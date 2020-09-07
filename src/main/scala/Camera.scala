@@ -2,21 +2,20 @@ import scala.math._
 
 case class Camera(origin: Vec3, lookat: Vec3, vup: Vec3, vfov: Double,
                   aspect_ratio: Double, aperture: Double, focus_distance: Double) {
-    val viewport_height = 2.0*tan(vfov.toRadians/2)
-    val viewport_width = aspect_ratio*viewport_height
-    // val focal_length = 1.0
+    private val viewport_height = 2.0*tan(vfov.toRadians/2)
+    private val viewport_width = aspect_ratio*viewport_height
 
-    val w = (origin - lookat).unit_vector
-    val u = vup.cross(w).unit_vector
-    val v = w.cross(u)
+    private val w = (origin - lookat).unit_vector
+    private val u = vup.cross(w).unit_vector
+    private val v = w.cross(u)
 
-    val horizontal = focus_distance*viewport_width*u
-    val vertical = focus_distance*viewport_height*v
-    val lower_left_corner = origin - horizontal/2 - vertical/2 - focus_distance*w
+    private val horizontal = focus_distance*viewport_width*u
+    private val vertical = focus_distance*viewport_height*v
+    private val lower_left_corner = origin - horizontal/2 - vertical/2 - focus_distance*w
     
-    val lens_radius = aperture/2
+    private val lens_radius = aperture/2
     
-    def get_ray(s: Double, t: Double) = {
+    def get_ray(s: Double, t: Double): Ray = {
         val rd = lens_radius*Vec3.random_in_unit_disk
         val offset = u*rd.x + v*rd.y
 

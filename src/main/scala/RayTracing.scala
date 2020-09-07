@@ -1,5 +1,3 @@
-import scala.math._
-
 import scala.concurrent._
 import scala.concurrent.duration._
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -15,6 +13,7 @@ object RayTracing extends App {
         world: Option[String] = None
     )
 
+    @scala.annotation.tailrec
     def parseOptions(args: List[String], options: Option[Options] = Some(Options())): Option[Options] = {
         args match {
             case "--filename" :: filename :: tail => parseOptions(tail, options.map(_.copy(filename = Some(filename))))
@@ -50,12 +49,12 @@ object RayTracing extends App {
     val max_depth = 50
 
     // Camera
-    val lookfrom = Vec3(13, 2, 3)
+    val origin = Vec3(13, 2, 3)
     val lookat = Vec3(0, 0, 0)
-    val focus_distance = 10
     val aperture = 0.1
+    val focus_distance = 10
     val camera = Camera(
-        lookfrom, lookat, Vec3(0, 1, 0),
+        origin, lookat, Vec3(0, 1, 0),
         20, aspect_ratio, aperture, focus_distance
     )
 
@@ -94,5 +93,5 @@ object RayTracing extends App {
     }
     println()
 
-    ppm.close
+    ppm.close()
 }
