@@ -1,0 +1,4 @@
+[debug] [raytracing-test] Classpath dependencies List()
+[debug] [raytracing-test] Dependencies from configurations List(raytracing)
+[debug] Bloop wrote the configuration of project 'raytracing-test' to '/Users/noahr/Desktop/raytracing/.bloop/raytracing-test.json'
+[success] Generated .bloop/raytracing-test.json

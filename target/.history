@@ -1,0 +1,76 @@
+run
+repl
+console
+run
+console
+clear
+console
+compile
+compile -feature
+compile -feature;
+scalaOptions += "-feature"
+scalacOptions += "-feature";
+scalacOptions += "-feature"
+set scalacOptions in ThisBuild ++= Seq("-deprecation", "-feature")
+compile
+run
+console
+run
+~run
+exit
+compile
+run
+console
+~run
+console
+~run
+console
+~run
+console
+run
+console
+~run
+last bgRun
+last Compile / bgRun
+run
+last Compile / bgRun
+quit
+~run
+version
+compile
+~run
+console
+~run
+console
+~run
+compile
+run
+~run
+run
+reload
+run
+reload
+run
+~run
+compile
+run
+console
+run
+console
+compile
+run
+run foo
+run --filename baz
+run -o baz
+run --width
+run -w 5
+run -w 5d
+run -w 5d e
+run -want
+run -want 3
+run
+run -w 320 -h 240
+run -w 320 -h 240 -s 8
+run -w 32 -h 24 -s 256
+run -w 320 -h 240 -s 256
+run -w 32e0 -h 240 -s 256

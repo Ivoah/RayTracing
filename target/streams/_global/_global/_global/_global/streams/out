@@ -1,0 +1,278 @@
+[0m[[0m[0mdebug[0m] [0m[0m[watch] [raytracing / Compile / run] Found inputs: /Users/noahr/Desktop/raytracing/*.{java,scala},/Users/noahr/Desktop/raytracing/src/main/java/**/*.{java,scala},/Users/noahr/Desktop/raytracing/src/main/resources/**/*,/Users/noahr/Desktop/raytracing/src/main/scala/**/*.{java,scala},/Users/noahr/Desktop/raytracing/src/main/scala-2.13/**/*.{java,scala}[0m
+[0m[[0m[0minfo[0m] [0m[0m1. Monitoring source files for raytracing/run...[0m
+[0m[[0m[0minfo[0m] [0m[0m   Press <enter> to interrupt or '?' for more options.[0m
+[0m[[0m[0mdebug[0m] [0m[0mraytracing / Compile / run - Accepted event for /Users/noahr/Desktop/raytracing/RayTracing.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived Update(/Users/noahr/Desktop/raytracing/RayTracing.scala,FileAttributes(isDirectory = false, isOther = false,isRegularFile = true, isSymbolicLink = false),FileAttributes(isDirectory = false, isOther = false,isRegularFile = true, isSymbolicLink = false))[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived event for path /Users/noahr/Desktop/raytracing/RayTracing.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived event for path /Users/noahr/Desktop/raytracing/RayTracing.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mCreating update event for modified /Users/noahr/Desktop/raytracing/RayTracing.scala (previous stamp: Hash(60442b06bc8e7712a2ec87fe6182f015e12d945d), current stamp: Hash(a07761511c8431e042ed4c5e1e504598943fc3df))[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived file event actions: /Users/noahr/Desktop/raytracing/RayTracing.scala -> Trigger. Returning: (Update(/Users/noahr/Desktop/raytracing/RayTracing.scala, 2020-Sep-04 12:13:47.664 ET),Trigger)[0m
+[0m[[0m[0minfo[0m] [0m[0mBuild triggered by /Users/noahr/Desktop/raytracing/RayTracing.scala. Running 'run'.[0m
+[0m[[0m[0mdebug[0m] [0m[0m[watch] [debug] Received file event Trigger for Update(/Users/noahr/Desktop/raytracing/RayTracing.scala, 2020-Sep-04 12:13:47.664 ET).[0m
+[0m[[0m[0minfo[0m] [0m[0m2. Monitoring source files for raytracing/run...[0m
+[0m[[0m[0minfo[0m] [0m[0m   Press <enter> to interrupt or '?' for more options.[0m
+[0m[[0m[0mdebug[0m] [0m[0mraytracing / Compile / run - Accepted event for /Users/noahr/Desktop/raytracing/RayTracing.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived Update(/Users/noahr/Desktop/raytracing/RayTracing.scala,FileAttributes(isDirectory = false, isOther = false,isRegularFile = true, isSymbolicLink = false),FileAttributes(isDirectory = false, isOther = false,isRegularFile = true, isSymbolicLink = false))[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived event for path /Users/noahr/Desktop/raytracing/RayTracing.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived event for path /Users/noahr/Desktop/raytracing/RayTracing.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mCreating update event for modified /Users/noahr/Desktop/raytracing/RayTracing.scala (previous stamp: Hash(a07761511c8431e042ed4c5e1e504598943fc3df), current stamp: Hash(b6b16432db82ced439a8f84c426cba57b85a2ced))[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived file event actions: /Users/noahr/Desktop/raytracing/RayTracing.scala -> Trigger. Returning: (Update(/Users/noahr/Desktop/raytracing/RayTracing.scala, 2020-Sep-04 12:14:11.050 ET),Trigger)[0m
+[0m[[0m[0minfo[0m] [0m[0mBuild triggered by /Users/noahr/Desktop/raytracing/RayTracing.scala. Running 'run'.[0m
+[0m[[0m[0mdebug[0m] [0m[0m[watch] [debug] Received file event Trigger for Update(/Users/noahr/Desktop/raytracing/RayTracing.scala, 2020-Sep-04 12:14:11.050 ET).[0m
+[0m[[0m[0mdebug[0m] [0m[0mraytracing / Compile / run - Accepted event for /Users/noahr/Desktop/raytracing/RayTracing.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived Update(/Users/noahr/Desktop/raytracing/RayTracing.scala,FileAttributes(isDirectory = false, isOther = false,isRegularFile = true, isSymbolicLink = false),FileAttributes(isDirectory = false, isOther = false,isRegularFile = true, isSymbolicLink = false))[0m
+[0m[[0m[0minfo[0m] [0m[0m3. Monitoring source files for raytracing/run...[0m
+[0m[[0m[0minfo[0m] [0m[0m   Press <enter> to interrupt or '?' for more options.[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived event for path /Users/noahr/Desktop/raytracing/RayTracing.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived event for path /Users/noahr/Desktop/raytracing/RayTracing.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mCreating update event for modified /Users/noahr/Desktop/raytracing/RayTracing.scala (previous stamp: Hash(b6b16432db82ced439a8f84c426cba57b85a2ced), current stamp: Hash(60442b06bc8e7712a2ec87fe6182f015e12d945d))[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived file event actions: /Users/noahr/Desktop/raytracing/RayTracing.scala -> Trigger. Returning: (Update(/Users/noahr/Desktop/raytracing/RayTracing.scala, 2020-Sep-04 12:14:12.176 ET),Trigger)[0m
+[0m[[0m[0minfo[0m] [0m[0mBuild triggered by /Users/noahr/Desktop/raytracing/RayTracing.scala. Running 'run'.[0m
+[0m[[0m[0mdebug[0m] [0m[0m[watch] [debug] Received file event Trigger for Update(/Users/noahr/Desktop/raytracing/RayTracing.scala, 2020-Sep-04 12:14:12.176 ET).[0m
+[0m[[0m[0minfo[0m] [0m[0m4. Monitoring source files for raytracing/run...[0m
+[0m[[0m[0minfo[0m] [0m[0m   Press <enter> to interrupt or '?' for more options.[0m
+[0m[[0m[0mdebug[0m] [0m[0mraytracing / Compile / run - Accepted event for /Users/noahr/Desktop/raytracing/RayTracing.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived Update(/Users/noahr/Desktop/raytracing/RayTracing.scala,FileAttributes(isDirectory = false, isOther = false,isRegularFile = true, isSymbolicLink = false),FileAttributes(isDirectory = false, isOther = false,isRegularFile = true, isSymbolicLink = false))[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived event for path /Users/noahr/Desktop/raytracing/RayTracing.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived event for path /Users/noahr/Desktop/raytracing/RayTracing.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mCreating update event for modified /Users/noahr/Desktop/raytracing/RayTracing.scala (previous stamp: Hash(60442b06bc8e7712a2ec87fe6182f015e12d945d), current stamp: Hash(59a6d672805b4ee91fb6a75f7e3022995c1fff11))[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived file event actions: /Users/noahr/Desktop/raytracing/RayTracing.scala -> Trigger. Returning: (Update(/Users/noahr/Desktop/raytracing/RayTracing.scala, 2020-Sep-04 12:21:39.190 ET),Trigger)[0m
+[0m[[0m[0minfo[0m] [0m[0mBuild triggered by /Users/noahr/Desktop/raytracing/RayTracing.scala. Running 'run'.[0m
+[0m[[0m[0mdebug[0m] [0m[0m[watch] [debug] Received file event Trigger for Update(/Users/noahr/Desktop/raytracing/RayTracing.scala, 2020-Sep-04 12:21:39.190 ET).[0m
+[0m[[0m[0minfo[0m] [0m[0m5. Monitoring source files for raytracing/run...[0m
+[0m[[0m[0minfo[0m] [0m[0m   Press <enter> to interrupt or '?' for more options.[0m
+[0m[[0m[0mdebug[0m] [0m[0mraytracing / Compile / run - Accepted event for /Users/noahr/Desktop/raytracing/ArgParser.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived Creation(/Users/noahr/Desktop/raytracing/ArgParser.scala,FileAttributes(isDirectory = false, isOther = false,isRegularFile = true, isSymbolicLink = false))[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived event for path /Users/noahr/Desktop/raytracing/ArgParser.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived event for path /Users/noahr/Desktop/raytracing/ArgParser.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived file event actions: /Users/noahr/Desktop/raytracing/ArgParser.scala -> Trigger. Returning: (Creation(/Users/noahr/Desktop/raytracing/ArgParser.scala, 2020-Sep-04 12:29:24.775 ET),Trigger)[0m
+[0m[[0m[0minfo[0m] [0m[0mBuild triggered by /Users/noahr/Desktop/raytracing/ArgParser.scala. Running 'run'.[0m
+[0m[[0m[0mdebug[0m] [0m[0m[watch] [debug] Received file event Trigger for Creation(/Users/noahr/Desktop/raytracing/ArgParser.scala, 2020-Sep-04 12:29:24.775 ET).[0m
+[0m[[0m[0minfo[0m] [0m[0m6. Monitoring source files for raytracing/run...[0m
+[0m[[0m[0minfo[0m] [0m[0m   Press <enter> to interrupt or '?' for more options.[0m
+[0m[[0m[0mdebug[0m] [0m[0mraytracing / Compile / run - Accepted event for /Users/noahr/Desktop/raytracing/ArgParser.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived Update(/Users/noahr/Desktop/raytracing/ArgParser.scala,FileAttributes(isDirectory = false, isOther = false,isRegularFile = true, isSymbolicLink = false),FileAttributes(isDirectory = false, isOther = false,isRegularFile = true, isSymbolicLink = false))[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived event for path /Users/noahr/Desktop/raytracing/ArgParser.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived event for path /Users/noahr/Desktop/raytracing/ArgParser.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mCreating update event for modified /Users/noahr/Desktop/raytracing/ArgParser.scala (previous stamp: Hash(da39a3ee5e6b4b0d3255bfef95601890afd80709), current stamp: Hash(7f6e8aa8686b48b1ee2998ae6a782a66e2e1e22e))[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived file event actions: /Users/noahr/Desktop/raytracing/ArgParser.scala -> Trigger. Returning: (Update(/Users/noahr/Desktop/raytracing/ArgParser.scala, 2020-Sep-04 13:02:48.100 ET),Trigger)[0m
+[0m[[0m[0minfo[0m] [0m[0mBuild triggered by /Users/noahr/Desktop/raytracing/ArgParser.scala. Running 'run'.[0m
+[0m[[0m[0mdebug[0m] [0m[0m[watch] [debug] Received file event Trigger for Update(/Users/noahr/Desktop/raytracing/ArgParser.scala, 2020-Sep-04 13:02:48.100 ET).[0m
+[0m[[0m[0minfo[0m] [0m[0m7. Monitoring source files for raytracing/run...[0m
+[0m[[0m[0minfo[0m] [0m[0m   Press <enter> to interrupt or '?' for more options.[0m
+[0m[[0m[0mdebug[0m] [0m[0mraytracing / Compile / run - Accepted event for /Users/noahr/Desktop/raytracing/ArgParser.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived Update(/Users/noahr/Desktop/raytracing/ArgParser.scala,FileAttributes(isDirectory = false, isOther = false,isRegularFile = true, isSymbolicLink = false),FileAttributes(isDirectory = false, isOther = false,isRegularFile = true, isSymbolicLink = false))[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived event for path /Users/noahr/Desktop/raytracing/ArgParser.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived event for path /Users/noahr/Desktop/raytracing/ArgParser.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mCreating update event for modified /Users/noahr/Desktop/raytracing/ArgParser.scala (previous stamp: Hash(7f6e8aa8686b48b1ee2998ae6a782a66e2e1e22e), current stamp: Hash(f08c831da8827dc6cf8f6fd002a6be36722fd2a6))[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived file event actions: /Users/noahr/Desktop/raytracing/ArgParser.scala -> Trigger. Returning: (Update(/Users/noahr/Desktop/raytracing/ArgParser.scala, 2020-Sep-04 13:02:50.575 ET),Trigger)[0m
+[0m[[0m[0minfo[0m] [0m[0mBuild triggered by /Users/noahr/Desktop/raytracing/ArgParser.scala. Running 'run'.[0m
+[0m[[0m[0mdebug[0m] [0m[0m[watch] [debug] Received file event Trigger for Update(/Users/noahr/Desktop/raytracing/ArgParser.scala, 2020-Sep-04 13:02:50.575 ET).[0m
+[0m[[0m[0minfo[0m] [0m[0m8. Monitoring source files for raytracing/run...[0m
+[0m[[0m[0minfo[0m] [0m[0m   Press <enter> to interrupt or '?' for more options.[0m
+[0m[[0m[0mdebug[0m] [0m[0mraytracing / Compile / run - Accepted event for /Users/noahr/Desktop/raytracing/ArgParser.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived Update(/Users/noahr/Desktop/raytracing/ArgParser.scala,FileAttributes(isDirectory = false, isOther = false,isRegularFile = true, isSymbolicLink = false),FileAttributes(isDirectory = false, isOther = false,isRegularFile = true, isSymbolicLink = false))[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived event for path /Users/noahr/Desktop/raytracing/ArgParser.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived event for path /Users/noahr/Desktop/raytracing/ArgParser.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mCreating update event for modified /Users/noahr/Desktop/raytracing/ArgParser.scala (previous stamp: Hash(f08c831da8827dc6cf8f6fd002a6be36722fd2a6), current stamp: Hash(3642761d3e658df553409167237bfd54c076d53f))[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived file event actions: /Users/noahr/Desktop/raytracing/ArgParser.scala -> Trigger. Returning: (Update(/Users/noahr/Desktop/raytracing/ArgParser.scala, 2020-Sep-04 13:03:15.663 ET),Trigger)[0m
+[0m[[0m[0minfo[0m] [0m[0mBuild triggered by /Users/noahr/Desktop/raytracing/ArgParser.scala. Running 'run'.[0m
+[0m[[0m[0mdebug[0m] [0m[0m[watch] [debug] Received file event Trigger for Update(/Users/noahr/Desktop/raytracing/ArgParser.scala, 2020-Sep-04 13:03:15.663 ET).[0m
+[0m[[0m[0mdebug[0m] [0m[0mraytracing / Compile / run - Accepted event for /Users/noahr/Desktop/raytracing/ArgParser.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived Update(/Users/noahr/Desktop/raytracing/ArgParser.scala,FileAttributes(isDirectory = false, isOther = false,isRegularFile = true, isSymbolicLink = false),FileAttributes(isDirectory = false, isOther = false,isRegularFile = true, isSymbolicLink = false))[0m
+[0m[[0m[0minfo[0m] [0m[0m9. Monitoring source files for raytracing/run...[0m
+[0m[[0m[0minfo[0m] [0m[0m   Press <enter> to interrupt or '?' for more options.[0m
+[0m[[0m[0mdebug[0m] [0m[0mDiscarding entry for recently updated path /Users/noahr/Desktop/raytracing/ArgParser.scala. This event occurred 10 ms since the last event for this path.[0m
+[0m[[0m[0mdebug[0m] [0m[0mraytracing / Compile / run - Accepted event for /Users/noahr/Desktop/raytracing/ArgParser.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived Update(/Users/noahr/Desktop/raytracing/ArgParser.scala,FileAttributes(isDirectory = false, isOther = false,isRegularFile = true, isSymbolicLink = false),FileAttributes(isDirectory = false, isOther = false,isRegularFile = true, isSymbolicLink = false))[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived event for path /Users/noahr/Desktop/raytracing/ArgParser.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived event for path /Users/noahr/Desktop/raytracing/ArgParser.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mCreating update event for modified /Users/noahr/Desktop/raytracing/ArgParser.scala (previous stamp: Hash(3642761d3e658df553409167237bfd54c076d53f), current stamp: Hash(b7f27dc0200c796b4c635aa4c573b9879854afb4))[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived file event actions: /Users/noahr/Desktop/raytracing/ArgParser.scala -> Trigger. Returning: (Update(/Users/noahr/Desktop/raytracing/ArgParser.scala, 2020-Sep-04 13:04:14.811 ET),Trigger)[0m
+[0m[[0m[0minfo[0m] [0m[0mBuild triggered by /Users/noahr/Desktop/raytracing/ArgParser.scala. Running 'run'.[0m
+[0m[[0m[0mdebug[0m] [0m[0m[watch] [debug] Received file event Trigger for Update(/Users/noahr/Desktop/raytracing/ArgParser.scala, 2020-Sep-04 13:04:14.811 ET).[0m
+[0m[[0m[0minfo[0m] [0m[0m10. Monitoring source files for raytracing/run...[0m
+[0m[[0m[0minfo[0m] [0m[0m    Press <enter> to interrupt or '?' for more options.[0m
+[0m[[0m[0mdebug[0m] [0m[0mraytracing / Compile / run - Accepted event for /Users/noahr/Desktop/raytracing/ArgParser.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived Update(/Users/noahr/Desktop/raytracing/ArgParser.scala,FileAttributes(isDirectory = false, isOther = false,isRegularFile = true, isSymbolicLink = false),FileAttributes(isDirectory = false, isOther = false,isRegularFile = true, isSymbolicLink = false))[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived event for path /Users/noahr/Desktop/raytracing/ArgParser.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived event for path /Users/noahr/Desktop/raytracing/ArgParser.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mCreating update event for modified /Users/noahr/Desktop/raytracing/ArgParser.scala (previous stamp: Hash(b7f27dc0200c796b4c635aa4c573b9879854afb4), current stamp: Hash(be047a78dede55da90016225a41e71b1fef497eb))[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived file event actions: /Users/noahr/Desktop/raytracing/ArgParser.scala -> Trigger. Returning: (Update(/Users/noahr/Desktop/raytracing/ArgParser.scala, 2020-Sep-04 13:05:08.520 ET),Trigger)[0m
+[0m[[0m[0minfo[0m] [0m[0mBuild triggered by /Users/noahr/Desktop/raytracing/ArgParser.scala. Running 'run'.[0m
+[0m[[0m[0mdebug[0m] [0m[0m[watch] [debug] Received file event Trigger for Update(/Users/noahr/Desktop/raytracing/ArgParser.scala, 2020-Sep-04 13:05:08.520 ET).[0m
+[0m[[0m[0minfo[0m] [0m[0m11. Monitoring source files for raytracing/run...[0m
+[0m[[0m[0minfo[0m] [0m[0m    Press <enter> to interrupt or '?' for more options.[0m
+[0m[[0m[0mdebug[0m] [0m[0mraytracing / Compile / run - Accepted event for /Users/noahr/Desktop/raytracing/ArgParser.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived Update(/Users/noahr/Desktop/raytracing/ArgParser.scala,FileAttributes(isDirectory = false, isOther = false,isRegularFile = true, isSymbolicLink = false),FileAttributes(isDirectory = false, isOther = false,isRegularFile = true, isSymbolicLink = false))[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived event for path /Users/noahr/Desktop/raytracing/ArgParser.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived event for path /Users/noahr/Desktop/raytracing/ArgParser.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mCreating update event for modified /Users/noahr/Desktop/raytracing/ArgParser.scala (previous stamp: Hash(be047a78dede55da90016225a41e71b1fef497eb), current stamp: Hash(c97eb4a0b84f7ae4e0f334e4477f59e7c9b2e4dd))[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived file event actions: /Users/noahr/Desktop/raytracing/ArgParser.scala -> Trigger. Returning: (Update(/Users/noahr/Desktop/raytracing/ArgParser.scala, 2020-Sep-04 13:05:37.421 ET),Trigger)[0m
+[0m[[0m[0minfo[0m] [0m[0mBuild triggered by /Users/noahr/Desktop/raytracing/ArgParser.scala. Running 'run'.[0m
+[0m[[0m[0mdebug[0m] [0m[0m[watch] [debug] Received file event Trigger for Update(/Users/noahr/Desktop/raytracing/ArgParser.scala, 2020-Sep-04 13:05:37.421 ET).[0m
+[0m[[0m[0minfo[0m] [0m[0m12. Monitoring source files for raytracing/run...[0m
+[0m[[0m[0minfo[0m] [0m[0m    Press <enter> to interrupt or '?' for more options.[0m
+[0m[[0m[0mdebug[0m] [0m[0mraytracing / Compile / run - Accepted event for /Users/noahr/Desktop/raytracing/ArgParser.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived Update(/Users/noahr/Desktop/raytracing/ArgParser.scala,FileAttributes(isDirectory = false, isOther = false,isRegularFile = true, isSymbolicLink = false),FileAttributes(isDirectory = false, isOther = false,isRegularFile = true, isSymbolicLink = false))[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived event for path /Users/noahr/Desktop/raytracing/ArgParser.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived event for path /Users/noahr/Desktop/raytracing/ArgParser.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mCreating update event for modified /Users/noahr/Desktop/raytracing/ArgParser.scala (previous stamp: Hash(c97eb4a0b84f7ae4e0f334e4477f59e7c9b2e4dd), current stamp: Hash(bb2e5b482b9d748b9063556abdb33812a3f18678))[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived file event actions: /Users/noahr/Desktop/raytracing/ArgParser.scala -> Trigger. Returning: (Update(/Users/noahr/Desktop/raytracing/ArgParser.scala, 2020-Sep-04 13:06:00.121 ET),Trigger)[0m
+[0m[[0m[0minfo[0m] [0m[0mBuild triggered by /Users/noahr/Desktop/raytracing/ArgParser.scala. Running 'run'.[0m
+[0m[[0m[0mdebug[0m] [0m[0m[watch] [debug] Received file event Trigger for Update(/Users/noahr/Desktop/raytracing/ArgParser.scala, 2020-Sep-04 13:06:00.121 ET).[0m
+[0m[[0m[0minfo[0m] [0m[0m13. Monitoring source files for raytracing/run...[0m
+[0m[[0m[0minfo[0m] [0m[0m    Press <enter> to interrupt or '?' for more options.[0m
+[0m[[0m[0mdebug[0m] [0m[0mraytracing / Compile / run - Accepted event for /Users/noahr/Desktop/raytracing/ArgParser.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived Update(/Users/noahr/Desktop/raytracing/ArgParser.scala,FileAttributes(isDirectory = false, isOther = false,isRegularFile = true, isSymbolicLink = false),FileAttributes(isDirectory = false, isOther = false,isRegularFile = true, isSymbolicLink = false))[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived event for path /Users/noahr/Desktop/raytracing/ArgParser.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived event for path /Users/noahr/Desktop/raytracing/ArgParser.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mCreating update event for modified /Users/noahr/Desktop/raytracing/ArgParser.scala (previous stamp: Hash(bb2e5b482b9d748b9063556abdb33812a3f18678), current stamp: Hash(ac710a14c8b061ad505f23214479c5bc9e871547))[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived file event actions: /Users/noahr/Desktop/raytracing/ArgParser.scala -> Trigger. Returning: (Update(/Users/noahr/Desktop/raytracing/ArgParser.scala, 2020-Sep-04 13:06:18.210 ET),Trigger)[0m
+[0m[[0m[0minfo[0m] [0m[0mBuild triggered by /Users/noahr/Desktop/raytracing/ArgParser.scala. Running 'run'.[0m
+[0m[[0m[0mdebug[0m] [0m[0m[watch] [debug] Received file event Trigger for Update(/Users/noahr/Desktop/raytracing/ArgParser.scala, 2020-Sep-04 13:06:18.210 ET).[0m
+[0m[[0m[0minfo[0m] [0m[0m14. Monitoring source files for raytracing/run...[0m
+[0m[[0m[0minfo[0m] [0m[0m    Press <enter> to interrupt or '?' for more options.[0m
+[0m[[0m[0mdebug[0m] [0m[0mraytracing / Compile / run - Accepted event for /Users/noahr/Desktop/raytracing/RayTracing.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived Update(/Users/noahr/Desktop/raytracing/RayTracing.scala,FileAttributes(isDirectory = false, isOther = false,isRegularFile = true, isSymbolicLink = false),FileAttributes(isDirectory = false, isOther = false,isRegularFile = true, isSymbolicLink = false))[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived event for path /Users/noahr/Desktop/raytracing/RayTracing.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived event for path /Users/noahr/Desktop/raytracing/RayTracing.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mCreating update event for modified /Users/noahr/Desktop/raytracing/RayTracing.scala (previous stamp: Hash(59a6d672805b4ee91fb6a75f7e3022995c1fff11), current stamp: Hash(83bcf938c24b01a7eb4fb22082c111d38a3944e1))[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived file event actions: /Users/noahr/Desktop/raytracing/RayTracing.scala -> Trigger. Returning: (Update(/Users/noahr/Desktop/raytracing/RayTracing.scala, 2020-Sep-04 13:25:22.233 ET),Trigger)[0m
+[0m[[0m[0minfo[0m] [0m[0mBuild triggered by /Users/noahr/Desktop/raytracing/RayTracing.scala. Running 'run'.[0m
+[0m[[0m[0mdebug[0m] [0m[0m[watch] [debug] Received file event Trigger for Update(/Users/noahr/Desktop/raytracing/RayTracing.scala, 2020-Sep-04 13:25:22.233 ET).[0m
+[0m[[0m[0minfo[0m] [0m[0m15. Monitoring source files for raytracing/run...[0m
+[0m[[0m[0minfo[0m] [0m[0m    Press <enter> to interrupt or '?' for more options.[0m
+[0m[[0m[0mdebug[0m] [0m[0mraytracing / Compile / run - Accepted event for /Users/noahr/Desktop/raytracing/RayTracing.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived Update(/Users/noahr/Desktop/raytracing/RayTracing.scala,FileAttributes(isDirectory = false, isOther = false,isRegularFile = true, isSymbolicLink = false),FileAttributes(isDirectory = false, isOther = false,isRegularFile = true, isSymbolicLink = false))[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived event for path /Users/noahr/Desktop/raytracing/RayTracing.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived event for path /Users/noahr/Desktop/raytracing/RayTracing.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mDropping event for unmodified path /Users/noahr/Desktop/raytracing/RayTracing.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mraytracing / Compile / run - Accepted event for /Users/noahr/Desktop/raytracing/ArgParser.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived Update(/Users/noahr/Desktop/raytracing/ArgParser.scala,FileAttributes(isDirectory = false, isOther = false,isRegularFile = true, isSymbolicLink = false),FileAttributes(isDirectory = false, isOther = false,isRegularFile = true, isSymbolicLink = false))[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived event for path /Users/noahr/Desktop/raytracing/ArgParser.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived event for path /Users/noahr/Desktop/raytracing/ArgParser.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mDropping event for unmodified path /Users/noahr/Desktop/raytracing/ArgParser.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mraytracing / Compile / run - Accepted event for /Users/noahr/Desktop/raytracing/RayTracing.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived Update(/Users/noahr/Desktop/raytracing/RayTracing.scala,FileAttributes(isDirectory = false, isOther = false,isRegularFile = true, isSymbolicLink = false),FileAttributes(isDirectory = false, isOther = false,isRegularFile = true, isSymbolicLink = false))[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived event for path /Users/noahr/Desktop/raytracing/RayTracing.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived event for path /Users/noahr/Desktop/raytracing/RayTracing.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mCreating update event for modified /Users/noahr/Desktop/raytracing/RayTracing.scala (previous stamp: Hash(83bcf938c24b01a7eb4fb22082c111d38a3944e1), current stamp: Hash(ba0434fbe2e231d1063320027a9639b651701443))[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived file event actions: /Users/noahr/Desktop/raytracing/RayTracing.scala -> Trigger. Returning: (Update(/Users/noahr/Desktop/raytracing/RayTracing.scala, 2020-Sep-04 13:48:31.563 ET),Trigger)[0m
+[0m[[0m[0minfo[0m] [0m[0mBuild triggered by /Users/noahr/Desktop/raytracing/RayTracing.scala. Running 'run'.[0m
+[0m[[0m[0mdebug[0m] [0m[0m[watch] [debug] Received file event Trigger for Update(/Users/noahr/Desktop/raytracing/RayTracing.scala, 2020-Sep-04 13:48:31.563 ET).[0m
+[0m[[0m[0minfo[0m] [0m[0m16. Monitoring source files for raytracing/run...[0m
+[0m[[0m[0minfo[0m] [0m[0m    Press <enter> to interrupt or '?' for more options.[0m
+[0m[[0m[0mdebug[0m] [0m[0mraytracing / Compile / run - Accepted event for /Users/noahr/Desktop/raytracing/RayTracing.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived Update(/Users/noahr/Desktop/raytracing/RayTracing.scala,FileAttributes(isDirectory = false, isOther = false,isRegularFile = true, isSymbolicLink = false),FileAttributes(isDirectory = false, isOther = false,isRegularFile = true, isSymbolicLink = false))[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived event for path /Users/noahr/Desktop/raytracing/RayTracing.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived event for path /Users/noahr/Desktop/raytracing/RayTracing.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mCreating update event for modified /Users/noahr/Desktop/raytracing/RayTracing.scala (previous stamp: Hash(ba0434fbe2e231d1063320027a9639b651701443), current stamp: Hash(3c3715e861971f5b3c6e42413f38a8af53e6a9c3))[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived file event actions: /Users/noahr/Desktop/raytracing/RayTracing.scala -> Trigger. Returning: (Update(/Users/noahr/Desktop/raytracing/RayTracing.scala, 2020-Sep-04 13:48:34.763 ET),Trigger)[0m
+[0m[[0m[0minfo[0m] [0m[0mBuild triggered by /Users/noahr/Desktop/raytracing/RayTracing.scala. Running 'run'.[0m
+[0m[[0m[0mdebug[0m] [0m[0m[watch] [debug] Received file event Trigger for Update(/Users/noahr/Desktop/raytracing/RayTracing.scala, 2020-Sep-04 13:48:34.763 ET).[0m
+[0m[[0m[0minfo[0m] [0m[0m17. Monitoring source files for raytracing/run...[0m
+[0m[[0m[0minfo[0m] [0m[0m    Press <enter> to interrupt or '?' for more options.[0m
+[0m[[0m[0mdebug[0m] [0m[0mraytracing / Compile / run - Accepted event for /Users/noahr/Desktop/raytracing/RayTracing.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived Update(/Users/noahr/Desktop/raytracing/RayTracing.scala,FileAttributes(isDirectory = false, isOther = false,isRegularFile = true, isSymbolicLink = false),FileAttributes(isDirectory = false, isOther = false,isRegularFile = true, isSymbolicLink = false))[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived event for path /Users/noahr/Desktop/raytracing/RayTracing.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived event for path /Users/noahr/Desktop/raytracing/RayTracing.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mCreating update event for modified /Users/noahr/Desktop/raytracing/RayTracing.scala (previous stamp: Hash(3c3715e861971f5b3c6e42413f38a8af53e6a9c3), current stamp: Hash(7529d6613fa7f060d01a558d9d8489e93394079d))[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived file event actions: /Users/noahr/Desktop/raytracing/RayTracing.scala -> Trigger. Returning: (Update(/Users/noahr/Desktop/raytracing/RayTracing.scala, 2020-Sep-04 13:49:28.535 ET),Trigger)[0m
+[0m[[0m[0minfo[0m] [0m[0mBuild triggered by /Users/noahr/Desktop/raytracing/RayTracing.scala. Running 'run'.[0m
+[0m[[0m[0mdebug[0m] [0m[0m[watch] [debug] Received file event Trigger for Update(/Users/noahr/Desktop/raytracing/RayTracing.scala, 2020-Sep-04 13:49:28.535 ET).[0m
+[0m[[0m[0minfo[0m] [0m[0m18. Monitoring source files for raytracing/run...[0m
+[0m[[0m[0minfo[0m] [0m[0m    Press <enter> to interrupt or '?' for more options.[0m
+[0m[[0m[0mdebug[0m] [0m[0mraytracing / Compile / run - Accepted event for /Users/noahr/Desktop/raytracing/RayTracing.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived Update(/Users/noahr/Desktop/raytracing/RayTracing.scala,FileAttributes(isDirectory = false, isOther = false,isRegularFile = true, isSymbolicLink = false),FileAttributes(isDirectory = false, isOther = false,isRegularFile = true, isSymbolicLink = false))[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived event for path /Users/noahr/Desktop/raytracing/RayTracing.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived event for path /Users/noahr/Desktop/raytracing/RayTracing.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mCreating update event for modified /Users/noahr/Desktop/raytracing/RayTracing.scala (previous stamp: Hash(7529d6613fa7f060d01a558d9d8489e93394079d), current stamp: Hash(1380a23e0c7be776de6dc326f0c07c7eff0c4b19))[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived file event actions: /Users/noahr/Desktop/raytracing/RayTracing.scala -> Trigger. Returning: (Update(/Users/noahr/Desktop/raytracing/RayTracing.scala, 2020-Sep-04 13:49:46.543 ET),Trigger)[0m
+[0m[[0m[0minfo[0m] [0m[0mBuild triggered by /Users/noahr/Desktop/raytracing/RayTracing.scala. Running 'run'.[0m
+[0m[[0m[0mdebug[0m] [0m[0m[watch] [debug] Received file event Trigger for Update(/Users/noahr/Desktop/raytracing/RayTracing.scala, 2020-Sep-04 13:49:46.543 ET).[0m
+[0m[[0m[0minfo[0m] [0m[0m19. Monitoring source files for raytracing/run...[0m
+[0m[[0m[0minfo[0m] [0m[0m    Press <enter> to interrupt or '?' for more options.[0m
+[0m[[0m[0mdebug[0m] [0m[0mraytracing / Compile / run - Accepted event for /Users/noahr/Desktop/raytracing/RayTracing.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived Update(/Users/noahr/Desktop/raytracing/RayTracing.scala,FileAttributes(isDirectory = false, isOther = false,isRegularFile = true, isSymbolicLink = false),FileAttributes(isDirectory = false, isOther = false,isRegularFile = true, isSymbolicLink = false))[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived event for path /Users/noahr/Desktop/raytracing/RayTracing.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived event for path /Users/noahr/Desktop/raytracing/RayTracing.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mCreating update event for modified /Users/noahr/Desktop/raytracing/RayTracing.scala (previous stamp: Hash(1380a23e0c7be776de6dc326f0c07c7eff0c4b19), current stamp: Hash(3c3715e861971f5b3c6e42413f38a8af53e6a9c3))[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived file event actions: /Users/noahr/Desktop/raytracing/RayTracing.scala -> Trigger. Returning: (Update(/Users/noahr/Desktop/raytracing/RayTracing.scala, 2020-Sep-04 13:50:33.121 ET),Trigger)[0m
+[0m[[0m[0minfo[0m] [0m[0mBuild triggered by /Users/noahr/Desktop/raytracing/RayTracing.scala. Running 'run'.[0m
+[0m[[0m[0mdebug[0m] [0m[0m[watch] [debug] Received file event Trigger for Update(/Users/noahr/Desktop/raytracing/RayTracing.scala, 2020-Sep-04 13:50:33.121 ET).[0m
+[0m[[0m[0minfo[0m] [0m[0m20. Monitoring source files for raytracing/run...[0m
+[0m[[0m[0minfo[0m] [0m[0m    Press <enter> to interrupt or '?' for more options.[0m
+[0m[[0m[0mdebug[0m] [0m[0mraytracing / Compile / run - Accepted event for /Users/noahr/Desktop/raytracing/RayTracing.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived Update(/Users/noahr/Desktop/raytracing/RayTracing.scala,FileAttributes(isDirectory = false, isOther = false,isRegularFile = true, isSymbolicLink = false),FileAttributes(isDirectory = false, isOther = false,isRegularFile = true, isSymbolicLink = false))[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived event for path /Users/noahr/Desktop/raytracing/RayTracing.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived event for path /Users/noahr/Desktop/raytracing/RayTracing.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mCreating update event for modified /Users/noahr/Desktop/raytracing/RayTracing.scala (previous stamp: Hash(3c3715e861971f5b3c6e42413f38a8af53e6a9c3), current stamp: Hash(83bcf938c24b01a7eb4fb22082c111d38a3944e1))[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived file event actions: /Users/noahr/Desktop/raytracing/RayTracing.scala -> Trigger. Returning: (Update(/Users/noahr/Desktop/raytracing/RayTracing.scala, 2020-Sep-04 13:51:58.710 ET),Trigger)[0m
+[0m[[0m[0minfo[0m] [0m[0mBuild triggered by /Users/noahr/Desktop/raytracing/RayTracing.scala. Running 'run'.[0m
+[0m[[0m[0mdebug[0m] [0m[0m[watch] [debug] Received file event Trigger for Update(/Users/noahr/Desktop/raytracing/RayTracing.scala, 2020-Sep-04 13:51:58.710 ET).[0m
+[0m[[0m[0minfo[0m] [0m[0m21. Monitoring source files for raytracing/run...[0m
+[0m[[0m[0minfo[0m] [0m[0m    Press <enter> to interrupt or '?' for more options.[0m
+[0m[[0m[0mdebug[0m] [0m[0mraytracing / Compile / run - Accepted event for /Users/noahr/Desktop/raytracing/RayTracing.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived Update(/Users/noahr/Desktop/raytracing/RayTracing.scala,FileAttributes(isDirectory = false, isOther = false,isRegularFile = true, isSymbolicLink = false),FileAttributes(isDirectory = false, isOther = false,isRegularFile = true, isSymbolicLink = false))[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived event for path /Users/noahr/Desktop/raytracing/RayTracing.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived event for path /Users/noahr/Desktop/raytracing/RayTracing.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mCreating update event for modified /Users/noahr/Desktop/raytracing/RayTracing.scala (previous stamp: Hash(83bcf938c24b01a7eb4fb22082c111d38a3944e1), current stamp: Hash(f5b801686dd03fb714fa0089539874202f3cb2d9))[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived file event actions: /Users/noahr/Desktop/raytracing/RayTracing.scala -> Trigger. Returning: (Update(/Users/noahr/Desktop/raytracing/RayTracing.scala, 2020-Sep-04 13:54:03.918 ET),Trigger)[0m
+[0m[[0m[0minfo[0m] [0m[0mBuild triggered by /Users/noahr/Desktop/raytracing/RayTracing.scala. Running 'run'.[0m
+[0m[[0m[0mdebug[0m] [0m[0m[watch] [debug] Received file event Trigger for Update(/Users/noahr/Desktop/raytracing/RayTracing.scala, 2020-Sep-04 13:54:03.918 ET).[0m
+[0m[[0m[0minfo[0m] [0m[0m22. Monitoring source files for raytracing/run...[0m
+[0m[[0m[0minfo[0m] [0m[0m    Press <enter> to interrupt or '?' for more options.[0m
+[0m[[0m[0mdebug[0m] [0m[0mraytracing / Compile / run - Accepted event for /Users/noahr/Desktop/raytracing/ArgParser.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived Deletion(/Users/noahr/Desktop/raytracing/ArgParser.scala,FileAttributes(isDirectory = false, isOther = false,isRegularFile = true, isSymbolicLink = false))[0m
+[0m[[0m[0mdebug[0m] [0m[0mQuarantining deletion event for path /Users/noahr/Desktop/raytracing/ArgParser.scala for 500 milliseconds[0m
+[0m[[0m[0mdebug[0m] [0m[0mTriggering event for previously quarantined deleted file: /Users/noahr/Desktop/raytracing/ArgParser.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mQuarantining deletion event for path /Users/noahr/Desktop/raytracing/ArgParser.scala for 500 milliseconds[0m
+[0m[[0m[0mdebug[0m] [0m[0mTriggering event for previously quarantined deleted file: /Users/noahr/Desktop/raytracing/ArgParser.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived file event actions: /Users/noahr/Desktop/raytracing/ArgParser.scala -> Trigger. Returning: (Deletion(/Users/noahr/Desktop/raytracing/ArgParser.scala, 2020-Sep-04 13:54:08.159 ET),Trigger)[0m
+[0m[[0m[0minfo[0m] [0m[0mBuild triggered by /Users/noahr/Desktop/raytracing/ArgParser.scala. Running 'run'.[0m
+[0m[[0m[0mdebug[0m] [0m[0m[watch] [debug] Received file event Trigger for Deletion(/Users/noahr/Desktop/raytracing/ArgParser.scala, 2020-Sep-04 13:54:08.159 ET).[0m
+[0m[[0m[0minfo[0m] [0m[0m23. Monitoring source files for raytracing/run...[0m
+[0m[[0m[0minfo[0m] [0m[0m    Press <enter> to interrupt or '?' for more options.[0m
+[0m[[0m[0mdebug[0m] [0m[0mraytracing / Compile / run - Accepted event for /Users/noahr/Desktop/raytracing/RayTracing.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived Update(/Users/noahr/Desktop/raytracing/RayTracing.scala,FileAttributes(isDirectory = false, isOther = false,isRegularFile = true, isSymbolicLink = false),FileAttributes(isDirectory = false, isOther = false,isRegularFile = true, isSymbolicLink = false))[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived event for path /Users/noahr/Desktop/raytracing/RayTracing.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived event for path /Users/noahr/Desktop/raytracing/RayTracing.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mCreating update event for modified /Users/noahr/Desktop/raytracing/RayTracing.scala (previous stamp: Hash(f5b801686dd03fb714fa0089539874202f3cb2d9), current stamp: Hash(1314b04007bf1cdbc1df3c37a5ae89257250bc0b))[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived file event actions: /Users/noahr/Desktop/raytracing/RayTracing.scala -> Trigger. Returning: (Update(/Users/noahr/Desktop/raytracing/RayTracing.scala, 2020-Sep-04 13:55:31.395 ET),Trigger)[0m
+[0m[[0m[0minfo[0m] [0m[0mBuild triggered by /Users/noahr/Desktop/raytracing/RayTracing.scala. Running 'run'.[0m
+[0m[[0m[0mdebug[0m] [0m[0m[watch] [debug] Received file event Trigger for Update(/Users/noahr/Desktop/raytracing/RayTracing.scala, 2020-Sep-04 13:55:31.395 ET).[0m
+[0m[[0m[0minfo[0m] [0m[0m24. Monitoring source files for raytracing/run...[0m
+[0m[[0m[0minfo[0m] [0m[0m    Press <enter> to interrupt or '?' for more options.[0m
+[0m[[0m[0mdebug[0m] [0m[0mraytracing / Compile / run - Accepted event for /Users/noahr/Desktop/raytracing/RayTracing.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived Update(/Users/noahr/Desktop/raytracing/RayTracing.scala,FileAttributes(isDirectory = false, isOther = false,isRegularFile = true, isSymbolicLink = false),FileAttributes(isDirectory = false, isOther = false,isRegularFile = true, isSymbolicLink = false))[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived event for path /Users/noahr/Desktop/raytracing/RayTracing.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived event for path /Users/noahr/Desktop/raytracing/RayTracing.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mCreating update event for modified /Users/noahr/Desktop/raytracing/RayTracing.scala (previous stamp: Hash(1314b04007bf1cdbc1df3c37a5ae89257250bc0b), current stamp: Hash(f964753b373803905af2ee579466243fbaef530e))[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived file event actions: /Users/noahr/Desktop/raytracing/RayTracing.scala -> Trigger. Returning: (Update(/Users/noahr/Desktop/raytracing/RayTracing.scala, 2020-Sep-04 13:58:58.737 ET),Trigger)[0m
+[0m[[0m[0minfo[0m] [0m[0mBuild triggered by /Users/noahr/Desktop/raytracing/RayTracing.scala. Running 'run'.[0m
+[0m[[0m[0mdebug[0m] [0m[0m[watch] [debug] Received file event Trigger for Update(/Users/noahr/Desktop/raytracing/RayTracing.scala, 2020-Sep-04 13:58:58.737 ET).[0m
+[0m[[0m[0minfo[0m] [0m[0m25. Monitoring source files for raytracing/run...[0m
+[0m[[0m[0minfo[0m] [0m[0m    Press <enter> to interrupt or '?' for more options.[0m
+[0m[[0m[0mdebug[0m] [0m[0mraytracing / Compile / run - Accepted event for /Users/noahr/Desktop/raytracing/RayTracing.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived Update(/Users/noahr/Desktop/raytracing/RayTracing.scala,FileAttributes(isDirectory = false, isOther = false,isRegularFile = true, isSymbolicLink = false),FileAttributes(isDirectory = false, isOther = false,isRegularFile = true, isSymbolicLink = false))[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived event for path /Users/noahr/Desktop/raytracing/RayTracing.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived event for path /Users/noahr/Desktop/raytracing/RayTracing.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mCreating update event for modified /Users/noahr/Desktop/raytracing/RayTracing.scala (previous stamp: Hash(f964753b373803905af2ee579466243fbaef530e), current stamp: Hash(ce87c96eab91c7f31eb8b137a38b5aef2e5b63df))[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived file event actions: /Users/noahr/Desktop/raytracing/RayTracing.scala -> Trigger. Returning: (Update(/Users/noahr/Desktop/raytracing/RayTracing.scala, 2020-Sep-04 13:59:12.148 ET),Trigger)[0m
+[0m[[0m[0minfo[0m] [0m[0mBuild triggered by /Users/noahr/Desktop/raytracing/RayTracing.scala. Running 'run'.[0m
+[0m[[0m[0mdebug[0m] [0m[0m[watch] [debug] Received file event Trigger for Update(/Users/noahr/Desktop/raytracing/RayTracing.scala, 2020-Sep-04 13:59:12.148 ET).[0m
+[0m[[0m[0minfo[0m] [0m[0m26. Monitoring source files for raytracing/run...[0m
+[0m[[0m[0minfo[0m] [0m[0m    Press <enter> to interrupt or '?' for more options.[0m
+[0m[[0m[0mdebug[0m] [0m[0mraytracing / Compile / run - Accepted event for /Users/noahr/Desktop/raytracing/RayTracing.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived Update(/Users/noahr/Desktop/raytracing/RayTracing.scala,FileAttributes(isDirectory = false, isOther = false,isRegularFile = true, isSymbolicLink = false),FileAttributes(isDirectory = false, isOther = false,isRegularFile = true, isSymbolicLink = false))[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived event for path /Users/noahr/Desktop/raytracing/RayTracing.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived event for path /Users/noahr/Desktop/raytracing/RayTracing.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0mCreating update event for modified /Users/noahr/Desktop/raytracing/RayTracing.scala (previous stamp: Hash(ce87c96eab91c7f31eb8b137a38b5aef2e5b63df), current stamp: Hash(0d75d1bf0c8e93581a64647826e29080fe8b13a0))[0m
+[0m[[0m[0mdebug[0m] [0m[0mReceived file event actions: /Users/noahr/Desktop/raytracing/RayTracing.scala -> Trigger. Returning: (Update(/Users/noahr/Desktop/raytracing/RayTracing.scala, 2020-Sep-04 13:59:18.074 ET),Trigger)[0m
+[0m[[0m[0minfo[0m] [0m[0mBuild triggered by /Users/noahr/Desktop/raytracing/RayTracing.scala. Running 'run'.[0m
+[0m[[0m[0mdebug[0m] [0m[0m[watch] [debug] Received file event Trigger for Update(/Users/noahr/Desktop/raytracing/RayTracing.scala, 2020-Sep-04 13:59:18.074 ET).[0m
+[0m[[0m[0minfo[0m] [0m[0m27. Monitoring source files for raytracing/run...[0m
+[0m[[0m[0minfo[0m] [0m[0m    Press <enter> to interrupt or '?' for more options.[0m
+[0m[[0m[0mdebug[0m] [0m[0m[watch] [debug] Received input event: Run().[0m
+[0m[[0m[0mdebug[0m] [0m[0m[watch] [debug] Received input event: Run().[0m
