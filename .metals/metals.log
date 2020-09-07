@@ -2008,3 +2008,228 @@ Caused by: java.nio.file.NoSuchFileException: /Users/noahr/Desktop/raytracing/.g
 	at io.methvin.watchservice.MacOSXListeningWatchService$MacOSXListeningCallback.invoke(MacOSXListeningWatchService.java:229)
 	... 11 more
 
+Sep 07, 2020 6:45:39 PM com.sun.jna.Native$1 uncaughtException
+WARNING: JNA: Callback io.methvin.watchservice.MacOSXListeningWatchService$MacOSXListeningCallback@2f7e7772 threw the following exception
+java.lang.IllegalStateException: Could not recursively list files for /Users/noahr/Desktop/raytracing/
+	at io.methvin.watchservice.MacOSXListeningWatchService$MacOSXListeningCallback.invoke(MacOSXListeningWatchService.java:231)
+	at jdk.internal.reflect.GeneratedMethodAccessor27.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at com.sun.jna.CallbackReference$DefaultCallbackProxy.invokeCallback(CallbackReference.java:520)
+	at com.sun.jna.CallbackReference$DefaultCallbackProxy.callback(CallbackReference.java:551)
+	at com.sun.jna.Native.invokeVoid(Native Method)
+	at com.sun.jna.Function.invoke(Function.java:415)
+	at com.sun.jna.Function.invoke(Function.java:361)
+	at com.sun.jna.Library$Handler.invoke(Library.java:265)
+	at com.sun.proxy.$Proxy13.CFRunLoopRun(Unknown Source)
+	at io.methvin.watchservice.MacOSXListeningWatchService$CFRunLoopThread.run(MacOSXListeningWatchService.java:174)
+Caused by: java.nio.file.NoSuchFileException: /Users/noahr/Desktop/raytracing/.gitignore.swp
+	at java.base/sun.nio.fs.UnixException.translateToIOException(UnixException.java:92)
+	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(UnixException.java:111)
+	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(UnixException.java:116)
+	at java.base/sun.nio.fs.UnixFileAttributeViews$Basic.readAttributes(UnixFileAttributeViews.java:55)
+	at java.base/sun.nio.fs.UnixFileSystemProvider.readAttributes(UnixFileSystemProvider.java:149)
+	at java.base/java.nio.file.Files.readAttributes(Files.java:1763)
+	at java.base/java.nio.file.FileTreeWalker.getAttributes(FileTreeWalker.java:219)
+	at java.base/java.nio.file.FileTreeWalker.visit(FileTreeWalker.java:276)
+	at java.base/java.nio.file.FileTreeWalker.next(FileTreeWalker.java:373)
+	at java.base/java.nio.file.Files.walkFileTree(Files.java:2760)
+	at java.base/java.nio.file.Files.walkFileTree(Files.java:2796)
+	at io.methvin.watcher.PathUtils.recursiveVisitFiles(PathUtils.java:86)
+	at io.methvin.watcher.PathUtils.recursiveListFiles(PathUtils.java:75)
+	at io.methvin.watchservice.MacOSXListeningWatchService$MacOSXListeningCallback.invoke(MacOSXListeningWatchService.java:229)
+	... 11 more
+
+Sep 07, 2020 6:46:11 PM com.sun.jna.Native$1 uncaughtException
+WARNING: JNA: Callback io.methvin.watchservice.MacOSXListeningWatchService$MacOSXListeningCallback@2f7e7772 threw the following exception
+java.lang.IllegalStateException: Could not recursively list files for /Users/noahr/Desktop/raytracing/.bloop/
+	at io.methvin.watchservice.MacOSXListeningWatchService$MacOSXListeningCallback.invoke(MacOSXListeningWatchService.java:231)
+	at jdk.internal.reflect.GeneratedMethodAccessor27.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at com.sun.jna.CallbackReference$DefaultCallbackProxy.invokeCallback(CallbackReference.java:520)
+	at com.sun.jna.CallbackReference$DefaultCallbackProxy.callback(CallbackReference.java:551)
+	at com.sun.jna.Native.invokeVoid(Native Method)
+	at com.sun.jna.Function.invoke(Function.java:415)
+	at com.sun.jna.Function.invoke(Function.java:361)
+	at com.sun.jna.Library$Handler.invoke(Library.java:265)
+	at com.sun.proxy.$Proxy13.CFRunLoopRun(Unknown Source)
+	at io.methvin.watchservice.MacOSXListeningWatchService$CFRunLoopThread.run(MacOSXListeningWatchService.java:174)
+Caused by: java.nio.file.NoSuchFileException: /Users/noahr/Desktop/raytracing/.bloop/raytracing/bloop-internal-classes/classes-Metals-Q2uFRcroRnGv44yUXJK4KQ==-MJLIo_UYTTWHXzd7GQGOMg==
+	at java.base/sun.nio.fs.UnixException.translateToIOException(UnixException.java:92)
+	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(UnixException.java:111)
+	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(UnixException.java:116)
+	at java.base/sun.nio.fs.UnixFileAttributeViews$Basic.readAttributes(UnixFileAttributeViews.java:55)
+	at java.base/sun.nio.fs.UnixFileSystemProvider.readAttributes(UnixFileSystemProvider.java:149)
+	at java.base/java.nio.file.Files.readAttributes(Files.java:1763)
+	at java.base/java.nio.file.FileTreeWalker.getAttributes(FileTreeWalker.java:219)
+	at java.base/java.nio.file.FileTreeWalker.visit(FileTreeWalker.java:276)
+	at java.base/java.nio.file.FileTreeWalker.next(FileTreeWalker.java:373)
+	at java.base/java.nio.file.Files.walkFileTree(Files.java:2760)
+	at java.base/java.nio.file.Files.walkFileTree(Files.java:2796)
+	at io.methvin.watcher.PathUtils.recursiveVisitFiles(PathUtils.java:86)
+	at io.methvin.watcher.PathUtils.recursiveListFiles(PathUtils.java:75)
+	at io.methvin.watchservice.MacOSXListeningWatchService$MacOSXListeningCallback.invoke(MacOSXListeningWatchService.java:229)
+	... 11 more
+
+Sep 07, 2020 6:46:11 PM com.sun.jna.Native$1 uncaughtException
+WARNING: JNA: Callback io.methvin.watchservice.MacOSXListeningWatchService$MacOSXListeningCallback@2f7e7772 threw the following exception
+java.lang.IllegalStateException: Could not recursively list files for /Users/noahr/Desktop/raytracing/.bloop/raytracing/bloop-internal-classes/
+	at io.methvin.watchservice.MacOSXListeningWatchService$MacOSXListeningCallback.invoke(MacOSXListeningWatchService.java:231)
+	at jdk.internal.reflect.GeneratedMethodAccessor27.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at com.sun.jna.CallbackReference$DefaultCallbackProxy.invokeCallback(CallbackReference.java:520)
+	at com.sun.jna.CallbackReference$DefaultCallbackProxy.callback(CallbackReference.java:551)
+	at com.sun.jna.Native.invokeVoid(Native Method)
+	at com.sun.jna.Function.invoke(Function.java:415)
+	at com.sun.jna.Function.invoke(Function.java:361)
+	at com.sun.jna.Library$Handler.invoke(Library.java:265)
+	at com.sun.proxy.$Proxy13.CFRunLoopRun(Unknown Source)
+	at io.methvin.watchservice.MacOSXListeningWatchService$CFRunLoopThread.run(MacOSXListeningWatchService.java:174)
+Caused by: java.nio.file.NoSuchFileException: /Users/noahr/Desktop/raytracing/.bloop/raytracing/bloop-internal-classes/classes-Metals-eN7k4RRmRsu4FF3QzDM4HA==-dT8ZlOblSZ2rbf_189PnNQ==
+	at java.base/sun.nio.fs.UnixException.translateToIOException(UnixException.java:92)
+	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(UnixException.java:111)
+	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(UnixException.java:116)
+	at java.base/sun.nio.fs.UnixFileAttributeViews$Basic.readAttributes(UnixFileAttributeViews.java:55)
+	at java.base/sun.nio.fs.UnixFileSystemProvider.readAttributes(UnixFileSystemProvider.java:149)
+	at java.base/java.nio.file.Files.readAttributes(Files.java:1763)
+	at java.base/java.nio.file.FileTreeWalker.getAttributes(FileTreeWalker.java:219)
+	at java.base/java.nio.file.FileTreeWalker.visit(FileTreeWalker.java:276)
+	at java.base/java.nio.file.FileTreeWalker.next(FileTreeWalker.java:373)
+	at java.base/java.nio.file.Files.walkFileTree(Files.java:2760)
+	at java.base/java.nio.file.Files.walkFileTree(Files.java:2796)
+	at io.methvin.watcher.PathUtils.recursiveVisitFiles(PathUtils.java:86)
+	at io.methvin.watcher.PathUtils.recursiveListFiles(PathUtils.java:75)
+	at io.methvin.watchservice.MacOSXListeningWatchService$MacOSXListeningCallback.invoke(MacOSXListeningWatchService.java:229)
+	... 11 more
+
+Sep 07, 2020 6:46:11 PM com.sun.jna.Native$1 uncaughtException
+WARNING: JNA: Callback io.methvin.watchservice.MacOSXListeningWatchService$MacOSXListeningCallback@2f7e7772 threw the following exception
+java.lang.IllegalStateException: Could not recursively list files for /Users/noahr/Desktop/raytracing/.bloop/raytracing/bloop-internal-classes/
+	at io.methvin.watchservice.MacOSXListeningWatchService$MacOSXListeningCallback.invoke(MacOSXListeningWatchService.java:231)
+	at jdk.internal.reflect.GeneratedMethodAccessor27.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at com.sun.jna.CallbackReference$DefaultCallbackProxy.invokeCallback(CallbackReference.java:520)
+	at com.sun.jna.CallbackReference$DefaultCallbackProxy.callback(CallbackReference.java:551)
+	at com.sun.jna.Native.invokeVoid(Native Method)
+	at com.sun.jna.Function.invoke(Function.java:415)
+	at com.sun.jna.Function.invoke(Function.java:361)
+	at com.sun.jna.Library$Handler.invoke(Library.java:265)
+	at com.sun.proxy.$Proxy13.CFRunLoopRun(Unknown Source)
+	at io.methvin.watchservice.MacOSXListeningWatchService$CFRunLoopThread.run(MacOSXListeningWatchService.java:174)
+Caused by: java.nio.file.NoSuchFileException: /Users/noahr/Desktop/raytracing/.bloop/raytracing/bloop-internal-classes/classes-Metals-Q2uFRcroRnGv44yUXJK4KQ==-lw7D2YFEQleR5btIUens6w==
+	at java.base/sun.nio.fs.UnixException.translateToIOException(UnixException.java:92)
+	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(UnixException.java:111)
+	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(UnixException.java:116)
+	at java.base/sun.nio.fs.UnixFileAttributeViews$Basic.readAttributes(UnixFileAttributeViews.java:55)
+	at java.base/sun.nio.fs.UnixFileSystemProvider.readAttributes(UnixFileSystemProvider.java:149)
+	at java.base/java.nio.file.Files.readAttributes(Files.java:1763)
+	at java.base/java.nio.file.FileTreeWalker.getAttributes(FileTreeWalker.java:219)
+	at java.base/java.nio.file.FileTreeWalker.visit(FileTreeWalker.java:276)
+	at java.base/java.nio.file.FileTreeWalker.next(FileTreeWalker.java:373)
+	at java.base/java.nio.file.Files.walkFileTree(Files.java:2760)
+	at java.base/java.nio.file.Files.walkFileTree(Files.java:2796)
+	at io.methvin.watcher.PathUtils.recursiveVisitFiles(PathUtils.java:86)
+	at io.methvin.watcher.PathUtils.recursiveListFiles(PathUtils.java:75)
+	at io.methvin.watchservice.MacOSXListeningWatchService$MacOSXListeningCallback.invoke(MacOSXListeningWatchService.java:229)
+	... 11 more
+
+Sep 07, 2020 6:46:11 PM com.sun.jna.Native$1 uncaughtException
+WARNING: JNA: Callback io.methvin.watchservice.MacOSXListeningWatchService$MacOSXListeningCallback@2f7e7772 threw the following exception
+java.lang.IllegalStateException: Could not recursively list files for /Users/noahr/Desktop/raytracing/.bloop/raytracing/bloop-internal-classes/
+	at io.methvin.watchservice.MacOSXListeningWatchService$MacOSXListeningCallback.invoke(MacOSXListeningWatchService.java:231)
+	at jdk.internal.reflect.GeneratedMethodAccessor27.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at com.sun.jna.CallbackReference$DefaultCallbackProxy.invokeCallback(CallbackReference.java:520)
+	at com.sun.jna.CallbackReference$DefaultCallbackProxy.callback(CallbackReference.java:551)
+	at com.sun.jna.Native.invokeVoid(Native Method)
+	at com.sun.jna.Function.invoke(Function.java:415)
+	at com.sun.jna.Function.invoke(Function.java:361)
+	at com.sun.jna.Library$Handler.invoke(Library.java:265)
+	at com.sun.proxy.$Proxy13.CFRunLoopRun(Unknown Source)
+	at io.methvin.watchservice.MacOSXListeningWatchService$CFRunLoopThread.run(MacOSXListeningWatchService.java:174)
+Caused by: java.nio.file.NoSuchFileException: /Users/noahr/Desktop/raytracing/.bloop/raytracing/bloop-internal-classes/classes-Metals-eN7k4RRmRsu4FF3QzDM4HA==-Qbgs_pilQyGG0zi-Db2wew==
+	at java.base/sun.nio.fs.UnixException.translateToIOException(UnixException.java:92)
+	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(UnixException.java:111)
+	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(UnixException.java:116)
+	at java.base/sun.nio.fs.UnixFileAttributeViews$Basic.readAttributes(UnixFileAttributeViews.java:55)
+	at java.base/sun.nio.fs.UnixFileSystemProvider.readAttributes(UnixFileSystemProvider.java:149)
+	at java.base/java.nio.file.Files.readAttributes(Files.java:1763)
+	at java.base/java.nio.file.FileTreeWalker.getAttributes(FileTreeWalker.java:219)
+	at java.base/java.nio.file.FileTreeWalker.visit(FileTreeWalker.java:276)
+	at java.base/java.nio.file.FileTreeWalker.next(FileTreeWalker.java:373)
+	at java.base/java.nio.file.Files.walkFileTree(Files.java:2760)
+	at java.base/java.nio.file.Files.walkFileTree(Files.java:2796)
+	at io.methvin.watcher.PathUtils.recursiveVisitFiles(PathUtils.java:86)
+	at io.methvin.watcher.PathUtils.recursiveListFiles(PathUtils.java:75)
+	at io.methvin.watchservice.MacOSXListeningWatchService$MacOSXListeningCallback.invoke(MacOSXListeningWatchService.java:229)
+	... 11 more
+
+Sep 07, 2020 6:46:11 PM com.sun.jna.Native$1 uncaughtException
+WARNING: JNA: Callback io.methvin.watchservice.MacOSXListeningWatchService$MacOSXListeningCallback@2f7e7772 threw the following exception
+java.lang.IllegalStateException: Could not recursively list files for /Users/noahr/Desktop/raytracing/.bloop/raytracing/bloop-internal-classes/
+	at io.methvin.watchservice.MacOSXListeningWatchService$MacOSXListeningCallback.invoke(MacOSXListeningWatchService.java:231)
+	at jdk.internal.reflect.GeneratedMethodAccessor27.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at com.sun.jna.CallbackReference$DefaultCallbackProxy.invokeCallback(CallbackReference.java:520)
+	at com.sun.jna.CallbackReference$DefaultCallbackProxy.callback(CallbackReference.java:551)
+	at com.sun.jna.Native.invokeVoid(Native Method)
+	at com.sun.jna.Function.invoke(Function.java:415)
+	at com.sun.jna.Function.invoke(Function.java:361)
+	at com.sun.jna.Library$Handler.invoke(Library.java:265)
+	at com.sun.proxy.$Proxy13.CFRunLoopRun(Unknown Source)
+	at io.methvin.watchservice.MacOSXListeningWatchService$CFRunLoopThread.run(MacOSXListeningWatchService.java:174)
+Caused by: java.nio.file.NoSuchFileException: /Users/noahr/Desktop/raytracing/.bloop/raytracing/bloop-internal-classes/classes-Metals-eN7k4RRmRsu4FF3QzDM4HA==-u57lzHmkQTm0bHygXH_XTQ==
+	at java.base/sun.nio.fs.UnixException.translateToIOException(UnixException.java:92)
+	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(UnixException.java:111)
+	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(UnixException.java:116)
+	at java.base/sun.nio.fs.UnixFileSystemProvider.newDirectoryStream(UnixFileSystemProvider.java:412)
+	at java.base/java.nio.file.Files.newDirectoryStream(Files.java:471)
+	at java.base/java.nio.file.FileTreeWalker.visit(FileTreeWalker.java:300)
+	at java.base/java.nio.file.FileTreeWalker.next(FileTreeWalker.java:373)
+	at java.base/java.nio.file.Files.walkFileTree(Files.java:2760)
+	at java.base/java.nio.file.Files.walkFileTree(Files.java:2796)
+	at io.methvin.watcher.PathUtils.recursiveVisitFiles(PathUtils.java:86)
+	at io.methvin.watcher.PathUtils.recursiveListFiles(PathUtils.java:75)
+	at io.methvin.watchservice.MacOSXListeningWatchService$MacOSXListeningCallback.invoke(MacOSXListeningWatchService.java:229)
+	... 11 more
+
+Sep 07, 2020 6:46:11 PM com.sun.jna.Native$1 uncaughtException
+WARNING: JNA: Callback io.methvin.watchservice.MacOSXListeningWatchService$MacOSXListeningCallback@2f7e7772 threw the following exception
+java.lang.IllegalStateException: Could not recursively list files for /Users/noahr/Desktop/raytracing/.bloop/raytracing/bloop-internal-classes/
+	at io.methvin.watchservice.MacOSXListeningWatchService$MacOSXListeningCallback.invoke(MacOSXListeningWatchService.java:231)
+	at jdk.internal.reflect.GeneratedMethodAccessor27.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at com.sun.jna.CallbackReference$DefaultCallbackProxy.invokeCallback(CallbackReference.java:520)
+	at com.sun.jna.CallbackReference$DefaultCallbackProxy.callback(CallbackReference.java:551)
+	at com.sun.jna.Native.invokeVoid(Native Method)
+	at com.sun.jna.Function.invoke(Function.java:415)
+	at com.sun.jna.Function.invoke(Function.java:361)
+	at com.sun.jna.Library$Handler.invoke(Library.java:265)
+	at com.sun.proxy.$Proxy13.CFRunLoopRun(Unknown Source)
+	at io.methvin.watchservice.MacOSXListeningWatchService$CFRunLoopThread.run(MacOSXListeningWatchService.java:174)
+Caused by: java.nio.file.NoSuchFileException: /Users/noahr/Desktop/raytracing/.bloop/raytracing/bloop-internal-classes/classes-Metals-eN7k4RRmRsu4FF3QzDM4HA==-wY9zAkICSq6vs5TKyxY01Q==
+	at java.base/sun.nio.fs.UnixException.translateToIOException(UnixException.java:92)
+	at java.base/sun.nio.fs.UnixException.asIOException(UnixException.java:120)
+	at java.base/sun.nio.fs.UnixDirectoryStream$UnixDirectoryIterator.readNextEntry(UnixDirectoryStream.java:168)
+	at java.base/sun.nio.fs.UnixDirectoryStream$UnixDirectoryIterator.hasNext(UnixDirectoryStream.java:198)
+	at java.base/java.nio.file.FileTreeWalker.next(FileTreeWalker.java:348)
+	at java.base/java.nio.file.Files.walkFileTree(Files.java:2760)
+	at java.base/java.nio.file.Files.walkFileTree(Files.java:2796)
+	at io.methvin.watcher.PathUtils.recursiveVisitFiles(PathUtils.java:86)
+	at io.methvin.watcher.PathUtils.recursiveListFiles(PathUtils.java:75)
+	at io.methvin.watchservice.MacOSXListeningWatchService$MacOSXListeningCallback.invoke(MacOSXListeningWatchService.java:229)
+	... 11 more
+
+2020.09.07 18:47:19 INFO  shutting down Metals
+No more data in the client stdin, exiting...
+No more data in the client stdin, exiting...
+2020.09.07 18:47:27 INFO  started: Metals version 0.9.3 in workspace '/Users/noahr/Desktop/raytracing' for client vscode.
+2020.09.07 18:47:28 INFO  time: initialize in 1.22s
+2020.09.07 18:47:29 INFO  no build target: using presentation compiler with only scala-library
+2020.09.07 18:47:29 INFO  skipping build import with status 'Installed'
