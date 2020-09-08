@@ -1,5 +1,11 @@
-target/
 .DS_Store
+
+target/
 
 .metals/
 .vscode/
+.idea/
+.bloop/
+
+*.ppm
+*.png

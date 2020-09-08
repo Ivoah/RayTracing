@@ -1,0 +1,77 @@
+{
+  "camera": {
+    "origin": [-7, 3, 10],
+    "target": [0, 1, 0],
+    "vup": [0, 1, 0],
+    "vfov": 20,
+    "aspect_ratio": 1.78,
+    "aperture": 0.1,
+    "focus_distance": -1
+  },
+  "materials": [
+    {
+      "name": "floor",
+      "type": "Diffuse",
+      "material": {
+        "color": [0, 0.8, 0]
+      }
+    },
+    {
+      "name": "glass",
+      "type": "Glass",
+      "material": {
+        "color": [1, 1, 1],
+        "ior": 1.45
+      }
+    },
+    {
+      "name": "gold",
+      "type": "Glossy",
+      "material": {
+        "color": [0.831372549, 0.68627451, 0.215686275],
+        "roughness": 0.5
+      }
+    },
+    {
+      "name": "red",
+      "type": "Diffuse",
+      "material": {
+        "color": [0.8, 0, 0]
+      }
+    }
+  ],
+  "world": [
+    {
+      "type": "Sphere",
+      "obj": {
+        "center": [0, -1000, 0],
+        "radius": 1000,
+        "material": "floor"
+      }
+    },
+    {
+      "type": "Sphere",
+      "obj": {
+        "center": [-2.5, 1, 0],
+        "radius": 1,
+        "material": "glass"
+      }
+    },
+    {
+      "type": "Sphere",
+      "obj": {
+        "center": [0, 1, 0],
+        "radius": 1,
+        "material": "red"
+      }
+    },
+    {
+      "type": "Sphere",
+      "obj": {
+        "center": [2.5, 1, 0],
+        "radius": 1,
+        "material": "gold"
+      }
+    }
+  ]
+}
