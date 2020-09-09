@@ -49,7 +49,7 @@ object RayTracing extends App {
   val max_depth = 50
 
   val sceneFile = io.Source.fromFile(options.scene.get)
-  val json = Json.parse(sceneFile.getLines.mkString)
+  val json = Json.parse(sceneFile.getLines().mkString)
   sceneFile.close()
 
   import JsonReads._
