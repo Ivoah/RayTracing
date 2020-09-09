@@ -1,7 +1,8 @@
+import scala.util.Random
+
 object BVH {
-  private val rand = new scala.util.Random
   def apply(objects: Hittable*): BVH = {
-    val comparator = rand.between(0, 3) match {
+    val comparator = Random.between(0, 3) match {
       case 0 => (o1: Hittable, o2: Hittable) => o1.bounding_box.v_min.x < o2.bounding_box.v_min.x
       case 1 => (o1: Hittable, o2: Hittable) => o1.bounding_box.v_min.y < o2.bounding_box.v_min.y
       case 2 => (o1: Hittable, o2: Hittable) => o1.bounding_box.v_min.z < o2.bounding_box.v_min.z
@@ -16,7 +17,7 @@ object BVH {
         val (left, right) = sorted.zipWithIndex.partition(_._2 > sorted.size/2)
         BVH(
           BVH(left.map(_._1): _*),
-          BVH(right.map(_._1): _*),
+          BVH(right.map(_._1): _*)
         )
     }
   }

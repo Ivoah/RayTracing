@@ -1,26 +1,25 @@
 import scala.math._
+import scala.util.Random
 
 trait Material {
   def scatter(ray: Ray, hit: Hit): Option[(Ray, Vec3)]
 }
 
-case class Diffuse(color: Vec3) extends Material {
+case class Diffuse(texture: Texture) extends Material {
   def scatter(ray: Ray, hit: Hit): Option[(Ray, Vec3)] = {
-    Some((Ray(hit.position, hit.normal + Vec3.random_unit_vector), color))
+    Some((Ray(hit.position, hit.normal + Vec3.random_unit_vector), texture(hit.uv, hit.position)))
   }
 }
 
-case class Glossy(color: Vec3, roughness: Double) extends Material {
+case class Glossy(texture: Texture, roughness: Double) extends Material {
   def scatter(ray: Ray, hit: Hit): Option[(Ray, Vec3)] = {
     val scattered = Ray(hit.position, ray.direction.unit_vector.reflect(hit.normal) + roughness*Vec3.random_in_unit_sphere)
-    if (scattered.direction.dot(hit.normal) > 0) Some((scattered, color))
+    if (scattered.direction.dot(hit.normal) > 0) Some((scattered, texture(hit.uv, hit.position)))
     else None
   }
 }
 
-case class Glass(color: Vec3, ior: Double) extends Material {
-  val rand = new scala.util.Random
-
+case class Glass(texture: Texture, ior: Double) extends Material {
   private def schlick(cosine: Double, ref_idx: Double) = {
     val r0 = (1 - ref_idx)/(1 + ref_idx)
     val r1 = r0*r0
@@ -39,12 +38,12 @@ case class Glass(color: Vec3, ior: Double) extends Material {
     val cos_theta = min(-ray.direction.unit_vector.dot(hit.normal), 1.0)
     val sin_theta = sqrt(1.0 - cos_theta*cos_theta)
 
-    if (etai_over_etat*sin_theta > 1 || schlick(cos_theta, etai_over_etat) > rand.nextDouble()) {
+    if (etai_over_etat*sin_theta > 1 || schlick(cos_theta, etai_over_etat) > Random.nextDouble()) {
       val reflected = ray.direction.unit_vector.reflect(hit.normal)
-      Some((Ray(hit.position, reflected), color))
+      Some((Ray(hit.position, reflected), texture(hit.uv, hit.position)))
     } else {
       val refracted = refract(ray.direction.unit_vector, hit.normal, etai_over_etat)
-      Some((Ray(hit.position, refracted), color))
+      Some((Ray(hit.position, refracted), texture(hit.uv, hit.position)))
     }
   }
 }

@@ -8,70 +8,62 @@
     "aperture": 0.1,
     "focus_distance": -1
   },
-  "materials": [
-    {
-      "name": "floor",
+  "materials": {
+    "floor": {
       "type": "Diffuse",
-      "material": {
+      "texture": {
+        "type": "SolidColor",
         "color": [0, 0.8, 0]
       }
     },
-    {
-      "name": "glass",
+    "glass": {
       "type": "Glass",
-      "material": {
-        "color": [1, 1, 1],
-        "ior": 1.45
-      }
+      "texture": {
+        "type": "SolidColor",
+        "color": [1, 1, 1]
+      },
+      "ior": 1.45
     },
-    {
-      "name": "gold",
+    "gold": {
       "type": "Glossy",
-      "material": {
-        "color": [0.831372549, 0.68627451, 0.215686275],
-        "roughness": 0.5
-      }
+      "texture": {
+        "type": "SolidColor",
+        "color": [0.831372549, 0.68627451, 0.215686275]
+      },
+      "roughness": 0.5
     },
-    {
-      "name": "red",
+    "red": {
       "type": "Diffuse",
-      "material": {
+      "texture": {
+        "type": "SolidColor",
         "color": [0.8, 0, 0]
       }
     }
-  ],
+  },
   "world": [
     {
       "type": "Sphere",
-      "obj": {
-        "center": [0, -1000, 0],
-        "radius": 1000,
-        "material": "floor"
-      }
+      "center": [0, -1000, 0],
+      "radius": 1000,
+      "material": "floor"
     },
     {
       "type": "Sphere",
-      "obj": {
-        "center": [-2.5, 1, 0],
-        "radius": 1,
-        "material": "glass"
-      }
+      "center": [-2.5, 1, 0],
+      "radius": 1,
+      "material": "glass"
     },
     {
       "type": "Sphere",
-      "obj": {
-        "center": [0, 1, 0],
-        "radius": 1,
-        "material": "red"
-      }
+      "center": [0, 1, 0],
+      "radius": 1,
+      "material": "red"
     },
     {
       "type": "Sphere",
-      "obj": {
-        "center": [2.5, 1, 0],
-        "radius": 1,
-        "material": "gold"
-      }
+      "center": [2.5, 1, 0],
+      "radius": 1,
+      "material": "gold"
     }
   ]
 }

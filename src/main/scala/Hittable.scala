@@ -1,4 +1,4 @@
-case class Hit(ray: Ray, outward_normal: Vec3, t: Double, material: Material) {
+case class Hit(ray: Ray, outward_normal: Vec3, t: Double, uv: Vec2, material: Material) {
   def position: Vec3 = ray.at(t)
   def front_face: Boolean = ray.direction.dot(outward_normal) < 0
   def normal: Vec3 = if (front_face) outward_normal else -outward_normal
