@@ -6,14 +6,13 @@ object JsonReads {
     JsPath(0).read[Double] and
     JsPath(1).read[Double] and
     JsPath(2).read[Double]
-  )(Vec3.apply _)
+  )(Vec3.apply: (Double, Double, Double) => Vec3)
 
   implicit val cameraReads: Reads[Camera] = Json.reads[Camera]
 
   implicit val solidColorReads: Reads[SolidColor] = Json.reads[SolidColor]
   lazy implicit val checkerReads: Reads[Checker] = Json.reads[Checker]
   implicit val perlinReads: Reads[Perlin] = Json.reads[Perlin]
-  implicit val simplexReads: Reads[Simplex] = Json.reads[Simplex]
   implicit val textureReads: Reads[Texture] = (
     (JsPath \ "type").read[String] and
     JsPath.read[JsObject]
@@ -22,7 +21,6 @@ object JsonReads {
       case "SolidColor" => texture.as[SolidColor]
       case "Checker" => texture.as[Checker]
       case "Perlin" => texture.as[Perlin]
-      case "Simplex" => texture.as[Simplex]
     }
   }
 

@@ -1,15 +1,5 @@
 import scala.util.Random
-import scala.concurrent._
-import scala.concurrent.duration._
-import scala.concurrent.ExecutionContext.Implicits.global
-
-import scala.swing._
-import scala.swing.Swing._
-
-import java.awt.image.BufferedImage
-import java.io.File
-import javax.imageio.ImageIO
-
+import org.scalajs.dom._
 import play.api.libs.json._
 
 object RayTracing extends App {
@@ -18,8 +8,8 @@ object RayTracing extends App {
     filename: Option[String] = None,
     width: Int = 400,
     height: Int = 225,
-    samples: Int = 32,
-    scene: String = "scene.json"
+    samples: Int = 8,
+    scene: Option[String] = None
   )
 
   @annotation.tailrec
@@ -33,7 +23,7 @@ object RayTracing extends App {
       case "-h" :: height :: tail => parseOptions(tail, options.map(_.copy(height = height.toInt)))
       case "--samples" :: samples :: tail => parseOptions(tail, options.map(_.copy(samples = samples.toInt)))
       case "-s" :: samples :: tail => parseOptions(tail, options.map(_.copy(samples = samples.toInt)))
-      case "--scene" :: scene :: tail => parseOptions(tail, options.map(_.copy(scene = scene)))
+      case "--scene" :: scene :: tail => parseOptions(tail, options.map(_.copy(scene = Some(scene))))
       case Nil => options
       case _ => None
     }
@@ -45,106 +35,67 @@ object RayTracing extends App {
   } catch {
     case _: NoSuchElementException =>
       println("Error parsing arguments")
-      System.exit(1)
   }
 
-  def loadScene(scene: File) = {
-    val sceneFile = io.Source.fromFile(scene)
-    val json = Json.parse(sceneFile.getLines().mkString)
-    sceneFile.close()
+  def loadScene(scene: String) = {
+    try {
+      val json = Json.parse(scene)
 
-    import JsonReads._
-    val camera = (json \ "camera").as[Camera]
-    implicit val materials: Map[String, Material] = (json \ "materials").as[Map[String, Material]]
-    val world = BVH((json \ "world").as[Seq[Hittable]]: _*)
-    (camera, world)
+      import JsonReads._
+      val camera = (json \ "camera").as[Camera]
+      implicit val materials: Map[String, Material] = (json \ "materials").as[Map[String, Material]]
+      val world = BVH((json \ "world").as[Seq[Hittable]]: _*)
+      Some((camera, world))
+    } catch {
+      case _: Throwable => None
+    }
   }
 
-  val img = new BufferedImage(options.width, options.height, BufferedImage.TYPE_INT_RGB)
-
-  options.filename match {
-    case Some(filename) =>
-      val (camera, world) = loadScene(new File(options.scene))
-      render(camera, world,
-        Some(line => print(s"\rRendered line [${line + 1}/${options.height}]")),
-        Some(time => println(s"\nRendered ${options.height} lines in $time seconds"))
-      )
-      ImageIO.write(img, "png", new File(filename))
-    case None =>
-      var (camera, world) = loadScene(new File(options.scene))
-      lazy val frame: Frame = new MainFrame {
-        title = s"Scala ray tracer: ${options.scene}"
-        resizable = false
-
-        menuBar = new MenuBar {
-          contents ++= Seq(
-              new Menu("File") {
-              contents ++= Seq(
-                new MenuItem(Action("Load scene") {
-                  val chooser = new FileChooser(new File("."))
-                  if (chooser.showOpenDialog(frame) == FileChooser.Result.Approve) {
-                    frame.title = s"Scala ray tracer: ${chooser.selectedFile.getName}"
-                    loadScene(chooser.selectedFile) match {
-                      case (new_camera, new_world) =>
-                        camera = new_camera
-                        world = new_world
-                    }
-                  }
-                }),
-                new MenuItem(Action("Save") {
-                  val chooser = new FileChooser(new File("."))
-                  if (chooser.showSaveDialog(frame) == FileChooser.Result.Approve)
-                    ImageIO.write(img, "png", chooser.selectedFile)
-                })
-              )
-            },
-            new MenuItem(Action("Render") {
-              new Thread {
-                override def run() {
-                  render(camera, world,
-                    Some(_ => frame.repaint()),
-                    Some(time => Dialog.showMessage(frame, s"Rendered ${options.height} lines in $time seconds"))
-                  )
-                }
-              }.start()
-            })
-          )
-        }
-
-        contents = new Panel {
-          preferredSize = (options.width, options.height)
-
-          override def paintComponent(g: Graphics2D): Unit = {
-            g.drawImage(img, 0, 0, null)
-          }
-        }
-
-        pack()
-        centerOnScreen()
-        open()
-      }
-
-      render(camera, world,
-        Some(_ => frame.repaint()),
-        Some(time => Dialog.showMessage(frame, s"Rendered ${options.height} lines in $time seconds"))
-      )
-  }
-
-  def render(camera: Camera, world: Hittable, update: Option[Int => Unit] = None, finish: Option[Double => Unit] = None) {
+  def render(camera: Camera, world: Hittable, update: Option[Int => Unit] = None, finish: Option[Double => Unit] = None): Unit = {
+    val canvas = document.getElementById("img").asInstanceOf[html.Canvas]
+    val ctx = canvas.getContext("2d")
+    val img = ctx.createImageData(1, 1).asInstanceOf[raw.ImageData]
+    img.data(3) = 255
     val start = System.currentTimeMillis()
-    for (j <- 0 until options.height) {
+
+    def renderLine(j: Int = 0): Unit = {
       for (i <- 0 until options.width) {
-        val pixel = Await.result(Future.reduceLeft(for (_ <- 0 until options.samples) yield Future {
+        val (r, g, b) = ((for (_ <- 0 until options.samples) yield {
           val u = (i + Random.nextDouble())/(options.width - 1)
           val v = (j + Random.nextDouble())/(options.height - 1)
           camera.ray_color(u, v, world)
-        })(_ + _), Duration.Inf)/options.samples
+        }).reduce(_ + _) / options.samples).toRGB
+        img.data(0) = r
+        img.data(1) = g
+        img.data(2) = b
 
-        img.setRGB(i, options.height - j - 1, pixel.toRGB)
-        update.foreach(_(j))
+        ctx.putImageData(img, i, options.height - j - 1)
+      }
+      update.foreach(_ (j))
+      if (j + 1 < options.height) window.requestAnimationFrame(_ => renderLine(j + 1))
+      else {
+        val stop = System.currentTimeMillis()
+        finish.foreach(_((stop - start)/1000.0))
       }
     }
-    val stop = System.currentTimeMillis()
-    finish.foreach(_((stop - start)/1000.0))
+    window.requestAnimationFrame(_ => renderLine())
+  }
+
+  val fileInput = document.getElementById("sceneFile").asInstanceOf[html.Input]
+  fileInput.onchange = e => {
+    val reader = new FileReader()
+    reader.readAsText(fileInput.files(0))
+    reader.onload = (e: UIEvent) => {
+      val contents = reader.result.asInstanceOf[String]
+      loadScene(contents) match {
+        case Some((camera, world)) =>
+          render(camera, world,
+            Some(line => println(s"Rendered line [${line + 1}/${options.height}]")),
+            Some(time => println(s"Rendered ${options.height} lines in $time seconds"))
+          )
+        case None =>
+          println(s"Error loading scene")
+      }
+    }
   }
 }
