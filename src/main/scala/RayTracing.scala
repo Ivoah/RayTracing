@@ -100,7 +100,7 @@ object RayTracing extends App {
             },
             new MenuItem(Action("Render") {
               new Thread {
-                override def run() {
+                override def run() = {
                   render(camera, world,
                     Some(_ => frame.repaint()),
                     Some(time => Dialog.showMessage(frame, s"Rendered ${options.height} lines in $time seconds"))
@@ -130,7 +130,7 @@ object RayTracing extends App {
       )
   }
 
-  def render(camera: Camera, world: Hittable, update: Option[Int => Unit] = None, finish: Option[Double => Unit] = None) {
+  def render(camera: Camera, world: Hittable, update: Option[Int => Unit] = None, finish: Option[Double => Unit] = None) = {
     val start = System.currentTimeMillis()
     for (j <- 0 until options.height) {
       for (i <- 0 until options.width) {
