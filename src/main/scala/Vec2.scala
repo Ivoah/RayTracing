@@ -11,6 +11,8 @@ object Vec2 {
     Random.between(min, max),
     Random.between(min, max),
   )
+
+  def apply(v: Double): Vec2 = Vec2(v, v)
 }
 
 case class Vec2(x: Double, y: Double) {
