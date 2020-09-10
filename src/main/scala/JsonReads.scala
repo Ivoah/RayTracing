@@ -6,7 +6,7 @@ object JsonReads {
     JsPath(0).read[Double] and
     JsPath(1).read[Double] and
     JsPath(2).read[Double]
-  )(Vec3.apply _)
+  )(Vec3.apply: (Double, Double, Double) => Vec3)
 
   implicit val cameraReads: Reads[Camera] = Json.reads[Camera]
 

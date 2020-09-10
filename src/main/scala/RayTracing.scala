@@ -91,7 +91,7 @@ object RayTracing extends App {
                     }
                   }
                 }),
-                new MenuItem(Action("Save") {
+                new MenuItem(Action("Save image") {
                   val chooser = new FileChooser(new File("."))
                   if (chooser.showSaveDialog(frame) == FileChooser.Result.Approve)
                     ImageIO.write(img, "png", chooser.selectedFile)

@@ -31,6 +31,8 @@ object Vec3 {
     val r = sqrt(1 - z*z)
     Vec3(r*cos(a), r*sin(a), z)
   }
+
+  def apply(v: Double): Vec3 = Vec3(v, v, v)
 }
 
 case class Vec3(x: Double, y: Double, z: Double) {

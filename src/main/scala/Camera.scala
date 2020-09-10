@@ -24,12 +24,12 @@ case class Camera(origin: Vec3, target: Vec3, vup: Vec3, vfov: Double,
 
   def ray_color(u: Double, v: Double, world: Hittable, depth: Int = 50): Vec3 = ray_color(get_ray(u, v), world, depth)
   def ray_color(ray: Ray, world: Hittable, depth: Int): Vec3 = {
-    if (depth <= 0) return Vec3(0, 0, 0)
+    if (depth <= 0) return Vec3(1)
     world.hit(ray, 0.001, Double.PositiveInfinity) match {
       case Some(hit) => hit.material.scatter(ray, hit) match {
           case Some((scattered, attenuation)) =>
             attenuation*ray_color(scattered, world, depth - 1)
-          case None => Vec3(0, 0, 0)
+          case None => Vec3(1)
         }
       case None =>
         val unit_direction = ray.direction.unit_vector
