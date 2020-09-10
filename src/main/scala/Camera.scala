@@ -22,7 +22,7 @@ case class Camera(origin: Vec3, target: Vec3, vup: Vec3, vfov: Double,
     Ray(origin + offset, lower_left_corner + s*horizontal + t*vertical - origin - offset)
   }
 
-  def ray_color(u: Double, v: Double, world: Hittable, depth: Int): Vec3 = ray_color(get_ray(u, v), world, depth)
+  def ray_color(u: Double, v: Double, world: Hittable, depth: Int = 50): Vec3 = ray_color(get_ray(u, v), world, depth)
   def ray_color(ray: Ray, world: Hittable, depth: Int): Vec3 = {
     if (depth <= 0) return Vec3(0, 0, 0)
     world.hit(ray, 0.001, Double.PositiveInfinity) match {
