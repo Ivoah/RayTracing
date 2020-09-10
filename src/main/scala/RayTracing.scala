@@ -81,7 +81,7 @@ object RayTracing extends App {
               new Menu("File") {
               contents ++= Seq(
                 new MenuItem(Action("Load scene") {
-                  val chooser = new FileChooser
+                  val chooser = new FileChooser(new File("."))
                   if (chooser.showOpenDialog(frame) == FileChooser.Result.Approve) {
                     frame.title = s"Scala ray tracer: ${chooser.selectedFile.getName}"
                     loadScene(chooser.selectedFile) match {
@@ -92,7 +92,7 @@ object RayTracing extends App {
                   }
                 }),
                 new MenuItem(Action("Save") {
-                  val chooser = new FileChooser
+                  val chooser = new FileChooser(new File("."))
                   if (chooser.showSaveDialog(frame) == FileChooser.Result.Approve)
                     ImageIO.write(img, "png", chooser.selectedFile)
                 })
