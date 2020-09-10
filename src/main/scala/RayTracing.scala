@@ -18,34 +18,48 @@ object RayTracing extends App {
     width: Int = 400,
     height: Int = 225,
     samples: Int = 32,
-    scene: Option[String] = None
+    scene: Option[String] = None,
+    help: Boolean = false
   )
 
   @annotation.tailrec
-  def parseOptions(args: List[String], options: Option[Options] = Some(Options())): Option[Options] = {
+  def parseOptions(args: List[String], options: Options = Options()): Options = {
     args match {
-      case "--filename" :: filename :: tail => parseOptions(tail, options.map(_.copy(filename = Some(filename))))
-      case "-o" :: filename :: tail => parseOptions(tail, options.map(_.copy(filename = Some(filename))))
-      case "--width" :: width :: tail => parseOptions(tail, options.map(_.copy(width = width.toInt)))
-      case "-w" :: width :: tail => parseOptions(tail, options.map(_.copy(width = width.toInt)))
-      case "--height" :: height :: tail => parseOptions(tail, options.map(_.copy(height = height.toInt)))
-      case "-h" :: height :: tail => parseOptions(tail, options.map(_.copy(height = height.toInt)))
-      case "--samples" :: samples :: tail => parseOptions(tail, options.map(_.copy(samples = samples.toInt)))
-      case "-s" :: samples :: tail => parseOptions(tail, options.map(_.copy(samples = samples.toInt)))
-      case "--scene" :: scene :: tail => parseOptions(tail, options.map(_.copy(scene = Some(scene))))
+      case "--filename" :: filename :: tail => parseOptions(tail, options.copy(filename = Some(filename)))
+      case "-o" :: filename :: tail => parseOptions(tail, options.copy(filename = Some(filename)))
+      case "--width" :: width :: tail => parseOptions(tail, options.copy(width = width.toInt))
+      case "-w" :: width :: tail => parseOptions(tail, options.copy(width = width.toInt))
+      case "--height" :: height :: tail => parseOptions(tail, options.copy(height = height.toInt))
+      case "-h" :: height :: tail => parseOptions(tail, options.copy(height = height.toInt))
+      case "--samples" :: samples :: tail => parseOptions(tail, options.copy(samples = samples.toInt))
+      case "-s" :: samples :: tail => parseOptions(tail, options.copy(samples = samples.toInt))
+      case "--scene" :: scene :: tail => parseOptions(tail, options.copy(scene = Some(scene)))
+      case "--help" :: tail => parseOptions(tail, options.copy(help = true))
       case Nil => options
-      case _ => None
     }
   }
 
+  val usage =
+    s"""Options:
+       |  --filename, -o
+       |      Must specify --scene if giving output file
+       |  --width, -w
+       |  --height, -h
+       |  --samples, -s
+       |  --scene
+       |  --help""".stripMargin
+
   var options = Options()
   try {
-    options = parseOptions(args.toList).get
+    options = parseOptions(args.toList)
   } catch {
-    case _: NoSuchElementException =>
+    case _: Throwable =>
       println("Error parsing arguments")
+      println(usage)
       System.exit(1)
   }
+
+  if (options.help) println(usage)
 
   def loadScene(scene: File) = {
     try {
@@ -164,8 +178,8 @@ object RayTracing extends App {
         })(_ + _), Duration.Inf)/options.samples
 
         img.setRGB(i, options.height - j - 1, pixel.toRGB)
-        update.foreach(_(j))
       }
+      update.foreach(_(j))
     }
     val stop = System.currentTimeMillis()
     finish.foreach(_((stop - start)/1000.0))
