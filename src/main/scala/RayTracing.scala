@@ -77,7 +77,7 @@ object RayTracing extends App {
     }
   }
 
-  val img = new BufferedImage(options.width, options.height, BufferedImage.TYPE_INT_RGB)
+  var img = new BufferedImage(options.width, options.height, BufferedImage.TYPE_INT_RGB)
 
   options.filename match {
     case Some(filename) =>
@@ -99,6 +99,14 @@ object RayTracing extends App {
           System.exit(1)
       }
     case None =>
+      val renderPanel = new Panel {
+        preferredSize = (options.width, options.height)
+
+        override def paintComponent(g: Graphics2D): Unit = {
+          g.drawImage(img, 0, 0, null)
+        }
+      }
+
       val progressBar = new ProgressBar {
         min = 0
         max = options.height
@@ -128,7 +136,7 @@ object RayTracing extends App {
                           }
                         }.start()
                       case None =>
-                        Dialog.showMessage(frame, s"Error loading scene ${chooser.selectedFile.getName}", "Scene load error", Dialog.Message.Error)
+                        Dialog.showMessage(frame, s"Error loading scene ${chooser.selectedFile.getName}", "Error", Dialog.Message.Error)
                     }
                   }
                 }),
@@ -138,19 +146,51 @@ object RayTracing extends App {
                     ImageIO.write(img, "png", chooser.selectedFile)
                 })
               )
+            },
+            new Menu("Options") {
+              contents ++= Seq(
+                new MenuItem(Action("Width") {
+                  Dialog.showInput(frame, "Image width", initial = options.width.toString).foreach { str =>
+                    str.toIntOption match {
+                      case Some(width) =>
+                        options = options.copy(width = width)
+                        renderPanel.preferredSize = (width, options.height)
+                        renderPanel.revalidate()
+                        frame.pack()
+                        img = new BufferedImage(options.width, options.height, BufferedImage.TYPE_INT_RGB)
+                      case None => Dialog.showMessage(frame, s"${'"'}$str${'"'} is not a number", "Error", Dialog.Message.Error)
+                    }
+                  }
+                }),
+                new MenuItem(Action("Height") {
+                  Dialog.showInput(frame, "Image height", initial = options.height.toString).foreach { str =>
+                    str.toIntOption match {
+                      case Some(height) =>
+                        options = options.copy(height = height)
+                        progressBar.max = height
+                        renderPanel.preferredSize = (options.width, height)
+                        renderPanel.revalidate()
+                        frame.pack()
+                        img = new BufferedImage(options.width, options.height, BufferedImage.TYPE_INT_RGB)
+                      case None => Dialog.showMessage(frame, s"${'"'}$str${'"'} is not a number", "Error", Dialog.Message.Error)
+                    }
+                  }
+                }),
+                new MenuItem(Action("Samples") {
+                  Dialog.showInput(frame, "Render samples", initial = options.samples.toString).foreach { str =>
+                    str.toIntOption match {
+                      case Some(samples) => options = options.copy(samples = samples)
+                      case None => Dialog.showMessage(frame, s"${'"'}$str${'"'} is not a number", "Error", Dialog.Message.Error)
+                    }
+                  }
+                }),
+              )
             }
           )
         }
 
         contents = new BorderPanel {
-          layout(new Panel {
-            preferredSize = (options.width, options.height)
-
-            override def paintComponent(g: Graphics2D): Unit = {
-              g.drawImage(img, 0, 0, null)
-            }
-          }) = BorderPanel.Position.Center
-
+          layout(renderPanel) = BorderPanel.Position.Center
           layout(progressBar) = BorderPanel.Position.South
         }
 
