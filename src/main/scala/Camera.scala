@@ -1,7 +1,7 @@
 import scala.math._
 
 case class Camera(origin: Vec3, target: Vec3, vup: Vec3, vfov: Double,
-                  aspect_ratio: Double, aperture: Double, focus_distance: Double) {
+                  aspect_ratio: Double, aperture: Double, focus_distance: Double, background: Vec3) {
   private val viewport_height = 2.0*tan(vfov.toRadians/2)
   private val viewport_width = aspect_ratio*viewport_height
 
@@ -24,17 +24,14 @@ case class Camera(origin: Vec3, target: Vec3, vup: Vec3, vfov: Double,
 
   def ray_color(u: Double, v: Double, world: Hittable, depth: Int = 50): Vec3 = ray_color(get_ray(u, v), world, depth)
   def ray_color(ray: Ray, world: Hittable, depth: Int): Vec3 = {
-    if (depth <= 0) return Vec3(1)
+    if (depth <= 0) return 0
     world.hit(ray, 0.001, Double.PositiveInfinity) match {
       case Some(hit) => hit.material.scatter(ray, hit) match {
           case Some((scattered, attenuation)) =>
-            attenuation*ray_color(scattered, world, depth - 1)
-          case None => Vec3(1)
+            hit.material.emit(hit.uv, hit.position) + attenuation*ray_color(scattered, world, depth - 1)
+          case None => hit.material.emit(hit.uv, hit.position)
         }
-      case None =>
-        val unit_direction = ray.direction.unit_vector
-        val t = 0.5*(unit_direction.y + 1.0)
-        (1.0 - t)*Vec3(1.0, 1.0, 1.0) + t*Vec3(0.5, 0.7, 1.0)
+      case None => background
     }
   }
 }

@@ -4,11 +4,12 @@ import scala.concurrent.duration._
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.swing._
 import scala.swing.Swing._
+
 import java.awt.image.BufferedImage
 import java.io.File
-
 import javax.imageio.ImageIO
 import javax.swing.filechooser.FileNameExtensionFilter
+
 import play.api.libs.json._
 
 object RayTracing extends App {
@@ -36,6 +37,7 @@ object RayTracing extends App {
       case "--scene" :: scene :: tail => parseOptions(tail, options.copy(scene = Some(scene)))
       case "--help" :: tail => parseOptions(tail, options.copy(help = true))
       case Nil => options
+      case _ => throw new Exception("Error parsing arguments")
     }
   }
 
@@ -66,6 +68,7 @@ object RayTracing extends App {
       val sceneFile = io.Source.fromFile(scene)
       val json = Json.parse(sceneFile.getLines().mkString)
       sceneFile.close()
+      System.setProperty("user.dir", scene.getAbsoluteFile.getParent)
 
       import JsonReads._
       val camera = (json \ "camera").as[Camera]
@@ -73,7 +76,9 @@ object RayTracing extends App {
       val world = BVH((json \ "world").as[Seq[Hittable]]: _*)
       Some((camera, world))
     } catch {
-      case _: Throwable => None
+      case e: Throwable =>
+        e.printStackTrace()
+        None
     }
   }
 
@@ -112,8 +117,26 @@ object RayTracing extends App {
         max = options.height
       }
 
+      var scene = options.scene.flatMap(f => loadScene(new File(f)))
+
+      class RenderThread extends Thread {
+        override def run(): Unit = {
+          scene match {
+            case Some((camera, world)) =>
+              render(camera, world,
+                Some(line => {progressBar.value = line; frame.repaint()}),
+                Some(time => Dialog.showMessage(frame, s"Rendered ${options.height} lines in $time seconds"))
+              )
+            case None =>
+          }
+        }
+      }
+
       lazy val frame: Frame = new MainFrame {
-        title = s"Scala ray tracer: ${options.scene}"
+        title = options.scene match {
+          case Some(sceneName) => s"Scala ray tracer: $sceneName"
+          case None => "Scala ray tracer"
+        }
         resizable = false
 
         menuBar = new MenuBar {
@@ -124,19 +147,12 @@ object RayTracing extends App {
                   val chooser = new FileChooser(new File("."))
                   chooser.fileFilter = new FileNameExtensionFilter("Scene files", "json")
                   if (chooser.showOpenDialog(frame) == FileChooser.Result.Approve) {
-                    loadScene(chooser.selectedFile) match {
-                      case Some((camera, world)) =>
-                        frame.title = s"Scala ray tracer: ${chooser.selectedFile.getName}"
-                        new Thread {
-                          override def run(): Unit = {
-                            render(camera, world,
-                              Some(line => {progressBar.value = line; frame.repaint()}),
-                              Some(time => Dialog.showMessage(frame, s"Rendered ${options.height} lines in $time seconds"))
-                            )
-                          }
-                        }.start()
-                      case None =>
-                        Dialog.showMessage(frame, s"Error loading scene ${chooser.selectedFile.getName}", "Error", Dialog.Message.Error)
+                    scene = loadScene(chooser.selectedFile)
+                    if (scene.isDefined) {
+                      frame.title = s"Scala ray tracer: ${chooser.selectedFile.getName}"
+                      (new RenderThread).start()
+                    } else {
+                      Dialog.showMessage(frame, s"Error loading scene ${chooser.selectedFile.getName}", "Error", Dialog.Message.Error)
                     }
                   }
                 }),
@@ -172,7 +188,7 @@ object RayTracing extends App {
                         renderPanel.revalidate()
                         frame.pack()
                         img = new BufferedImage(options.width, options.height, BufferedImage.TYPE_INT_RGB)
-                      case None => Dialog.showMessage(frame, s"${'"'}$str${'"'} is not a number", "Error", Dialog.Message.Error)
+                      case None => Dialog.showMessage(frame, s"""""$str" is not a number""", "Error", Dialog.Message.Error)
                     }
                   }
                 }),
@@ -180,12 +196,15 @@ object RayTracing extends App {
                   Dialog.showInput(frame, "Render samples", initial = options.samples.toString).foreach { str =>
                     str.toIntOption match {
                       case Some(samples) => options = options.copy(samples = samples)
-                      case None => Dialog.showMessage(frame, s"${'"'}$str${'"'} is not a number", "Error", Dialog.Message.Error)
+                      case None => Dialog.showMessage(frame, s""""$str" is not a number""", "Error", Dialog.Message.Error)
                     }
                   }
-                }),
+                })
               )
-            }
+            },
+            new MenuItem(Action("Render") {
+              (new RenderThread).start()
+            })
           )
         }
 
@@ -199,12 +218,8 @@ object RayTracing extends App {
       }
 
       frame.open()
-      options.scene.flatMap(file => loadScene(new File(file))).foreach { case (camera, world) =>
-        render(camera, world,
-          Some(line => {progressBar.value = line; frame.repaint()}),
-          Some(time => Dialog.showMessage(frame, s"Rendered ${options.height} lines in $time seconds"))
-        )
-      }
+      options.scene.foreach(sceneName => if (scene.isEmpty) Dialog.showMessage(frame, s"Error loading scene $sceneName", "Error", Dialog.Message.Error))
+      (new RenderThread).start()
   }
 
   def render(camera: Camera, world: Hittable, update: Option[Int => Unit] = None, finish: Option[Double => Unit] = None): Unit = {
