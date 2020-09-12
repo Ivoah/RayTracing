@@ -1,7 +1,9 @@
 .DS_Store
 
-project/
 target/
+project/
+!project/build.properties
+!project/plugins.sbt
 
 .metals/
 .vscode/
@@ -10,3 +12,4 @@ target/
 
 *.ppm
 *.png
+*.jar

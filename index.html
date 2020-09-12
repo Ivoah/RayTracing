@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Scala.js ray tracer</title>
+    </head>
+    <body>
+        <select id="scenes">
+            <option value="scene.json">Default</option>
+            <option value="checker.json">Checker</option>
+            <option value="perlin.json">Perlin</option>
+            <option value="random.json">Random</option>
+        </select>
+        <button id="render">Render</button>
+        <br />
+        <canvas id="img" width="400" height="225" style="border:1px solid #000000;"></canvas>
+        <script type="text/javascript" src="scala-js-ray-tracer-fastopt.js"></script>
+    </body>
+</html>

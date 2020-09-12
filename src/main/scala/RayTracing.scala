@@ -1,5 +1,7 @@
 import scala.util.Random
 import org.scalajs.dom._
+import org.scalajs.dom.ext.Ajax
+import scala.scalajs.concurrent.JSExecutionContext.Implicits.queue
 import play.api.libs.json._
 
 object RayTracing extends App {
@@ -81,13 +83,11 @@ object RayTracing extends App {
     window.requestAnimationFrame(_ => renderLine())
   }
 
-  val fileInput = document.getElementById("sceneFile").asInstanceOf[html.Input]
-  fileInput.onchange = e => {
-    val reader = new FileReader()
-    reader.readAsText(fileInput.files(0))
-    reader.onload = (e: UIEvent) => {
-      val contents = reader.result.asInstanceOf[String]
-      loadScene(contents) match {
+  val button = document.getElementById("render").asInstanceOf[html.Input]
+  button.onclick = e => {
+    val scenes = document.getElementById("scenes").asInstanceOf[html.Select]
+    Ajax.get(scenes.value).foreach { xhr =>
+      loadScene(xhr.responseText) match {
         case Some((camera, world)) =>
           render(camera, world,
             Some(line => println(s"Rendered line [${line + 1}/${options.height}]")),
