@@ -36,7 +36,7 @@ jobs:
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git log
+          ls raytracing
           git add .
           git commit -m 'Update raytracing'
           git push
