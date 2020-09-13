@@ -20,7 +20,7 @@ jobs:
           ref: scalajs
           path: RayTracing
       - name: Checkout github pages repo
-        run: git checkout --depth 1 git@github.com:Ivoah/ivoah.github.io.git
+        run: git clone --depth 1 git@github.com:Ivoah/ivoah.github.io.git
       - name: Set up JDK 1.8
         uses: actions/setup-java@v1
         with:
