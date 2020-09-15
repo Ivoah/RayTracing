@@ -30,7 +30,7 @@ jobs:
         run: sbt fastOptJS
       - name: Copy files
         run: |
-          sed 's|target/scala-2\.13/||' raytracing.html > ivoah.github.io/raytracing/index.html
+          sed 's|target/scala-2\.13/||' RayTracing/raytracing.html > ivoah.github.io/raytracing/index.html
           cp RayTracing/*.json ivoah.github.io/raytracing/
           cp RayTracing/target/scala-2.13/scala-js-ray-tracer-fastopt.js ivoah.github.io/raytracing/
       - name: Commit + push
