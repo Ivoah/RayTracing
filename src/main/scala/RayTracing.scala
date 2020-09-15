@@ -86,6 +86,8 @@ object RayTracing extends App {
   val button = document.getElementById("render").asInstanceOf[html.Input]
   button.onclick = e => {
     val scenes = document.getElementById("scenes").asInstanceOf[html.Select]
+    val samples = document.getElementById("samples").asInstanceOf[html.Input]
+    options = options.copy(samples = samples.valueAsNumber.toInt)
     Ajax.get(scenes.value).foreach { xhr =>
       loadScene(xhr.responseText) match {
         case Some((camera, world)) =>

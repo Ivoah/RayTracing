@@ -11,10 +11,11 @@
             <option value="perlin.json">Perlin</option>
             <option value="random.json">Random</option>
         </select>
+        <input type="number" id="samples" min="1" max="512" value="16">
         <button id="render">Render</button>
         <a href="https://github.com/Ivoah/RayTracing">GitHub</a>
         <br />
         <canvas id="img" width="400" height="225" style="border:1px solid #000000;"></canvas>
-        <script type="text/javascript" src="scala-js-ray-tracer-fastopt.js"></script>
+        <script type="text/javascript" src="target/scala-2.13/scala-js-ray-tracer-fastopt.js"></script>
     </body>
 </html>
