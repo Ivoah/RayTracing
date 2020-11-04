@@ -218,7 +218,9 @@ object RayTracing extends App {
       }
 
       frame.open()
-      options.scene.foreach(sceneName => if (scene.isEmpty) Dialog.showMessage(frame, s"Error loading scene $sceneName", "Error", Dialog.Message.Error))
+      if (options.scene.isDefined && scene.isEmpty) {
+        Dialog.showMessage(frame, s"Error loading scene ${options.scene.get}", "Error", Dialog.Message.Error)
+      }
       (new RenderThread).start()
   }
 
