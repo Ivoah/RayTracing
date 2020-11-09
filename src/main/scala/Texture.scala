@@ -79,12 +79,12 @@ case class Perlin(scale: Double) extends Texture {
 
 case class Image(img: BufferedImage) extends Texture {
   def apply(uv: Vec2, p: Vec3): Vec3 = {
-    val u = Utils.clamp(uv.x, 0.0, 1.0)
-    val v = 1.0 - Utils.clamp(uv.y, 0.0, 1.0)  // Flip V to image coordinates
+    val u = Util.clamp(uv.x, 0.0, 1.0)
+    val v = 1.0 - Util.clamp(uv.y, 0.0, 1.0)  // Flip V to image coordinates
 
     // Clamp integer mapping, since actual coordinates should be less than 1.0
-    val i = Utils.clamp((u * img.getWidth).toInt, 0, img.getWidth - 1)
-    val j = Utils.clamp((v * img.getHeight).toInt, 0, img.getHeight - 1)
+    val i = Util.clamp((u * img.getWidth).toInt, 0, img.getWidth - 1)
+    val j = Util.clamp((v * img.getHeight).toInt, 0, img.getHeight - 1)
 
     Vec3.fromRGB(img.getRGB(i, j))
   }

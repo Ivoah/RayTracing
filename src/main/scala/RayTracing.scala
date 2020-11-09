@@ -119,13 +119,17 @@ object RayTracing extends App {
 
       var scene = options.scene.flatMap(f => loadScene(new File(f)))
 
-      class RenderThread extends Thread {
+      class RenderThread(val bar: MenuBar) extends Thread {
         override def run(): Unit = {
           scene match {
             case Some((camera, world)) =>
+              bar.contents.foreach(_.enabled = false)
               render(camera, world,
                 Some(line => {progressBar.value = line; frame.repaint()}),
-                Some(time => Dialog.showMessage(frame, s"Rendered ${options.height} lines in $time seconds"))
+                Some(time => {
+                  Dialog.showMessage(frame, s"Rendered ${options.height} lines in $time seconds")
+                  bar.contents.foreach(_.enabled = true)
+                })
               )
             case None =>
           }
@@ -150,7 +154,6 @@ object RayTracing extends App {
                     scene = loadScene(chooser.selectedFile)
                     if (scene.isDefined) {
                       frame.title = s"Scala ray tracer: ${chooser.selectedFile.getName}"
-                      (new RenderThread).start()
                     } else {
                       Dialog.showMessage(frame, s"Error loading scene ${chooser.selectedFile.getName}", "Error", Dialog.Message.Error)
                     }
@@ -203,7 +206,7 @@ object RayTracing extends App {
               )
             },
             new MenuItem(Action("Render") {
-              (new RenderThread).start()
+              (new RenderThread(this)).start()
             })
           )
         }
@@ -221,7 +224,7 @@ object RayTracing extends App {
       if (options.scene.isDefined && scene.isEmpty) {
         Dialog.showMessage(frame, s"Error loading scene ${options.scene.get}", "Error", Dialog.Message.Error)
       }
-      (new RenderThread).start()
+      (new RenderThread(frame.menuBar)).start()
   }
 
   def render(camera: Camera, world: Hittable, update: Option[Int => Unit] = None, finish: Option[Double => Unit] = None): Unit = {
