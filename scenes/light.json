@@ -1,0 +1,21 @@
+{
+  "camera": {
+    "origin": [26, 3, 6],
+    "target": [0, 2, 0],
+    "vup": [0, 1, 0],
+    "vfov": 20,
+    "aspect_ratio": 1.78,
+    "aperture": 0,
+    "focus_distance": -1,
+    "background": [0, 0, 0]
+  },
+  "materials": {
+    "perlin": {"type": "Diffuse", "texture": {"type": "Perlin", "scale": 4}},
+    "light": {"type": "Emission", "strength": 4, "texture": {"type": "SolidColor", "color": [1, 1, 1]}}
+  },
+  "world": [
+    {"type": "Sphere", "center": [0, -1000, 0], "radius": 1000, "material": "perlin"},
+    {"type": "Sphere", "center": [0, 2, 0], "radius": 2, "material": "perlin"},
+    {"type": "XYRect", "sides": [3, 5, 1, 3], "z": -2, "material": "light"}
+  ]
+}

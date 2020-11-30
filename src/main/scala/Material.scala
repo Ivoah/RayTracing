@@ -2,6 +2,7 @@ import scala.math._
 import scala.util.Random
 
 trait Material {
+  def emit(uv: Vec2, p: Vec3): Vec3 = Vec3(0, 0, 0)
   def scatter(ray: Ray, hit: Hit): Option[(Ray, Vec3)]
 }
 
@@ -46,4 +47,9 @@ case class Glass(texture: Texture, ior: Double) extends Material {
       Some((Ray(hit.position, refracted), texture(hit.uv, hit.position)))
     }
   }
+}
+
+case class Emission(texture: Texture, strength: Double) extends Material {
+  def scatter(ray: Ray, hit: Hit): Option[(Ray, Vec3)] = None
+  override def emit(uv: Vec2, p: Vec3): Vec3 = strength*texture(uv, p)
 }

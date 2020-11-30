@@ -116,7 +116,8 @@ camera = {
     "vfov": 20,
     "aspect_ratio": 1.78,
     "aperture": 0.1,
-    "focus_distance": 10
+    "focus_distance": 10,
+    "background": [0.70, 0.80, 1.00]
 }
 
 with open('random.json', 'w') as f:

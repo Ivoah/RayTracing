@@ -1,0 +1,19 @@
+{
+  "camera": {
+    "origin": [13, 2, 3],
+    "target": [0, 0, 0],
+    "vup": [0, 1, 0],
+    "vfov": 20,
+    "aspect_ratio": 1.78,
+    "aperture": 0,
+    "focus_distance": -1,
+    "background": [0.70, 0.80, 1.00]
+  },
+  "materials": {
+    "perlin": {"type": "Diffuse", "texture": {"type": "Perlin", "scale": 4}}
+  },
+  "world": [
+    {"type": "Sphere", "center": [0, -1000, 0], "radius": 1000, "material": "perlin"},
+    {"type": "Sphere", "center": [0, 2, 0], "radius": 2, "material": "perlin"}
+  ]
+}

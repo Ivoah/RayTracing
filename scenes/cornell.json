@@ -1,0 +1,26 @@
+{
+  "camera": {
+    "origin": [278, 278, -800],
+    "target": [278, 278, 0],
+    "vup": [0, 1, 0],
+    "vfov": 40,
+    "aspect_ratio": 1,
+    "aperture": 0,
+    "focus_distance": -1,
+    "background": [0, 0, 0]
+  },
+  "materials": {
+    "red": {"type": "Diffuse", "texture": {"type": "SolidColor", "color": [0.65, 0.05, 0.05]}},
+    "green": {"type": "Diffuse", "texture": {"type": "SolidColor", "color": [0.12, 0.45, 0.15]}},
+    "white": {"type": "Diffuse", "texture": {"type": "SolidColor", "color": [0.73, 0.73, 0.73]}},
+    "light": {"type": "Emission", "strength": 15, "texture": {"type": "SolidColor", "color": [1, 1, 1]}}
+  },
+  "world": [
+    {"type": "YZRect", "sides": [0, 555, 0, 555], "x": 555, "material": "green"},
+    {"type": "YZRect", "sides": [0, 555, 0, 555], "x": 0, "material": "red"},
+    {"type": "XZRect", "sides": [213, 343, 227, 332], "y": 554, "material": "light"},
+    {"type": "XZRect", "sides": [0, 555, 0, 555], "y": 0, "material": "white"},
+    {"type": "XZRect", "sides": [0, 555, 0, 555], "y": 555, "material": "white"},
+    {"type": "XYRect", "sides": [0, 555, 0, 555], "z": 555, "material": "white"}
+  ]
+}

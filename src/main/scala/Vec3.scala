@@ -20,7 +20,8 @@ object Vec3 {
   }
 
   @annotation.tailrec
-  def random_in_unit_disk: Vec3 = {
+  def
+  random_in_unit_disk: Vec3 = {
     val v = Vec3(Random.between(-1.0, 1.0), Random.between(-1.0, 1.0), 0)
     if (v.length_squared <= 1) v else random_in_unit_disk
   }
@@ -32,7 +33,11 @@ object Vec3 {
     Vec3(r*cos(a), r*sin(a), z)
   }
 
-  def apply(v: Double): Vec3 = Vec3(v, v, v)
+  def fromRGB(rgb: Int): Vec3 = Vec3(
+    ((rgb >> 16) & 0xFF)/255.0,
+    ((rgb >> 8) & 0xFF)/255.0,
+    (rgb & 0xFF)/255.0
+  )
 }
 
 case class Vec3(x: Double, y: Double, z: Double) {
@@ -65,5 +70,7 @@ case class Vec3(x: Double, y: Double, z: Double) {
   }
 
   def toPPM = s"${(255.99*sqrt(x)).toInt} ${(255.99*sqrt(y)).toInt} ${(255.99*sqrt(z)).toInt}\n"
-  def toRGB: (Int, Int, Int) = ((255.99*sqrt(x)).toInt, (255.99*sqrt(y)).toInt, (255.99*sqrt(z)).toInt)
+  def toRGB: Int = (255*Util.clamp(sqrt(x), 0, 0.999)).toInt << 16 |
+    (255*Util.clamp(sqrt(y), 0, 0.999)).toInt << 8 |
+    (255*Util.clamp(sqrt(z), 0, 0.999)).toInt
 }
