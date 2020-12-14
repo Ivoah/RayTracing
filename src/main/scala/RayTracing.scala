@@ -14,30 +14,7 @@ object RayTracing extends App {
     scene: Option[String] = None
   )
 
-  @annotation.tailrec
-  def parseOptions(args: List[String], options: Option[Options] = Some(Options())): Option[Options] = {
-    args match {
-      case "--filename" :: filename :: tail => parseOptions(tail, options.map(_.copy(filename = Some(filename))))
-      case "-o" :: filename :: tail => parseOptions(tail, options.map(_.copy(filename = Some(filename))))
-      case "--width" :: width :: tail => parseOptions(tail, options.map(_.copy(width = width.toInt)))
-      case "-w" :: width :: tail => parseOptions(tail, options.map(_.copy(width = width.toInt)))
-      case "--height" :: height :: tail => parseOptions(tail, options.map(_.copy(height = height.toInt)))
-      case "-h" :: height :: tail => parseOptions(tail, options.map(_.copy(height = height.toInt)))
-      case "--samples" :: samples :: tail => parseOptions(tail, options.map(_.copy(samples = samples.toInt)))
-      case "-s" :: samples :: tail => parseOptions(tail, options.map(_.copy(samples = samples.toInt)))
-      case "--scene" :: scene :: tail => parseOptions(tail, options.map(_.copy(scene = Some(scene))))
-      case Nil => options
-      case _ => None
-    }
-  }
-
   var options = Options()
-  try {
-    options = parseOptions(args.toList).get
-  } catch {
-    case _: NoSuchElementException =>
-      println("Error parsing arguments")
-  }
 
   def loadScene(scene: String) = {
     try {

@@ -1,7 +1,3 @@
-import java.awt.image.BufferedImage
-import java.io.File
-import javax.imageio.ImageIO
-
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
 
@@ -11,20 +7,9 @@ object JsonReads {
 
   implicit val cameraReads: Reads[Camera] = Json.reads[Camera]
 
-  implicit val bufferedImageReads: Reads[BufferedImage] =
-    JsPath.read[String].map(path => {
-      // Dirty hack because new File doesn't seem to respect user.dir
-      val file = new File(path)
-      ImageIO.read(
-        if (file.isAbsolute) file
-        else new File(System.getProperty("user.dir"), file.getName)
-      )
-    })
-
   implicit val solidColorReads: Reads[SolidColor] = Json.reads[SolidColor]
   lazy implicit val checkerReads: Reads[Checker] = Json.reads[Checker]
   implicit val perlinReads: Reads[Perlin] = Json.reads[Perlin]
-  implicit val imageReads: Reads[Image] = Json.reads[Image]
   implicit val textureReads: Reads[Texture] = (
     (JsPath \ "type").read[String] and JsPath.read[JsObject]
   ) { (_type: String, texture: JsObject) =>
@@ -32,7 +17,7 @@ object JsonReads {
       case "SolidColor" => texture.as[SolidColor]
       case "Checker" => texture.as[Checker]
       case "Perlin" => texture.as[Perlin]
-      case "Image" => texture.as[Image]
+      case "Image" => Checker(5, SolidColor(Vec3(1, 0, 1)), SolidColor(Vec3(0, 0, 0)))
     }
   }
 

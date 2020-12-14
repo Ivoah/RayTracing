@@ -70,7 +70,5 @@ case class Vec3(x: Double, y: Double, z: Double) {
   }
 
   def toPPM = s"${(255.99*sqrt(x)).toInt} ${(255.99*sqrt(y)).toInt} ${(255.99*sqrt(z)).toInt}\n"
-  def toRGB: Int = (255*Util.clamp(sqrt(x), 0, 0.999)).toInt << 16 |
-    (255*Util.clamp(sqrt(y), 0, 0.999)).toInt << 8 |
-    (255*Util.clamp(sqrt(z), 0, 0.999)).toInt
+  def toRGB: (Int, Int, Int) = ((255.99*sqrt(x)).toInt, (255.99*sqrt(y)).toInt, (255.99*sqrt(z)).toInt)
 }
