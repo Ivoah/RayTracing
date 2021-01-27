@@ -70,7 +70,7 @@ object RayTracing extends App {
       sceneFile.close()
       System.setProperty("user.dir", scene.getAbsoluteFile.getParent)
 
-      import JsonReads._
+      import JsonFormats._
       val camera = (json \ "camera").as[Camera]
       implicit val materials: Map[String, Material] = (json \ "materials").as[Map[String, Material]]
       val world = BVH((json \ "world").as[Seq[Hittable]]: _*)
@@ -119,20 +119,31 @@ object RayTracing extends App {
 
       var scene = options.scene.flatMap(f => loadScene(new File(f)))
 
+      var thread: Option[RenderThread] = None
       class RenderThread(val bar: MenuBar) extends Thread {
+        var rendering = false
         override def run(): Unit = {
           scene match {
             case Some((camera, world)) =>
               bar.contents.foreach(_.enabled = false)
+              val renderButton = bar.contents.find(_.name == "Render").get.asInstanceOf[MenuItem]
+              renderButton.text = "Stop"
+              renderButton.enabled = true
+              rendering = true
               render(camera, world,
                 Some(line => {progressBar.value = line; frame.repaint()}),
-                Some(time => {
-                  Dialog.showMessage(frame, s"Rendered ${options.height} lines in $time seconds")
-                  bar.contents.foreach(_.enabled = true)
-                })
+                Some(time => Dialog.showMessage(frame, s"Rendered ${options.height} lines in $time seconds")),
+                Some(() => !rendering)
               )
+              thread = None
+              bar.contents.foreach(_.enabled = true)
+              renderButton.text = "Render"
             case None =>
           }
+        }
+
+        def break(): Unit = {
+          rendering = false
         }
       }
 
@@ -206,8 +217,15 @@ object RayTracing extends App {
               )
             },
             new MenuItem(Action("Render") {
-              (new RenderThread(this)).start()
-            })
+              thread match {
+                case Some(thread) => thread.break()
+                case None =>
+                  thread = Some(new RenderThread(this))
+                  thread.foreach(_.start())
+              }
+            }) {
+              name = "Render"
+            }
           )
         }
 
@@ -224,12 +242,17 @@ object RayTracing extends App {
       if (options.scene.isDefined && scene.isEmpty) {
         Dialog.showMessage(frame, s"Error loading scene ${options.scene.get}", "Error", Dialog.Message.Error)
       }
-      (new RenderThread(frame.menuBar)).start()
+      thread = Some(new RenderThread(frame.menuBar))
+      thread.map(_.start())
   }
 
-  def render(camera: Camera, world: Hittable, update: Option[Int => Unit] = None, finish: Option[Double => Unit] = None): Unit = {
+  def render(camera: Camera, world: Hittable,
+             update: Option[Int => Unit] = None,
+             finish: Option[Double => Unit] = None,
+             break: Option[() => Boolean] = None): Unit = {
     val start = System.currentTimeMillis()
     for (j <- 0 until options.height) {
+      if (break.exists(_())) return
       for (i <- 0 until options.width) {
         val pixel = Await.result(Future.reduceLeft(for (_ <- 0 until options.samples) yield Future {
           val u = (i + Random.nextDouble())/(options.width - 1)

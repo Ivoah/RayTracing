@@ -5,11 +5,13 @@ import javax.imageio.ImageIO
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
 
-object JsonReads {
+object JsonFormats {
   implicit val vec2Reads: Reads[Vec2] = (JsPath(0).read[Double] and JsPath(1).read[Double])(Vec2.apply _)
+  implicit val vec2Writes: Writes[Vec2] = (v: Vec2) => JsArray(v.toSeq.map(JsNumber(_)))
   implicit val vec3Reads: Reads[Vec3] = (JsPath(0).read[Double] and JsPath(1).read[Double] and JsPath(2).read[Double])(Vec3.apply _)
+  implicit val vec3Writes: Writes[Vec3] = (v: Vec3) => JsArray(v.toSeq.map(JsNumber(_)))
 
-  implicit val cameraReads: Reads[Camera] = Json.reads[Camera]
+  implicit val cameraFormat: Format[Camera] = Json.format[Camera]
 
   implicit val bufferedImageReads: Reads[BufferedImage] =
     JsPath.read[String].map(path => {
