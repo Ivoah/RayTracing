@@ -1,14 +1,21 @@
-import java.awt.image.BufferedImage
+import play.api.libs.json._
+import JsonFormats._
 
+import java.awt.image.BufferedImage
 import scala.math._
 import scala.util.Random
 
-trait Texture {
+sealed trait Texture {
   def apply(uv: Vec2, p: Vec3): Vec3
+  def toJson: JsObject
 }
 
 case class SolidColor(color: Vec3) extends Texture {
   def apply(uv: Vec2, p: Vec3): Vec3 = color
+  def toJson: JsObject = JsObject(Seq(
+    "type" -> JsString("SolidColor"),
+    "color" -> Json.toJson(color)
+  ))
 }
 
 case class Checker(size: Double, t1: Texture, t2: Texture) extends Texture {
@@ -17,6 +24,13 @@ case class Checker(size: Double, t1: Texture, t2: Texture) extends Texture {
     if (sines < 0) t1(uv, p)
     else t2(uv, p)
   }
+
+  def toJson: JsObject = JsObject(Seq(
+    "type" -> JsString("SolidColor"),
+    "size" -> JsNumber(size),
+    "t1" -> t1.toJson,
+    "t2" -> t2.toJson
+  ))
 }
 
 case class Perlin(scale: Double) extends Texture {
@@ -75,6 +89,10 @@ case class Perlin(scale: Double) extends Texture {
   }
 
   def apply(uv: Vec2, p: Vec3): Vec3 = 0.5*(1 + sin(scale*p.z + 10*turb(p)))
+  def toJson: JsObject = JsObject(Seq(
+    "type" -> JsString("Perlin"),
+    "scale" -> JsNumber(scale)
+  ))
 }
 
 case class Image(img: BufferedImage) extends Texture {
@@ -88,4 +106,6 @@ case class Image(img: BufferedImage) extends Texture {
 
     Vec3.fromRGB(img.getRGB(i, j))
   }
+
+  def toJson: JsObject = Checker(5, SolidColor(Vec3(1, 0, 1)), SolidColor(Vec3(0, 0, 0))).toJson
 }

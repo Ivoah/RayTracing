@@ -5,6 +5,7 @@ import scala.language.implicitConversions
 object Vec3 {
   implicit def intToVec3(v: Int): Vec3 = Vec3(v, v, v)
   implicit def doubleToVec3(v: Double): Vec3 = Vec3(v, v, v)
+  implicit def tupleToVec3(t: (Double, Double, Double)): Vec3 = Vec3(t._1, t._2, t._3)
 
   def random: Vec3 = Vec3(Random.nextDouble(), Random.nextDouble(), Random.nextDouble())
   def random(min: Double, max: Double): Vec3 = Vec3(
@@ -60,6 +61,9 @@ case class Vec3(x: Double, y: Double, z: Double) {
   def length_squared: Double = x*x + y*y + z*z
   def length: Double = sqrt(length_squared)
   def unit_vector: Vec3 = this/length
+
+  def toTuple: (Double, Double, Double) = (x, y, z)
+  def toSeq: Seq[Double] = Seq(x, y, z)
 
   def apply(i: Int): Double = {
     i match {

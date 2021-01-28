@@ -30,7 +30,7 @@ case class BVH(left: Hittable, right: Hittable) extends Hittable {
     val hit_left = left.hit(r, t_min, t_max)
     val hit_right = right.hit(r, t_min, hit_left.map(_.t).getOrElse(t_max))
 
-    return hit_right.orElse(hit_left)
+    hit_right.orElse(hit_left)
   }
 
   val bounding_box: AABB = left.bounding_box + right.bounding_box
