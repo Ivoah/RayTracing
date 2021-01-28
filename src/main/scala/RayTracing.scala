@@ -1,16 +1,18 @@
-import scala.util.Random
+import scala.util.{Random, Try}
 import scala.concurrent._
 import scala.concurrent.duration._
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.swing._
 import scala.swing.Swing._
-
 import java.awt.image.BufferedImage
-import java.io.File
+import java.io._
 import javax.imageio.ImageIO
 import javax.swing.filechooser.FileNameExtensionFilter
-
 import play.api.libs.json._
+
+import java.net._
+import java.util.concurrent.atomic.AtomicInteger
+import scala.util.control.Breaks._
 
 object RayTracing extends App {
 
@@ -63,7 +65,7 @@ object RayTracing extends App {
 
   if (options.help) println(usage)
 
-  def loadScene(scene: File) = {
+  def loadScene(scene: File): Option[(Camera, Hittable)] = {
     try {
       val sceneFile = io.Source.fromFile(scene)
       val json = Json.parse(sceneFile.getLines().mkString)
@@ -124,8 +126,9 @@ object RayTracing extends App {
           scene match {
             case Some((camera, world)) =>
               bar.contents.foreach(_.enabled = false)
+              var lines = 0
               render(camera, world,
-                Some(line => {progressBar.value = line; frame.repaint()}),
+                Some(line => {lines += 1; progressBar.value = lines; frame.repaint()}),
                 Some(time => {
                   Dialog.showMessage(frame, s"Rendered ${options.height} lines in $time seconds")
                   bar.contents.foreach(_.enabled = true)
@@ -228,19 +231,54 @@ object RayTracing extends App {
   }
 
   def render(camera: Camera, world: Hittable, update: Option[Int => Unit] = None, finish: Option[Double => Unit] = None): Unit = {
+    img = new BufferedImage(options.width, options.height, BufferedImage.TYPE_INT_RGB)
     val start = System.currentTimeMillis()
-    for (j <- 0 until options.height) {
-      for (i <- 0 until options.width) {
-        val pixel = Await.result(Future.reduceLeft(for (_ <- 0 until options.samples) yield Future {
-          val u = (i + Random.nextDouble())/(options.width - 1)
-          val v = (j + Random.nextDouble())/(options.height - 1)
-          camera.ray_color(u, v, world)
-        })(_ + _), Duration.Inf)/options.samples
 
-        img.setRGB(i, options.height - j - 1, pixel.toRGB)
+    val hosts = Seq(
+//      "samantha.ivoah.net" -> 4,
+//      "mini.ivoah.net" -> 4,
+//      "c2.local" -> 4,
+      "c3.local" -> 5*4,
+//      "261.local" -> 4,
+//      "262.local" -> 4,
+//      "263.local" -> 4,
+//      "localhost" -> 6
+    )
+
+    val nextLine = new AtomicInteger(0)
+    val threads = for ((host, threads) <- hosts; thread <- 0 until threads) yield {
+      val t = new Thread {
+        override def run(): Unit = {
+          val socket = new Socket(InetAddress.getByName(host), 5122)
+          val out = new ObjectOutputStream(socket.getOutputStream)
+          val in = new ObjectInputStream(socket.getInputStream)
+
+          out.writeObject(RenderServer.RenderRequest(Some(camera), Some(world), Some(options), 0))
+          out.flush()
+          in.readObject()
+
+          breakable { while (true) {
+            val j = nextLine.getAndIncrement()
+            if (j >= options.height) break
+
+            println(s"Requesting line $j on thread ($host, $thread)")
+            out.writeObject(RenderServer.RenderRequest(None, None, None, j))
+            out.flush()
+
+            val line = in.readObject().asInstanceOf[Try[Seq[Int]]].get
+
+            line.zipWithIndex.foreach { case (p, i) => img.setRGB(i, options.height - j - 1, p) }
+
+            update.foreach(_ (j))
+          }}
+          socket.close()
+        }
       }
-      update.foreach(_(j))
+      t.start()
+      t
     }
+    threads.foreach(_.join())
+
     val stop = System.currentTimeMillis()
     finish.foreach(_((stop - start)/1000.0))
   }
