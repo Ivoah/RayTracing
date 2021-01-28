@@ -252,7 +252,7 @@ object RayTracing extends App {
   def render(camera: Camera, world: Hittable,
              update: Option[Int => Unit] = None,
              finish: Option[Double => Unit] = None,
-             break: Option[() => Boolean] = None): Unit = {
+             _break: Option[() => Boolean] = None): Unit = {
     img = new BufferedImage(options.width, options.height, BufferedImage.TYPE_INT_RGB)
     val start = System.currentTimeMillis()
 
@@ -281,7 +281,7 @@ object RayTracing extends App {
 
           breakable { while (true) {
             val j = nextLine.getAndIncrement()
-            if (j >= options.height ||  break.exists(_())) break
+            if (j >= options.height ||  _break.exists(_())) break
 
             println(s"Requesting line $j on thread ($host, $thread)")
             out.writeObject(RenderServer.RenderRequest(None, None, None, j))
