@@ -1,5 +1,6 @@
 import java.awt.image.BufferedImage
 import java.io.File
+import java.nio.file.Path
 import javax.imageio.ImageIO
 
 import play.api.libs.json._
@@ -61,6 +62,23 @@ object JsonFormats {
   ) { (center: Vec3, radius: Double, material: String) =>
     Sphere(center, radius, materials(material))
   }
+  implicit def triangleReads(implicit materials: Map[String, Material]): Reads[Triangle] = (
+    (JsPath \ "vertices").read[(Vec3, Vec3, Vec3)] and
+      (JsPath \ "material").read[String]
+  ) { (vertices: (Vec3, Vec3, Vec3), material: String) =>
+    Triangle(vertices, materials(material))
+  }
+  implicit def stlReads(implicit materials: Map[String, Material]): Reads[HittableList] = (
+    (JsPath \ "file").read[String].map(path => {
+      // Dirty hack because new File doesn't seem to respect user.dir
+      val file = new File(path)
+      if (file.isAbsolute) file
+      else new File(System.getProperty("user.dir"), file.getName)
+    }) and
+      (JsPath \ "material").read[String]
+    ) { (file: File, material: String) =>
+    HittableList.fromSTL(file.toPath, materials(material))
+  }
   implicit def xyRectReads(implicit materials: Map[String, Material]): Reads[XYRect] = (
     (JsPath \ "sides").read[Seq[Double]] and
       (JsPath \ "z").read[Double] and
@@ -87,6 +105,8 @@ object JsonFormats {
     JsPath.read[JsObject]
   ) { (_type: String, obj: JsObject) =>
     _type match {
+      case "STL" => obj.as[HittableList](stlReads)
+      case "Triangle" => obj.as[Triangle]
       case "Sphere" => obj.as[Sphere]
       case "XYRect" => obj.as[XYRect]
       case "XZRect" => obj.as[XZRect]

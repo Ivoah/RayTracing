@@ -21,8 +21,7 @@ object Vec3 {
   }
 
   @annotation.tailrec
-  def
-  random_in_unit_disk: Vec3 = {
+  def random_in_unit_disk: Vec3 = {
     val v = Vec3(Random.between(-1.0, 1.0), Random.between(-1.0, 1.0), 0)
     if (v.length_squared <= 1) v else random_in_unit_disk
   }

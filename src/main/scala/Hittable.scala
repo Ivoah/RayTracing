@@ -1,3 +1,4 @@
+import java.nio.file.{Files, Path}
 import scala.math._
 
 case class Hit(ray: Ray, outward_normal: Vec3, t: Double, uv: Vec2, material: Material) {
@@ -21,6 +22,29 @@ case class HittableList(objects: Hittable*) extends Hittable {
   final def bounding_box: AABB = objects.map(_.bounding_box).reduce(_ + _)
 }
 
+object HittableList {
+  def fromSTL(file: Path, material: Material): HittableList = {
+    val triangle_re = raw"""(?m)^facet normal (-?\d+.\d+) (-?\d+.\d+) (-?\d+.\d+)
+                           |outer loop
+                           |vertex (-?\d+.\d+) (-?\d+.\d+) (-?\d+.\d+)
+                           |vertex (-?\d+.\d+) (-?\d+.\d+) (-?\d+.\d+)
+                           |vertex (-?\d+.\d+) (-?\d+.\d+) (-?\d+.\d+)
+                           |endloop
+                           |endfacet""".stripMargin.r
+    val triangles = triangle_re.findAllMatchIn(Files.readString(file)).map { m =>
+      Triangle(
+        (
+          Vec3(m.group(4).toDouble, m.group(5).toDouble, m.group(6).toDouble),
+          Vec3(m.group(7).toDouble, m.group(8).toDouble, m.group(9).toDouble),
+          Vec3(m.group(10).toDouble, m.group(11).toDouble, m.group(12).toDouble),
+        ),
+        material
+      )
+    }.toSeq
+    HittableList(triangles: _*)
+  }
+}
+
 case class Sphere(center: Vec3, radius: Double, material: Material) extends Hittable {
   def get_uv(p: Vec3): Vec2 = {
     val phi = atan2(p.z, p.x)
@@ -38,16 +62,13 @@ case class Sphere(center: Vec3, radius: Double, material: Material) extends Hitt
     val discriminant = half_b*half_b - a*c
     if (discriminant > 0) {
       val t1 = (-half_b - sqrt(discriminant))/a
-      if (t1 < t_max && t1 > t_min) {
-        return Some(Hit(r, (r.at(t1) - center)/radius, t1, get_uv((r.at(t1) - center)/radius), this.material))
-      }
-
       val t2 = (-half_b + sqrt(discriminant))/a
-      if (t2 < t_max && t2 > t_min) {
-        return Some(Hit(r, (r.at(t2) - center)/radius, t2, get_uv((r.at(t1) - center)/radius), this.material))
-      }
-    }
-    None
+      if (t1 < t_max && t1 > t_min) {
+        Some(Hit(r, (r.at(t1) - center)/radius, t1, get_uv((r.at(t1) - center)/radius), this.material))
+      } else if (t2 < t_max && t2 > t_min) {
+        Some(Hit(r, (r.at(t2) - center)/radius, t2, get_uv((r.at(t1) - center)/radius), this.material))
+      } else None
+    } else None
   }
 
   def bounding_box: AABB = AABB(center - radius, center + radius)
@@ -93,4 +114,25 @@ case class YZRect(y0: Double, y1: Double, z0: Double, z1: Double, x: Double, mat
     }
   }
   def bounding_box: AABB = AABB(Vec3(x - 0.0001, y0, z0), Vec3(x + 0.0001, y1, z1))
+}
+
+case class Triangle(vertices: (Vec3, Vec3, Vec3), material: Material) extends Hittable {
+  def hit(r: Ray, t_min: Double, t_max: Double): Option[Hit] = {
+    val edgeAB = vertices._2 - vertices._1
+    val edgeAC = vertices._3 - vertices._1
+    val normalVector = edgeAB.cross(edgeAC)
+    val ao = r.origin - vertices._1
+    val dao = ao.cross(r.direction)
+    val determinant = -r.direction.dot(normalVector)
+
+    val t = ao.dot(normalVector)/determinant
+    val u = edgeAC.dot(dao)/determinant
+    val v = -edgeAB.dot(dao)/determinant
+    val w = 1 - u - v
+
+    if (determinant > 1e-6 && t >= t_min && t <= t_max && u >= 0 && v >= 0 && w >= 0) {
+      Some(Hit(r, normalVector, t, Vec2(u, v), material))
+    } else None
+  }
+  def bounding_box: AABB = AABB(vertices._1, vertices._1) + AABB(vertices._2, vertices._2) + AABB(vertices._3, vertices._3)
 }

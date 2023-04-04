@@ -4,13 +4,13 @@ import scala.concurrent.duration._
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.swing._
 import scala.swing.Swing._
-
 import java.awt.image.BufferedImage
 import java.io.File
 import javax.imageio.ImageIO
 import javax.swing.filechooser.FileNameExtensionFilter
-
 import play.api.libs.json._
+
+import java.nio.file.Files
 
 object RayTracing extends App {
 
@@ -20,6 +20,7 @@ object RayTracing extends App {
     height: Int = 225,
     samples: Int = 32,
     scene: Option[String] = None,
+    dump: Boolean = false,
     help: Boolean = false
   )
 
@@ -35,6 +36,7 @@ object RayTracing extends App {
       case "--samples" :: samples :: tail => parseOptions(tail, options.copy(samples = samples.toInt))
       case "-s" :: samples :: tail => parseOptions(tail, options.copy(samples = samples.toInt))
       case "--scene" :: scene :: tail => parseOptions(tail, options.copy(scene = Some(scene)))
+      case "--dump" :: tail => parseOptions(tail, options.copy(dump = true))
       case "--help" :: tail => parseOptions(tail, options.copy(help = true))
       case Nil => options
       case _ => throw new Exception("Error parsing arguments")
@@ -49,6 +51,7 @@ object RayTracing extends App {
        |  --height, -h
        |  --samples, -s
        |  --scene
+       |  --dump
        |  --help""".stripMargin
 
   var options = Options()
@@ -65,15 +68,14 @@ object RayTracing extends App {
 
   def loadScene(scene: File) = {
     try {
-      val sceneFile = io.Source.fromFile(scene)
-      val json = Json.parse(sceneFile.getLines().mkString)
-      sceneFile.close()
+      val json = Json.parse(Files.readString(scene.toPath))
       System.setProperty("user.dir", scene.getAbsoluteFile.getParent)
 
       import JsonFormats._
       val camera = (json \ "camera").as[Camera]
       implicit val materials: Map[String, Material] = (json \ "materials").as[Map[String, Material]]
-      val world = BVH((json \ "world").as[Seq[Hittable]]: _*)
+      val world = HittableList((json \ "world").as[Seq[Hittable]]: _*)
+      if (options.dump) pprint.pprintln(world)
       Some((camera, world))
     } catch {
       case e: Throwable =>
@@ -112,9 +114,19 @@ object RayTracing extends App {
         }
       }
 
-      val progressBar = new ProgressBar {
-        min = 0
-        max = options.height
+      val statusBar = new GridPanel(1, 1) {
+        val label: Label = new Label("") {
+          xAlignment = Alignment.Left
+        }
+        val progressBar: ProgressBar = new ProgressBar {
+          min = 0
+          max = options.height
+        }
+
+        def setProgressBar(): Unit = contents(0) = progressBar
+        def setLabel(): Unit = contents(0) = label
+
+        contents += label
       }
 
       var scene = options.scene.flatMap(f => loadScene(new File(f)))
@@ -130,9 +142,14 @@ object RayTracing extends App {
               renderButton.text = "Stop"
               renderButton.enabled = true
               rendering = true
+              statusBar.progressBar.max = options.height
+              statusBar.setProgressBar()
               render(camera, world,
-                Some(line => {progressBar.value = line; frame.repaint()}),
-                Some(time => Dialog.showMessage(frame, s"Rendered ${options.height} lines in $time seconds")),
+                Some(line => {statusBar.progressBar.value = line; frame.repaint()}),
+                Some(time => {
+                  statusBar.label.text = s"Rendered ${options.height} lines in $time seconds"
+                  statusBar.setLabel()
+                }),
                 Some(() => !rendering)
               )
               thread = None
@@ -197,7 +214,6 @@ object RayTracing extends App {
                     str.toIntOption match {
                       case Some(height) =>
                         options = options.copy(height = height)
-                        progressBar.max = height
                         renderPanel.preferredSize = (options.width, height)
                         renderPanel.revalidate()
                         frame.pack()
@@ -231,7 +247,7 @@ object RayTracing extends App {
 
         contents = new BorderPanel {
           layout(renderPanel) = BorderPanel.Position.Center
-          layout(progressBar) = BorderPanel.Position.South
+          layout(statusBar) = BorderPanel.Position.South
         }
 
         pack()

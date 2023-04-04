@@ -1,0 +1,22 @@
+{
+  "camera": {
+    "origin": [0, 0, 20],
+    "target": [0, 0, 0],
+    "vup": [0, 1, 0],
+    "vfov": 20,
+    "aspect_ratio": 1.78,
+    "aperture": 0.1,
+    "focus_distance": -1,
+    "background": [0.70, 0.80, 1.00]
+  },
+  "materials": {
+    "red": {"type": "Diffuse", "texture": {"type": "SolidColor", "color": [0.8, 0, 0]}},
+    "black": {"type": "Diffuse", "texture": {"type": "SolidColor", "color": [0, 0, 0]}}
+  },
+  "world": [
+    {"type": "Sphere", "center": [0, 0, 0], "radius": 0.1, "material": "black"},
+    {"type": "Sphere", "center": [0, 2, 0], "radius": 0.1, "material": "black"},
+    {"type": "Sphere", "center": [-1, 0, 0], "radius": 0.1, "material": "black"},
+    {"type": "Triangle", "vertices": [[0, 0, 0], [0, 2, 0], [-1, 0, 0]], "material": "red"}
+  ]
+}
