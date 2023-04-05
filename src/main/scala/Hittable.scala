@@ -25,12 +25,12 @@ case class HittableList(objects: Hittable*) extends Hittable {
 object HittableList {
   def fromSTL(file: Path, material: Material): HittableList = {
     val triangle_re = raw"""(?m)^facet normal (-?\d+.\d+) (-?\d+.\d+) (-?\d+.\d+)
-                           |outer loop
-                           |vertex (-?\d+.\d+) (-?\d+.\d+) (-?\d+.\d+)
-                           |vertex (-?\d+.\d+) (-?\d+.\d+) (-?\d+.\d+)
-                           |vertex (-?\d+.\d+) (-?\d+.\d+) (-?\d+.\d+)
-                           |endloop
-                           |endfacet""".stripMargin.r
+                                |outer loop
+                                |vertex (-?\d+.\d+) (-?\d+.\d+) (-?\d+.\d+)
+                                |vertex (-?\d+.\d+) (-?\d+.\d+) (-?\d+.\d+)
+                                |vertex (-?\d+.\d+) (-?\d+.\d+) (-?\d+.\d+)
+                                |endloop
+                                |endfacet""".stripMargin.r
     val triangles = triangle_re.findAllMatchIn(Files.readString(file)).map { m =>
       Triangle(
         (

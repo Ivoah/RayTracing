@@ -74,7 +74,7 @@ object RayTracing extends App {
       import JsonFormats._
       val camera = (json \ "camera").as[Camera]
       implicit val materials: Map[String, Material] = (json \ "materials").as[Map[String, Material]]
-      val world = HittableList((json \ "world").as[Seq[Hittable]]: _*)
+      val world = BVH((json \ "world").as[Seq[Hittable]]: _*)
       if (options.dump) pprint.pprintln(world)
       Some((camera, world))
     } catch {
