@@ -68,7 +68,7 @@ object JsonFormats {
   ) { (vertices: (Vec3, Vec3, Vec3), material: String) =>
     Triangle(vertices, materials(material))
   }
-  implicit def stlReads(implicit materials: Map[String, Material]): Reads[HittableList] = (
+  implicit def stlReads(implicit materials: Map[String, Material]): Reads[BVH] = (
     (JsPath \ "file").read[String].map(path => {
       // Dirty hack because new File doesn't seem to respect user.dir
       val file = new File(path)
@@ -77,7 +77,7 @@ object JsonFormats {
     }) and
       (JsPath \ "material").read[String]
     ) { (file: File, material: String) =>
-    HittableList.fromSTL(file.toPath, materials(material))
+    BVH.fromSTL(file.toPath, materials(material))
   }
   implicit def xyRectReads(implicit materials: Map[String, Material]): Reads[XYRect] = (
     (JsPath \ "sides").read[Seq[Double]] and
@@ -105,7 +105,7 @@ object JsonFormats {
     JsPath.read[JsObject]
   ) { (_type: String, obj: JsObject) =>
     _type match {
-      case "STL" => obj.as[HittableList](stlReads)
+      case "STL" => obj.as[BVH](stlReads)
       case "Triangle" => obj.as[Triangle]
       case "Sphere" => obj.as[Sphere]
       case "XYRect" => obj.as[XYRect]

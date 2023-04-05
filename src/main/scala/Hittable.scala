@@ -12,38 +12,15 @@ abstract class Hittable() {
   def bounding_box: AABB
 }
 
-case class HittableList(objects: Hittable*) extends Hittable {
-  def hit(r: Ray, t_min: Double, t_max: Double): Option[Hit] = {
-    objects.foldLeft[Option[Hit]](None) { (prevHit: Option[Hit], obj: Hittable) =>
-      obj.hit(r, t_min, prevHit.map(_.t).getOrElse(t_max)).orElse(prevHit)
-    }
-  }
-
-  final def bounding_box: AABB = objects.map(_.bounding_box).reduce(_ + _)
-}
-
-object HittableList {
-  def fromSTL(file: Path, material: Material): HittableList = {
-    val triangle_re = raw"""(?m)^facet normal (-?\d+.\d+) (-?\d+.\d+) (-?\d+.\d+)
-                                |outer loop
-                                |vertex (-?\d+.\d+) (-?\d+.\d+) (-?\d+.\d+)
-                                |vertex (-?\d+.\d+) (-?\d+.\d+) (-?\d+.\d+)
-                                |vertex (-?\d+.\d+) (-?\d+.\d+) (-?\d+.\d+)
-                                |endloop
-                                |endfacet""".stripMargin.r
-    val triangles = triangle_re.findAllMatchIn(Files.readString(file)).map { m =>
-      Triangle(
-        (
-          Vec3(m.group(4).toDouble, m.group(5).toDouble, m.group(6).toDouble),
-          Vec3(m.group(7).toDouble, m.group(8).toDouble, m.group(9).toDouble),
-          Vec3(m.group(10).toDouble, m.group(11).toDouble, m.group(12).toDouble),
-        ),
-        material
-      )
-    }.toSeq
-    HittableList(triangles: _*)
-  }
-}
+//case class HittableList(objects: Hittable*) extends Hittable {
+//  def hit(r: Ray, t_min: Double, t_max: Double): Option[Hit] = {
+//    objects.foldLeft[Option[Hit]](None) { (prevHit: Option[Hit], obj: Hittable) =>
+//      obj.hit(r, t_min, prevHit.map(_.t).getOrElse(t_max)).orElse(prevHit)
+//    }
+//  }
+//
+//  final def bounding_box: AABB = objects.map(_.bounding_box).reduce(_ + _)
+//}
 
 case class Sphere(center: Vec3, radius: Double, material: Material) extends Hittable {
   def get_uv(p: Vec3): Vec2 = {

@@ -1,3 +1,4 @@
+import java.nio.file.{Files, Path}
 import scala.util.Random
 
 object BVH {
@@ -20,6 +21,28 @@ object BVH {
           BVH(right.map(_._1): _*)
         )
     }
+  }
+
+  def fromSTL(file: Path, material: Material): BVH = {
+    val triangle_re =
+      raw"""(?m)^facet normal (-?\d+.\d+) (-?\d+.\d+) (-?\d+.\d+)
+           |outer loop
+           |vertex (-?\d+.\d+) (-?\d+.\d+) (-?\d+.\d+)
+           |vertex (-?\d+.\d+) (-?\d+.\d+) (-?\d+.\d+)
+           |vertex (-?\d+.\d+) (-?\d+.\d+) (-?\d+.\d+)
+           |endloop
+           |endfacet""".stripMargin.r
+    val triangles = triangle_re.findAllMatchIn(Files.readString(file)).map { m =>
+      Triangle(
+        (
+          Vec3(m.group(4).toDouble, m.group(5).toDouble, m.group(6).toDouble),
+          Vec3(m.group(7).toDouble, m.group(8).toDouble, m.group(9).toDouble),
+          Vec3(m.group(10).toDouble, m.group(11).toDouble, m.group(12).toDouble),
+        ),
+        material
+      )
+    }.toSeq
+    BVH(triangles: _*)
   }
 }
 
