@@ -66,7 +66,7 @@ object RayTracing extends App {
 
   if (options.help) println(usage)
 
-  def loadScene(scene: File) = {
+  private def loadScene(scene: File) = {
     try {
       val json = Json.parse(Files.readString(scene.toPath))
       System.setProperty("user.dir", scene.getAbsoluteFile.getParent)
@@ -84,6 +84,11 @@ object RayTracing extends App {
     }
   }
 
+  def formatDuration(t: Double) = {
+    if (t >= 3600) f"${t/3600}%02.0fh:${(t%3600)/60}%02.0fm:${t%60}%05.2fs"
+    else f"${(t%3600)/60}%02.0fm:${t%60}%05.2fs"
+  }
+
   var img = new BufferedImage(options.width, options.height, BufferedImage.TYPE_INT_RGB)
 
   options.filename match {
@@ -94,7 +99,7 @@ object RayTracing extends App {
             case Some((camera, world)) =>
               render(camera, world,
                 line => print(s"\rRendered line [${line + 1}/${options.height}]"),
-                time => println(s"\nRendered ${options.height} lines in $time seconds")
+                time => println(s"\nTime: ${formatDuration(time)}")
               )
               ImageIO.write(img, "png", new File(filename))
             case None =>
@@ -147,7 +152,7 @@ object RayTracing extends App {
               render(camera, world,
                 line => {statusBar.progressBar.value = line; frame.repaint()},
                 time => {
-                  statusBar.label.text = s"Rendered ${options.height} lines in $time seconds"
+                  statusBar.label.text = s"Time ${formatDuration(time)}"
                   statusBar.setLabel()
                 },
                 () => !rendering
