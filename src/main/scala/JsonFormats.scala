@@ -68,7 +68,7 @@ object JsonFormats {
   ) { (vertices: (Vec3, Vec3, Vec3), material: String) =>
     Triangle(vertices, materials(material))
   }
-  implicit def stlReads(implicit materials: Map[String, Material]): Reads[BVH] = (
+  def stlReads(implicit materials: Map[String, Material]): Reads[BVH] = (
     (JsPath \ "file").read[String].map(path => {
       // Dirty hack because new File doesn't seem to respect user.dir
       val file = new File(path)
