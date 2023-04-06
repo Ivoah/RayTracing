@@ -93,8 +93,8 @@ object RayTracing extends App {
           loadScene(new File(scene)) match {
             case Some((camera, world)) =>
               render(camera, world,
-                Some(line => print(s"\rRendered line [${line + 1}/${options.height}]")),
-                Some(time => println(s"\nRendered ${options.height} lines in $time seconds"))
+                line => print(s"\rRendered line [${line + 1}/${options.height}]"),
+                time => println(s"\nRendered ${options.height} lines in $time seconds")
               )
               ImageIO.write(img, "png", new File(filename))
             case None =>
@@ -145,12 +145,12 @@ object RayTracing extends App {
               statusBar.progressBar.max = options.height
               statusBar.setProgressBar()
               render(camera, world,
-                Some(line => {statusBar.progressBar.value = line; frame.repaint()}),
-                Some(time => {
+                line => {statusBar.progressBar.value = line; frame.repaint()},
+                time => {
                   statusBar.label.text = s"Rendered ${options.height} lines in $time seconds"
                   statusBar.setLabel()
-                }),
-                Some(() => !rendering)
+                },
+                () => !rendering
               )
               thread = None
               bar.contents.foreach(_.enabled = true)
@@ -259,16 +259,16 @@ object RayTracing extends App {
         Dialog.showMessage(frame, s"Error loading scene ${options.scene.get}", "Error", Dialog.Message.Error)
       }
       thread = Some(new RenderThread(frame.menuBar))
-      thread.map(_.start())
+      thread.foreach(_.start())
   }
 
   def render(camera: Camera, world: Hittable,
-             update: Option[Int => Unit] = None,
-             finish: Option[Double => Unit] = None,
-             break: Option[() => Boolean] = None): Unit = {
+             update: Int => Unit = _ => (),
+             finish: Double => Unit = _ => (),
+             break: () => Boolean = () => false): Unit = {
     val start = System.currentTimeMillis()
     for (j <- 0 until options.height) {
-      if (break.exists(_())) return
+      if (break()) return
       for (i <- 0 until options.width) {
         val pixel = Await.result(Future.reduceLeft(for (_ <- 0 until options.samples) yield Future {
           val u = (i + Random.nextDouble())/(options.width - 1)
@@ -278,9 +278,9 @@ object RayTracing extends App {
 
         img.setRGB(i, options.height - j - 1, pixel.toRGB)
       }
-      update.foreach(_(j))
+      update(j)
     }
     val stop = System.currentTimeMillis()
-    finish.foreach(_((stop - start)/1000.0))
+    finish((stop - start)/1000.0)
   }
 }
