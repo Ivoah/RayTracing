@@ -9,6 +9,7 @@ project/
 .vscode/
 .idea/
 .bloop/
+.bsp/
 
 *.ppm
 *.png
