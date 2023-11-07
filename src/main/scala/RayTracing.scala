@@ -138,34 +138,36 @@ object RayTracing extends App {
 
       var thread: Option[RenderThread] = None
       class RenderThread(val bar: MenuBar) extends Thread {
-        var rendering = false
         override def run(): Unit = {
-          scene match {
-            case Some((camera, world)) =>
-              bar.contents.foreach(_.enabled = false)
-              val renderButton = bar.contents.find(_.name == "Render").get.asInstanceOf[MenuItem]
-              renderButton.text = "Stop"
-              renderButton.enabled = true
-              rendering = true
-              statusBar.progressBar.max = options.height
-              statusBar.setProgressBar()
-              render(camera, world,
-                line => {statusBar.progressBar.value = line; frame.repaint()},
-                time => {
-                  statusBar.label.text = s"Time ${formatDuration(time)}"
-                  statusBar.setLabel()
-                },
-                () => !rendering
-              )
-              thread = None
-              bar.contents.foreach(_.enabled = true)
-              renderButton.text = "Render"
-            case None =>
+          val renderButton = bar.contents.find(_.name == "Render").get.asInstanceOf[MenuItem]
+          try {
+            scene match {
+              case Some((camera, world)) =>
+                bar.contents.foreach(_.enabled = false)
+                renderButton.text = "Stop"
+                renderButton.enabled = true
+                statusBar.progressBar.max = options.height
+                statusBar.setProgressBar()
+                render(camera, world,
+                  line => {
+                    statusBar.progressBar.value = line;
+                    frame.repaint()
+                  },
+                  time => {
+                    statusBar.label.text = s"Time ${formatDuration(time)}"
+                    statusBar.setLabel()
+                  },
+                  () => Thread.interrupted()
+                )
+              case None =>
+            }
+          } catch {
+            case _: InterruptedException =>
+          } finally {
+            thread = None
+            bar.contents.foreach(_.enabled = true)
+            renderButton.text = "Render"
           }
-        }
-
-        def break(): Unit = {
-          rendering = false
         }
       }
 
@@ -239,7 +241,7 @@ object RayTracing extends App {
             },
             new MenuItem(Action("Render") {
               thread match {
-                case Some(thread) => thread.break()
+                case Some(thread) => thread.interrupt()
                 case None =>
                   thread = Some(new RenderThread(this))
                   thread.foreach(_.start())
