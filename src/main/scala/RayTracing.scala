@@ -9,10 +9,12 @@ import java.io.File
 import javax.imageio.ImageIO
 import javax.swing.filechooser.FileNameExtensionFilter
 import play.api.libs.json._
+import reflect.Selectable.reflectiveSelectable
 
 import java.nio.file.Files
 
-object RayTracing extends App {
+@main
+def main(args: String*): Unit = {
 
   case class Options(
     filename: Option[String] = None,
@@ -59,14 +61,14 @@ object RayTracing extends App {
     options = parseOptions(args.toList)
   } catch {
     case _: Throwable =>
-      println("Error parsing arguments")
+      println(s"Error parsing arguments \"$args\"")
       println(usage)
       System.exit(1)
   }
 
   if (options.help) println(usage)
 
-  private def loadScene(scene: File) = {
+  def loadScene(scene: File) = {
     try {
       val json = Json.parse(Files.readString(scene.toPath))
       System.setProperty("user.dir", scene.getAbsoluteFile.getParent)
@@ -119,7 +121,7 @@ object RayTracing extends App {
         }
       }
 
-      val statusBar = new GridPanel(1, 1) {
+      val statusBar: GridPanel { val label: Label; val progressBar: ProgressBar; def setProgressBar(): Unit; def setLabel(): Unit } = new GridPanel(1, 1) {
         val label: Label = new Label("") {
           xAlignment = Alignment.Left
         }
