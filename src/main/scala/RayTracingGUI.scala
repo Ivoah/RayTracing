@@ -7,29 +7,32 @@ import scala.reflect.Selectable.reflectiveSelectable
 import scala.swing.*
 import scala.swing.Swing.*
 
-class RayTracingGUI(var options: Options) extends MainFrame() {
-  var img = new BufferedImage(options.width, options.height, BufferedImage.TYPE_INT_RGB)
+class RayTracingGUI(options: Options) extends MainFrame() {
+  private var width = options.width()
+  private var height = options.height()
+  private var samples = options.samples()
+  private var img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB)
 
-  def formatDuration(t: Double) = {
+  private def formatDuration(t: Double) = {
     if (t >= 3600) f"${t / 3600}%02.0fh${(t % 3600) / 60}%02.0fm${t % 60}%05.2fs"
     else f"${(t % 3600) / 60}%02.0fm${t % 60}%05.2fs"
   }
 
-  val renderPanel = new Panel {
-    preferredSize = (options.width, options.height)
+  private val renderPanel = new Panel {
+    preferredSize = (width, height)
 
     override def paintComponent(g: Graphics2D): Unit = {
       g.drawImage(img, 0, 0, null)
     }
   }
 
-  val statusBar: GridPanel { val label: Label; val progressBar: ProgressBar; def setProgressBar(): Unit; def setLabel(): Unit } = new GridPanel(1, 1) {
+  private val statusBar: GridPanel { val label: Label; val progressBar: ProgressBar; def setProgressBar(): Unit; def setLabel(): Unit } = new GridPanel(1, 1) {
     val label: Label = new Label("") {
       xAlignment = Alignment.Left
     }
     val progressBar: ProgressBar = new ProgressBar {
       min = 0
-      max = options.height
+      max = height
     }
 
     def setProgressBar(): Unit = contents(0) = progressBar
@@ -38,10 +41,10 @@ class RayTracingGUI(var options: Options) extends MainFrame() {
     contents += label
   }
 
-  var scene = options.scene.flatMap(f => Scene.fromFile(new File(f)))
+  private var scene = options.scene.toOption.flatMap(f => Scene.fromFile(f, options.dump()))
 
-  var thread: Option[RenderThread] = None
-  class RenderThread(val bar: MenuBar) extends Thread {
+  private var thread: Option[RenderThread] = None
+  private class RenderThread(val bar: MenuBar) extends Thread {
     private var _break = false
     override def run(): Unit = {
       val renderButton = bar.contents.find(_.name == "Render").get.asInstanceOf[MenuItem]
@@ -50,9 +53,9 @@ class RayTracingGUI(var options: Options) extends MainFrame() {
           bar.contents.foreach(_.enabled = false)
           renderButton.text = "Stop"
           renderButton.enabled = true
-          statusBar.progressBar.max = options.height
+          statusBar.progressBar.max = height
           statusBar.setProgressBar()
-          camera.render(world, img, options.samples,
+          camera.render(world, img, samples,
             line => {
               statusBar.progressBar.value = line;
               frame.repaint()
@@ -75,7 +78,7 @@ class RayTracingGUI(var options: Options) extends MainFrame() {
 
   private val frame = this
 
-  title = options.scene match {
+  title = options.scene.toOption match {
     case Some(sceneName) => s"Scala ray tracer: $sceneName"
     case None => "Scala ray tracer"
   }
@@ -89,7 +92,7 @@ class RayTracingGUI(var options: Options) extends MainFrame() {
             val chooser = new FileChooser(new File("."))
             chooser.fileFilter = new FileNameExtensionFilter("Scene files", "json")
             if (chooser.showOpenDialog(frame) == FileChooser.Result.Approve) {
-              scene = Scene.fromFile(chooser.selectedFile)
+              scene = Scene.fromFile(chooser.selectedFile, options.dump())
               if (scene.isDefined) {
                 frame.title = s"Scala ray tracer: ${chooser.selectedFile.getName}"
               } else {
@@ -107,35 +110,35 @@ class RayTracingGUI(var options: Options) extends MainFrame() {
       new Menu("Options") {
         contents ++= Seq(
           new MenuItem(Action("Width") {
-            Dialog.showInput(frame, "Image width", initial = options.width.toString).foreach { str =>
+            Dialog.showInput(frame, "Image width", initial = width.toString).foreach { str =>
               str.toIntOption match {
-                case Some(width) =>
-                  options = options.copy(width = width)
-                  renderPanel.preferredSize = (width, options.height)
+                case Some(new_width) =>
+                  width = new_width
+                  renderPanel.preferredSize = (width, height)
                   renderPanel.revalidate()
                   frame.pack()
-                  img = new BufferedImage(options.width, options.height, BufferedImage.TYPE_INT_RGB)
+                  img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB)
                 case None => Dialog.showMessage(frame, s"${'"'}$str${'"'} is not a number", "Error", Dialog.Message.Error)
               }
             }
           }),
           new MenuItem(Action("Height") {
-            Dialog.showInput(frame, "Image height", initial = options.height.toString).foreach { str =>
+            Dialog.showInput(frame, "Image height", initial = height.toString).foreach { str =>
               str.toIntOption match {
-                case Some(height) =>
-                  options = options.copy(height = height)
-                  renderPanel.preferredSize = (options.width, height)
+                case Some(new_height) =>
+                  height = new_height
+                  renderPanel.preferredSize = (width, height)
                   renderPanel.revalidate()
                   frame.pack()
-                  img = new BufferedImage(options.width, options.height, BufferedImage.TYPE_INT_RGB)
+                  img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB)
                 case None => Dialog.showMessage(frame, s"""""$str" is not a number""", "Error", Dialog.Message.Error)
               }
             }
           }),
           new MenuItem(Action("Samples") {
-            Dialog.showInput(frame, "Render samples", initial = options.samples.toString).foreach { str =>
+            Dialog.showInput(frame, "Render samples", initial = samples.toString).foreach { str =>
               str.toIntOption match {
-                case Some(samples) => options = options.copy(samples = samples)
+                case Some(new_samples) => samples = new_samples
                 case None => Dialog.showMessage(frame, s""""$str" is not a number""", "Error", Dialog.Message.Error)
               }
             }
@@ -164,7 +167,7 @@ class RayTracingGUI(var options: Options) extends MainFrame() {
   centerOnScreen()
 
   if (options.scene.isDefined && scene.isEmpty) {
-    Dialog.showMessage(frame, s"Error loading scene ${options.scene.get}", "Error", Dialog.Message.Error)
+    Dialog.showMessage(frame, s"Error loading scene ${options.scene().getName}", "Error", Dialog.Message.Error)
   }
   thread = Some(new RenderThread(frame.menuBar))
   thread.foreach(_.start())
