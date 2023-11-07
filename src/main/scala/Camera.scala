@@ -1,4 +1,9 @@
-import scala.math._
+import java.awt.image.BufferedImage
+import scala.concurrent.*
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.duration.*
+import scala.math.*
+import scala.util.{Random, boundary}
 
 case class Camera(origin: Vec3, target: Vec3, vup: Vec3, vfov: Double,
                   aspect_ratio: Double, aperture: Double, focus_distance: Double, background: Vec3) {
@@ -33,5 +38,29 @@ case class Camera(origin: Vec3, target: Vec3, vup: Vec3, vfov: Double,
         }
       case None => background
     }
+  }
+
+  def render(world: Hittable, img: BufferedImage, samples: Int,
+             update: Int => Unit = _ => (),
+             finish: Double => Unit = _ => (),
+             break: () => Boolean = () => false): Unit = {
+    val start = System.currentTimeMillis()
+    boundary {
+      for (j <- 0 until img.getHeight) {
+        if (break()) boundary.break()
+        for (i <- 0 until img.getWidth) {
+          val pixel = Await.result(Future.reduceLeft(for (_ <- 0 until samples) yield Future {
+            val u = (i + Random.nextDouble()) / (img.getWidth - 1)
+            val v = (j + Random.nextDouble()) / (img.getHeight - 1)
+            ray_color(u, v, world)
+          })(_ + _), Duration.Inf) / samples
+
+          img.setRGB(i, img.getHeight - j - 1, pixel.toRGB)
+        }
+        update(j)
+      }
+    }
+    val stop = System.currentTimeMillis()
+    finish((stop - start) / 1000.0)
   }
 }

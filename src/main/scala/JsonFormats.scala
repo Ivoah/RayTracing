@@ -1,10 +1,10 @@
+import play.api.libs.functional.syntax.*
+import play.api.libs.json.*
+
 import java.awt.image.BufferedImage
 import java.io.File
 import java.nio.file.Path
 import javax.imageio.ImageIO
-
-import play.api.libs.json._
-import play.api.libs.functional.syntax._
 
 object JsonFormats {
   implicit val vec2Reads: Reads[Vec2] = (JsPath(0).read[Double] and JsPath(1).read[Double])(Vec2.apply _)
