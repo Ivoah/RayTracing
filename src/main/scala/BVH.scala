@@ -3,10 +3,10 @@ import scala.util.Random
 
 object BVH {
   def apply(objects: Hittable*): BVH = {
-    val comparator = Random.between(0, 3) match {
-      case 0 => (o1: Hittable, o2: Hittable) => o1.bounding_box.v_min.x < o2.bounding_box.v_min.x
-      case 1 => (o1: Hittable, o2: Hittable) => o1.bounding_box.v_min.y < o2.bounding_box.v_min.y
-      case 2 => (o1: Hittable, o2: Hittable) => o1.bounding_box.v_min.z < o2.bounding_box.v_min.z
+    val comparator: (Hittable, Hittable) => Boolean = Random.between(0, 3) match {
+      case 0 => _.bounding_box.v_min.x < _.bounding_box.v_min.x
+      case 1 => _.bounding_box.v_min.y < _.bounding_box.v_min.y
+      case 2 => _.bounding_box.v_min.z < _.bounding_box.v_min.z
     }
     objects match {
       case obj :: Nil => BVH(obj, obj)
