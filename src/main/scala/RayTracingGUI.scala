@@ -13,11 +13,6 @@ class RayTracingGUI(options: Options) extends MainFrame() {
   private var samples = options.samples()
   private var img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB)
 
-  private def formatDuration(t: Double) = {
-    if (t >= 3600) f"${t / 3600}%02.0fh${(t % 3600) / 60}%02.0fm${t % 60}%05.2fs"
-    else f"${(t % 3600) / 60}%02.0fm${t % 60}%05.2fs"
-  }
-
   private val renderPanel = new Panel {
     preferredSize = (width, height)
 
@@ -61,7 +56,7 @@ class RayTracingGUI(options: Options) extends MainFrame() {
               frame.repaint()
             },
             time => {
-              statusBar.label.text = s"Time ${formatDuration(time)}"
+              statusBar.label.text = s"Time ${Util.formatDuration(time)}"
               statusBar.setLabel()
             },
             () => _break
