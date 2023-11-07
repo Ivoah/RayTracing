@@ -85,8 +85,8 @@ object RayTracing extends App {
   }
 
   def formatDuration(t: Double) = {
-    if (t >= 3600) f"${t/3600}%02.0fh:${(t%3600)/60}%02.0fm:${t%60}%05.2fs"
-    else f"${(t%3600)/60}%02.0fm:${t%60}%05.2fs"
+    if (t >= 3600) f"${t/3600}%02.0fh${(t%3600)/60}%02.0fm${t%60}%05.2fs"
+    else f"${(t%3600)/60}%02.0fm${t%60}%05.2fs"
   }
 
   var img = new BufferedImage(options.width, options.height, BufferedImage.TYPE_INT_RGB)
