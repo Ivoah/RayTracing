@@ -10,6 +10,7 @@ import javax.imageio.ImageIO
 import javax.swing.filechooser.FileNameExtensionFilter
 import play.api.libs.json.*
 import scala.reflect.Selectable.reflectiveSelectable
+import scala.util.boundary, boundary.break
 
 import java.nio.file.Files
 
@@ -277,21 +278,22 @@ def main(args: String*): Unit = {
   def render(camera: Camera, world: Hittable,
              update: Int => Unit = _ => (),
              finish: Double => Unit = _ => (),
-             break: () => Boolean = () => false): Unit = {
+             shouldBreak: () => Boolean = () => false): Unit = {
     val start = System.currentTimeMillis()
-    for (j <- 0 until options.height) {
-      if (break()) return
-      for (i <- 0 until options.width) {
-        val pixel = Await.result(Future.reduceLeft(for (_ <- 0 until options.samples) yield Future {
-          val u = (i + Random.nextDouble())/(options.width - 1)
-          val v = (j + Random.nextDouble())/(options.height - 1)
-          camera.ray_color(u, v, world)
-        })(_ + _), Duration.Inf)/options.samples
+    boundary:
+      for (j <- 0 until options.height) {
+        if (shouldBreak()) break()
+        for (i <- 0 until options.width) {
+          val pixel = Await.result(Future.reduceLeft(for (_ <- 0 until options.samples) yield Future {
+            val u = (i + Random.nextDouble())/(options.width - 1)
+            val v = (j + Random.nextDouble())/(options.height - 1)
+            camera.ray_color(u, v, world)
+          })(_ + _), Duration.Inf)/options.samples
 
-        img.setRGB(i, options.height - j - 1, pixel.toRGB)
+          img.setRGB(i, options.height - j - 1, pixel.toRGB)
+        }
+        update(j)
       }
-      update(j)
-    }
     val stop = System.currentTimeMillis()
     finish((stop - start)/1000.0)
   }
