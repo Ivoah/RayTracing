@@ -111,5 +111,5 @@ case class Triangle(vertices: (Vec3, Vec3, Vec3), material: Material) extends Hi
       Some(Hit(r, normalVector, t, Vec2(u, v), material))
     } else None
   }
-  def bounding_box: AABB = AABB(vertices._1, vertices._1) + AABB(vertices._2, vertices._2) + AABB(vertices._3, vertices._3)
+  def bounding_box: AABB = AABB(Seq(vertices._1, vertices._2, vertices._3))
 }

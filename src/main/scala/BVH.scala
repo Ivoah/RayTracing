@@ -1,5 +1,6 @@
 import java.nio.file.{Files, Path}
 import scala.util.Random
+import scala.math
 
 case class BVH(left: Hittable, right: Hittable) extends Hittable {
   val bounding_box: AABB = left.bounding_box + right.bounding_box
@@ -29,7 +30,7 @@ object BVH {
       case objs =>
         val Seq(left, right) = objs
           .sortWith(comparator)
-          .grouped(Math.ceil(objs.size.toDouble/2).toInt)
+          .grouped(math.ceil(objs.size.toDouble/2).toInt)
           .map(BVH.apply)
           .toSeq
         BVH(left, right)

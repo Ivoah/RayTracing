@@ -31,3 +31,7 @@ case class AABB(v_min: Vec3, v_max: Vec3) {
     )
   )
 }
+
+object AABB {
+  def apply(vertices: Seq[Vec3]): AABB = vertices.map(v => AABB(v, v)).reduce(_ + _)
+}
