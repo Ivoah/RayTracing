@@ -16,58 +16,24 @@ import java.nio.file.Files
 
 @main
 def main(args: String*): Unit = {
+  import org.rogach.scallop.*
 
-  case class Options(
-    filename: Option[String] = None,
-    width: Int = 400,
-    height: Int = 225,
-    samples: Int = 32,
-    scene: Option[String] = None,
-    dump: Boolean = false,
-    help: Boolean = false
-  )
+  class Conf(args: Seq[String]) extends ScallopConf(args) {
+    val filename: ScallopOption[String] = opt(short = 'o')
+    val width: ScallopOption[Int] = opt(default = Some(400))
+    val height: ScallopOption[Int] = opt(default = Some(225))
+    val samples: ScallopOption[Int] = opt(default = Some(32))
+    val dump: ScallopOption[Boolean] = opt(default = Some(false))
+    val scene: ScallopOption[String] = trailArg(required = false)
 
-  @annotation.tailrec
-  def parseOptions(args: List[String], options: Options = Options()): Options = {
-    args match {
-      case "--filename" :: filename :: tail => parseOptions(tail, options.copy(filename = Some(filename)))
-      case "-o" :: filename :: tail => parseOptions(tail, options.copy(filename = Some(filename)))
-      case "--width" :: width :: tail => parseOptions(tail, options.copy(width = width.toInt))
-      case "-w" :: width :: tail => parseOptions(tail, options.copy(width = width.toInt))
-      case "--height" :: height :: tail => parseOptions(tail, options.copy(height = height.toInt))
-      case "-h" :: height :: tail => parseOptions(tail, options.copy(height = height.toInt))
-      case "--samples" :: samples :: tail => parseOptions(tail, options.copy(samples = samples.toInt))
-      case "-s" :: samples :: tail => parseOptions(tail, options.copy(samples = samples.toInt))
-      case "--scene" :: scene :: tail => parseOptions(tail, options.copy(scene = Some(scene)))
-      case "--dump" :: tail => parseOptions(tail, options.copy(dump = true))
-      case "--help" :: tail => parseOptions(tail, options.copy(help = true))
-      case Nil => options
-      case _ => throw new Exception("Error parsing arguments")
-    }
+    dependsOnAll(filename, List(scene))
+    verify()
   }
 
-  val usage =
-    s"""Options:
-       |  --filename, -o
-       |      Must specify --scene if giving output file
-       |  --width, -w
-       |  --height, -h
-       |  --samples, -s
-       |  --scene
-       |  --dump
-       |  --help""".stripMargin
-
-  var options = Options()
-  try {
-    options = parseOptions(args.toList)
-  } catch {
-    case _: Throwable =>
-      println(s"Error parsing arguments: \"$args\"")
-      println(usage)
-      System.exit(1)
-  }
-
-  if (options.help) println(usage)
+  val options = Conf(args)
+  var width = options.width()
+  var height = options.height()
+  var samples = options.samples()
 
   def loadScene(scene: File) = {
     try {
@@ -78,7 +44,7 @@ def main(args: String*): Unit = {
       val camera = (json \ "camera").as[Camera]
       implicit val materials: Map[String, Material] = (json \ "materials").as[Map[String, Material]]
       val world = BVH((json \ "world").as[Seq[Hittable]])
-      if (options.dump) pprint.pprintln(world)
+      if (options.dump()) pprint.pprintln(world)
       Some((camera, world))
     } catch {
       case e: Throwable =>
@@ -92,16 +58,16 @@ def main(args: String*): Unit = {
     else f"${(t%3600)/60}%02.0fm:${t%60}%05.2fs"
   }
 
-  var img = new BufferedImage(options.width, options.height, BufferedImage.TYPE_INT_RGB)
+  var img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB)
 
-  options.filename match {
+  options.filename.toOption match {
     case Some(filename) =>
-      options.scene match {
+      options.scene.toOption match {
         case Some(scene) =>
           loadScene(new File(scene)) match {
             case Some((camera, world)) =>
               render(camera, world,
-                line => print(s"\rRendered line [${line + 1}/${options.height}]"),
+                line => print(s"\rRendered line [${line + 1}/${height}]"),
                 time => println(s"\nTime: ${formatDuration(time)}")
               )
               ImageIO.write(img, "png", new File(filename))
@@ -115,7 +81,7 @@ def main(args: String*): Unit = {
       }
     case None =>
       val renderPanel = new Panel {
-        preferredSize = (options.width, options.height)
+        preferredSize = (width, height)
 
         override def paintComponent(g: Graphics2D): Unit = {
           g.drawImage(img, 0, 0, null)
@@ -133,7 +99,7 @@ def main(args: String*): Unit = {
         }
         val progressBar: ProgressBar = new ProgressBar {
           min = 0
-          max = options.height
+          max = height
         }
 
         def setProgressBar(): Unit = contents(0) = progressBar
@@ -142,7 +108,7 @@ def main(args: String*): Unit = {
         contents += label
       }
 
-      var scene = options.scene.flatMap(f => loadScene(new File(f)))
+      var scene = options.scene.toOption.flatMap(f => loadScene(new File(f)))
 
       var thread: Option[RenderThread] = None
       class RenderThread(val bar: MenuBar) extends Thread {
@@ -155,7 +121,7 @@ def main(args: String*): Unit = {
               renderButton.text = "Stop"
               renderButton.enabled = true
               rendering = true
-              statusBar.progressBar.max = options.height
+              statusBar.progressBar.max = height
               statusBar.setProgressBar()
               render(camera, world,
                 line => {statusBar.progressBar.value = line; frame.repaint()},
@@ -178,7 +144,7 @@ def main(args: String*): Unit = {
       }
 
       lazy val frame: Frame = new MainFrame {
-        title = options.scene match {
+        title = options.scene.toOption match {
           case Some(sceneName) => s"Scala ray tracer: $sceneName"
           case None => "Scala ray tracer"
         }
@@ -210,35 +176,35 @@ def main(args: String*): Unit = {
             new Menu("Options") {
               contents ++= Seq(
                 new MenuItem(Action("Width") {
-                  Dialog.showInput(frame, "Image width", initial = options.width.toString).foreach { str =>
+                  Dialog.showInput(frame, "Image width", initial = width.toString).foreach { str =>
                     str.toIntOption match {
-                      case Some(width) =>
-                        options = options.copy(width = width)
-                        renderPanel.preferredSize = (width, options.height)
+                      case Some(newWidth) =>
+                        width = newWidth
+                        renderPanel.preferredSize = (width, height)
                         renderPanel.revalidate()
                         frame.pack()
-                        img = new BufferedImage(options.width, options.height, BufferedImage.TYPE_INT_RGB)
-                      case None => Dialog.showMessage(frame, s"${'"'}$str${'"'} is not a number", "Error", Dialog.Message.Error)
+                        img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB)
+                      case None => Dialog.showMessage(frame, s"""""$str" is not a number""", "Error", Dialog.Message.Error)
                     }
                   }
                 }),
                 new MenuItem(Action("Height") {
-                  Dialog.showInput(frame, "Image height", initial = options.height.toString).foreach { str =>
+                  Dialog.showInput(frame, "Image height", initial = height.toString).foreach { str =>
                     str.toIntOption match {
-                      case Some(height) =>
-                        options = options.copy(height = height)
-                        renderPanel.preferredSize = (options.width, height)
+                      case Some(newHeight) =>
+                        height = newHeight
+                        renderPanel.preferredSize = (width, height)
                         renderPanel.revalidate()
                         frame.pack()
-                        img = new BufferedImage(options.width, options.height, BufferedImage.TYPE_INT_RGB)
+                        img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB)
                       case None => Dialog.showMessage(frame, s"""""$str" is not a number""", "Error", Dialog.Message.Error)
                     }
                   }
                 }),
                 new MenuItem(Action("Samples") {
-                  Dialog.showInput(frame, "Render samples", initial = options.samples.toString).foreach { str =>
+                  Dialog.showInput(frame, "Render samples", initial = samples.toString).foreach { str =>
                     str.toIntOption match {
-                      case Some(samples) => options = options.copy(samples = samples)
+                      case Some(newSamples) => samples = newSamples
                       case None => Dialog.showMessage(frame, s""""$str" is not a number""", "Error", Dialog.Message.Error)
                     }
                   }
@@ -269,7 +235,7 @@ def main(args: String*): Unit = {
 
       frame.open()
       if (options.scene.isDefined && scene.isEmpty) {
-        Dialog.showMessage(frame, s"Error loading scene ${options.scene.get}", "Error", Dialog.Message.Error)
+        Dialog.showMessage(frame, s"Error loading scene ${options.scene()}", "Error", Dialog.Message.Error)
       }
       thread = Some(new RenderThread(frame.menuBar))
       thread.foreach(_.start())
@@ -281,16 +247,16 @@ def main(args: String*): Unit = {
              shouldBreak: () => Boolean = () => false): Unit = {
     val start = System.currentTimeMillis()
     boundary:
-      for (j <- 0 until options.height) {
+      for (j <- 0 until height) {
         if (shouldBreak()) break()
-        for (i <- 0 until options.width) {
-          val pixel = Await.result(Future.reduceLeft(for (_ <- 0 until options.samples) yield Future {
-            val u = (i + Random.nextDouble())/(options.width - 1)
-            val v = (j + Random.nextDouble())/(options.height - 1)
+        for (i <- 0 until width) {
+          val pixel = Await.result(Future.reduceLeft(for (_ <- 0 until samples) yield Future {
+            val u = (i + Random.nextDouble())/(width - 1)
+            val v = (j + Random.nextDouble())/(height - 1)
             camera.ray_color(u, v, world)
-          })(_ + _), Duration.Inf)/options.samples
+          })(_ + _), Duration.Inf)/samples
 
-          img.setRGB(i, options.height - j - 1, pixel.toRGB)
+          img.setRGB(i, height - j - 1, pixel.toRGB)
         }
         update(j)
       }
