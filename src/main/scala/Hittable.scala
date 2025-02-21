@@ -7,7 +7,7 @@ case class Hit(ray: Ray, outward_normal: Vec3, t: Double, uv: Vec2, material: Ma
   def normal: Vec3 = if (front_face) outward_normal else -outward_normal
 }
 
-abstract class Hittable() {
+abstract class Hittable {
   def hit(r: Ray, t_min: Double, t_max: Double): Option[Hit]
   def bounding_box: AABB
 }
