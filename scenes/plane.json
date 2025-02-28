@@ -1,0 +1,18 @@
+{
+  "camera": {
+    "origin": [0, 0, 5],
+    "target": [0, 0, 0],
+    "vup": [0, 1, 0],
+    "vfov": 20,
+    "aspect_ratio": 1.78,
+    "aperture": 0.1,
+    "focus_distance": -1,
+    "background": [0, 0, 0]
+  },
+  "materials": {
+    "earth": {"type": "Emission", "strength": 1, "texture": {"type": "Image", "file": "quad.png"}}
+  },
+  "world": [
+    {"type": "XYRect", "sides": [-1, 1, -1, 1], "z": 0, "material": "earth"}
+  ]
+}

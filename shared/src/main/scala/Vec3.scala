@@ -38,6 +38,12 @@ object Vec3 {
     ((rgb >> 8) & 0xFF)/255.0,
     (rgb & 0xFF)/255.0
   )
+
+  def fromArray(rgb: Array[Byte]): Vec3 = Vec3(
+    rgb(0)/255.0,
+    rgb(1)/255.0,
+    rgb(2)/255.0
+  )
 }
 
 case class Vec3(x: Double, y: Double, z: Double) {
@@ -76,4 +82,5 @@ case class Vec3(x: Double, y: Double, z: Double) {
   def toRGB: Int = (255*Util.clamp(sqrt(x), 0, 0.999)).toInt << 16 |
     (255*Util.clamp(sqrt(y), 0, 0.999)).toInt << 8 |
     (255*Util.clamp(sqrt(z), 0, 0.999)).toInt
+  def toRGB2: (Int, Int, Int) = ((255.99*sqrt(x)).toInt, (255.99*sqrt(y)).toInt, (255.99*sqrt(z)).toInt)
 }

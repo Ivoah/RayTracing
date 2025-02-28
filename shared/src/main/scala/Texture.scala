@@ -1,21 +1,20 @@
 import play.api.libs.json._
 import JsonFormats._
 
-import java.awt.image.BufferedImage
 import scala.math._
 import scala.util.Random
 
 sealed trait Texture {
   def apply(uv: Vec2, p: Vec3): Vec3
-  def toJson: JsObject
+  // def toJson: JsObject
 }
 
 case class SolidColor(color: Vec3) extends Texture {
   def apply(uv: Vec2, p: Vec3): Vec3 = color
-  def toJson: JsObject = JsObject(Seq(
-    "type" -> JsString("SolidColor"),
-    "color" -> Json.toJson(color)
-  ))
+  // def toJson: JsObject = JsObject(Seq(
+  //   "type" -> JsString("SolidColor"),
+  //   "color" -> Json.toJson(color)
+  // ))
 }
 
 case class Checker(size: Double, t1: Texture, t2: Texture) extends Texture {
@@ -25,12 +24,12 @@ case class Checker(size: Double, t1: Texture, t2: Texture) extends Texture {
     else t2(uv, p)
   }
 
-  def toJson: JsObject = JsObject(Seq(
-    "type" -> JsString("SolidColor"),
-    "size" -> JsNumber(size),
-    "t1" -> t1.toJson,
-    "t2" -> t2.toJson
-  ))
+  // def toJson: JsObject = JsObject(Seq(
+  //   "type" -> JsString("SolidColor"),
+  //   "size" -> JsNumber(size),
+  //   "t1" -> t1.toJson,
+  //   "t2" -> t2.toJson
+  // ))
 }
 
 case class Perlin(scale: Double) extends Texture {
@@ -89,23 +88,23 @@ case class Perlin(scale: Double) extends Texture {
   }
 
   def apply(uv: Vec2, p: Vec3): Vec3 = 0.5*(1 + sin(scale*p.z + 10*turb(p)))
-  def toJson: JsObject = JsObject(Seq(
-    "type" -> JsString("Perlin"),
-    "scale" -> JsNumber(scale)
-  ))
+  // def toJson: JsObject = JsObject(Seq(
+  //   "type" -> JsString("Perlin"),
+  //   "scale" -> JsNumber(scale)
+  // ))
 }
 
-case class Image(img: BufferedImage) extends Texture {
+case class Image(width: Int, height: Int, pixels: IndexedSeq[Vec3]) extends Texture {
   def apply(uv: Vec2, p: Vec3): Vec3 = {
     val u = Util.clamp(uv.x, 0.0, 1.0)
     val v = 1.0 - Util.clamp(uv.y, 0.0, 1.0)  // Flip V to image coordinates
 
     // Clamp integer mapping, since actual coordinates should be less than 1.0
-    val i = Util.clamp((u * img.getWidth).toInt, 0, img.getWidth - 1)
-    val j = Util.clamp((v * img.getHeight).toInt, 0, img.getHeight - 1)
+    val i = Util.clamp((u * width).toInt, 0, width - 1)
+    val j = Util.clamp((v * height).toInt, 0, height - 1)
 
-    Vec3.fromRGB(img.getRGB(i, j))
+    pixels(j*width + i)
   }
 
-  def toJson: JsObject = Checker(5, SolidColor(Vec3(1, 0, 1)), SolidColor(Vec3(0, 0, 0))).toJson
+  // def toJson: JsObject = Checker(5, SolidColor(Vec3(1, 0, 1)), SolidColor(Vec3(0, 0, 0))).toJson
 }

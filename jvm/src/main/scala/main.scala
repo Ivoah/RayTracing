@@ -56,11 +56,16 @@ def render(camera: Camera, world: Hittable, img: BufferedImage, samples: Int,
     for (j <- 0 until img.getHeight()) {
       if (shouldBreak()) break()
       for (i <- 0 until img.getWidth()) {
-        val pixel = Await.result(Future.reduceLeft(for (_ <- 0 until samples) yield Future {
-          val u = (i + Random.nextDouble())/(img.getWidth() - 1)
-          val v = (j + Random.nextDouble())/(img.getHeight() - 1)
+//        val pixel = Await.result(Future.reduceLeft(for (_ <- 0 until samples) yield Future {
+//          val u = (i + Random.nextDouble())/(img.getWidth() - 1)
+//          val v = (j + Random.nextDouble())/(img.getHeight() - 1)
+//          camera.ray_color(u, v, world)
+//        })(_ + _), Duration.Inf)/samples
+        val pixel = (0 until samples).map(_ => {
+          val u = (i + Random.nextDouble()) / (img.getWidth() - 1)
+          val v = (j + Random.nextDouble()) / (img.getHeight() - 1)
           camera.ray_color(u, v, world)
-        })(_ + _), Duration.Inf)/samples
+        }).reduce(_ + _) / samples
 
         img.setRGB(i, img.getHeight() - j - 1, pixel.toRGB)
       }
@@ -256,7 +261,8 @@ def gui(options: Options): Unit = {
 
 @main
 def main(args: String*): Unit = {
-  val options = Options(args)
+  // val options = Options(args)
+  val options = Options(Seq("-o", "out.png", "scenes/plane.json"))
   if (options.filename.isSupplied) cmd(options)
   else gui(options)
 }

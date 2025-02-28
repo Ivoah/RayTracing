@@ -1,4 +1,3 @@
-import java.nio.file.{Files, Path}
 import scala.util.Random
 import scala.math
 
@@ -22,22 +21,18 @@ object BVH {
       case 1 => (o1: Hittable, o2: Hittable) => o1.bounding_box.v_min.y < o2.bounding_box.v_min.y
       case 2 => (o1: Hittable, o2: Hittable) => o1.bounding_box.v_min.z < o2.bounding_box.v_min.z
     }
-    objects match {
-      case obj :: Nil => BVH(obj, obj)
-      case obj1 :: obj2 :: Nil =>
-        if (comparator(obj1, obj2)) BVH(obj1, obj2)
-        else BVH(obj2, obj1)
-      case objs =>
-        val Seq(left, right) = objs
-          .sortWith(comparator)
-          .grouped(math.ceil(objs.size.toDouble/2).toInt)
-          .map(BVH.apply)
-          .toSeq
-        BVH(left, right)
+
+    objects
+      .sortWith(comparator)
+      .grouped(math.ceil(objects.size.toDouble/2).toInt)
+      .map(side => if (side.length > 1) BVH(side) else side.head)
+      .toSeq match {
+      case Seq(only) => BVH(only, only)
+      case Seq(left, right) => BVH(left, right)
     }
   }
 
-  def fromSTL(file: Path, material: Material): BVH = {
+  def fromSTL(source: String, material: Material): BVH = {
     val triangle_re =
       raw"""(?m)^facet normal (-?\d+.\d+) (-?\d+.\d+) (-?\d+.\d+)
            |outer loop
@@ -46,7 +41,7 @@ object BVH {
            |vertex (-?\d+.\d+) (-?\d+.\d+) (-?\d+.\d+)
            |endloop
            |endfacet""".stripMargin.r
-    val triangles = triangle_re.findAllMatchIn(Files.readString(file)).map { m =>
+    val triangles = triangle_re.findAllMatchIn(source).map { m =>
       Triangle(
         (
           Vec3(m.group(4).toDouble, m.group(5).toDouble, m.group(6).toDouble),

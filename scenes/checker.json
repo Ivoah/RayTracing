@@ -10,7 +10,7 @@
     "background": [0.70, 0.80, 1.00]
   },
   "materials": {
-    "checker": {
+    "checker1": {
       "type": "Diffuse",
       "texture": {
         "type": "Checker",
@@ -18,10 +18,19 @@
         "t1": {"type": "SolidColor", "color": [0.2, 0.3, 0.1]},
         "t2": {"type": "SolidColor", "color": [0.9, 0.9, 0.9]}
       }
+    },
+    "checker2": {
+      "type": "Diffuse",
+      "texture": {
+        "type": "Checker",
+        "size": 10,
+        "t1": {"type": "SolidColor", "color": [0.2, 0.3, 0.1]},
+        "t2": {"type": "Image", "file": "earthmap.jpg"}
+      }
     }
   },
   "world": [
-    {"type": "Sphere", "center": [0, -10, 0], "radius": 10, "material": "checker"},
-    {"type": "Sphere", "center": [0, 10, 0], "radius": 10, "material": "checker"}
+    {"type": "Sphere", "center": [0, -10, 0], "radius": 10, "material": "checker1"},
+    {"type": "Sphere", "center": [0, 10, 0], "radius": 10, "material": "checker2"}
   ]
 }

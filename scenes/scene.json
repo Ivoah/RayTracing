@@ -13,7 +13,7 @@
     "floor": {"type": "Diffuse", "texture": {"type": "SolidColor", "color": [0, 0.8, 0]}},
     "glass": {"type": "Glass", "texture": {"type": "SolidColor", "color": [1, 1, 1]}, "ior": 1.45},
     "gold": {"type": "Glossy", "texture": {"type": "SolidColor", "color": [0.8, 0.7, 0.2]}, "roughness": 0.5},
-    "earth": {"type": "Diffuse", "texture": {"type": "Image", "img": "earthmap.jpg"}}
+    "earth": {"type": "Diffuse", "texture": {"type": "Image", "file": "earthmap.jpg"}}
   },
   "world": [
     {"type": "Sphere", "center": [0, -1000, 0], "radius": 1000, "material": "floor"},
