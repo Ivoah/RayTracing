@@ -12,5 +12,5 @@ project/
 .bsp/
 
 *.ppm
-*.png
+/*.png
 *.jar
