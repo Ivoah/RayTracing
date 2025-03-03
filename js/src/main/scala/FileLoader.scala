@@ -9,6 +9,12 @@ import scala.concurrent.*
 import scala.concurrent.duration.*
 
 import scalajs.js
+import org.scalajs.dom.HTMLCanvasElement
+import scala.scalajs.js.annotation.JSGlobal
+
+@js.native
+@JSGlobal
+class OffscreenCanvas(width: Int, height: Int) extends HTMLCanvasElement
 
 given FileLoader = new FileLoader {
   def loadImage(path: String): Image = {
@@ -31,9 +37,7 @@ given FileLoader = new FileLoader {
       img.src = s"scenes/$path"
       println(s"Loading $path")
       img.onload = { _ =>
-        val canvas = dom.document.createElement("canvas").asInstanceOf[dom.HTMLCanvasElement]
-        canvas.width = img.width
-        canvas.height = img.height
+        val canvas = OffscreenCanvas(img.width, img.height)
         val ctx = canvas.getContext("2d").asInstanceOf[dom.CanvasRenderingContext2D]
         ctx.drawImage(img, 0, 0)
         imgPixels = Some(ctx.getImageData(0, 0, img.width, img.height)
