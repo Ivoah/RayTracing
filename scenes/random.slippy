@@ -1,0 +1,31 @@
+{
+  :camera (Camera
+    (v3 13 2 3)
+    (v3 0 0 0)
+    (v3 0 1 0)
+    20
+    1.78
+    0.1
+    10
+    (v3 0.70 0.80 1.00)
+  )
+  :world (concat
+    [
+      (Sphere (v3 0 -1000 0) 1000 (Diffuse (SolidColor (v3 0.5 0.5 0.5))))
+      (Sphere (v3 0 1 0) 1 (Glass (SolidColor (v3 1 1 1)) 1.5))
+      (Sphere (v3 -4 1 0) 1 (Diffuse (SolidColor (v3 0.4 0.2 0.1))))
+      (Sphere (v3 4 1 0) 1 (Glossy (SolidColor (v3 0.7 0.6 0.5)) 0))
+    ]
+    (flatten (map (range -11 11) (fn [a] (map (range -11 11) (fn [b]
+      (Sphere
+        (v3
+          (+ a (* 0.9 (rand)))
+          0.2 
+          (+ b (* 0.9 (rand)))
+        )
+        0.2
+        (Diffuse (SolidColor (v3 0 0.8 0)))
+      )
+    )))))
+  )
+}

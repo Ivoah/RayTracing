@@ -31,15 +31,38 @@ class Options(args: Seq[String]) extends ScallopConf(args) {
 
 def loadScene(scene: File, dump: Boolean = false) = {
   try {
-    val json = Json.parse(Files.readString(scene.toPath))
     System.setProperty("user.dir", scene.getAbsoluteFile.getParent)
+    
+    val cameraWorld = if (scene.getName().endsWith(".slippy")) {
+      import net.ivoah.slippy
+      val ast = slippy.parse(Files.readString(scene.toPath))
+      val evaled = ast.eval(slippy.stdlib ++ Map(
+        "v3" -> Vec3.apply,
+        "Camera" -> Camera.apply,
+        "Sphere" -> Sphere.apply,
+        "Diffuse" -> Diffuse.apply,
+        "Glossy" -> Glossy.apply,
+        "Glass" -> Glass.apply,
+        "SolidColor" -> SolidColor.apply,
+        "Image" -> ((path: String) => summon[FileLoader].loadImage(path))
+      )).asInstanceOf[Map[slippy.Keyword, Camera | Hittable]]
 
-    import JsonFormats._
-    val camera = (json \ "camera").as[Camera]
-    implicit val materials: Map[String, Material] = (json \ "materials").as[Map[String, Material]]
-    val world = BVH((json \ "world").as[Seq[Hittable]])
-    if (dump) pprint.pprintln(world)
-    Some((camera, world))
+      (
+        evaled(slippy.Keyword("camera")).asInstanceOf[Camera],
+        BVH(evaled(slippy.Keyword("world")).asInstanceOf[Seq[Hittable]])
+      )
+    } else {
+      import JsonFormats._
+      val json = Json.parse(Files.readString(scene.toPath))
+      implicit val materials: Map[String, Material] = (json \ "materials").as[Map[String, Material]]
+      (
+        (json \ "camera").as[Camera],
+        BVH((json \ "world").as[Seq[Hittable]])
+      )
+    }
+
+    if (dump) pprint.pprintln(cameraWorld._2)
+    Some(cameraWorld)
   } catch {
     case e: Throwable =>
       e.printStackTrace()
@@ -47,7 +70,7 @@ def loadScene(scene: File, dump: Boolean = false) = {
   }
 }
 
-def render(camera: Camera, world: Hittable, img: BufferedImage, samples: Int,
+def renderFrame(camera: Camera, world: Hittable, img: BufferedImage, samples: Int,
            update: Int => Unit = _ => (),
            finish: Double => Unit = _ => (),
            shouldBreak: () => Boolean = () => false): Unit = {
@@ -84,7 +107,7 @@ def cmd(options: Options): Unit = {
   loadScene(new File(options.scene()), options.dump()) match {
     case Some((camera, world)) =>
       val img = new BufferedImage(options.width(), options.height(), BufferedImage.TYPE_INT_RGB)
-      render(camera, world, img, options.samples(),
+      renderFrame(camera, world, img, options.samples(),
         line => print(s"\rRendered line [${line + 1}/${options.height()}]"),
         time => println(s"\nTime: ${formatDuration(time)}")
       )
@@ -140,10 +163,7 @@ def gui(options: Options): Unit = {
       contents += label
     }
 
-    var scene = options.scene.toOption.flatMap(f => loadScene(new File(f), options.dump()))
-    if (options.scene.isDefined && scene.isEmpty) {
-      Dialog.showMessage(frame, s"Error loading scene ${options.scene()}", "Error", Dialog.Message.Error)
-    }
+    var scene: Option[(Camera, BVH)] = None
 
     class RenderThread(val bar: MenuBar) extends Thread {
       var rendering = false
@@ -157,7 +177,7 @@ def gui(options: Options): Unit = {
             rendering = true
             statusBar.progressBar.max = height
             statusBar.setProgressBar()
-            render(camera, world, img, samples,
+            renderFrame(camera, world, img, samples,
               line => {statusBar.progressBar.value = line; frame.repaint()},
               time => {
                 statusBar.label.text = s"Time ${formatDuration(time)}"
@@ -189,7 +209,7 @@ def gui(options: Options): Unit = {
           contents ++= Seq(
             new MenuItem(Action("Load scene") {
               val chooser = new FileChooser(new File("."))
-              chooser.fileFilter = new FileNameExtensionFilter("Scene files", "json")
+              chooser.fileFilter = new FileNameExtensionFilter("Scene files", "json", "slippy")
               if (chooser.showOpenDialog(frame) == FileChooser.Result.Approve) {
                 scene = loadScene(chooser.selectedFile)
                 if (scene.isDefined) {
@@ -253,7 +273,18 @@ def gui(options: Options): Unit = {
     centerOnScreen()
 
     var thread: Option[RenderThread] = Some(new RenderThread(menuBar))
-    thread.foreach(_.start())
+
+    override def open(): Unit = {
+      super.open()
+
+      scene = options.scene.toOption.flatMap(f => loadScene(new File(f), options.dump()))
+      options.scene.toOption.flatMap(f => loadScene(new File(f), options.dump()))
+      if (options.scene.isDefined && scene.isEmpty) {
+        Dialog.showMessage(frame, s"Error loading scene ${options.scene()}", "Error", Dialog.Message.Error)
+      } else {
+        thread.foreach(_.start())
+      }
+    }
   }
 
   frame.open()
@@ -262,7 +293,7 @@ def gui(options: Options): Unit = {
 @main
 def main(args: String*): Unit = {
   // val options = Options(args)
-  val options = Options(Seq("-o", "out.png", "scenes/plane.json"))
+  val options = Options(Seq("scenes/random.slippy"))
   if (options.filename.isSupplied) cmd(options)
   else gui(options)
 }
