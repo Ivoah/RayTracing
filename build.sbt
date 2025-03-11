@@ -7,7 +7,7 @@ lazy val RayTracing = crossProject(JVMPlatform, JSPlatform).crossType(CrossType.
     libraryDependencies ++= Seq(
       "org.playframework" %%% "play-json" % "3.0.4",
       "com.lihaoyi" %%% "pprint" % "0.9.0",
-      "net.ivoah" %% "slippy" % "0.1.0-SNAPSHOT"
+      "net.ivoah" %% "slippy" % "0.1.0"
     ),
   )
   .jvmSettings(
