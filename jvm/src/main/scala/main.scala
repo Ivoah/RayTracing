@@ -292,8 +292,7 @@ def gui(options: Options): Unit = {
 
 @main
 def main(args: String*): Unit = {
-  // val options = Options(args)
-  val options = Options(Seq("scenes/random.slippy"))
+  val options = Options(args)
   if (options.filename.isSupplied) cmd(options)
   else gui(options)
 }

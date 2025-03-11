@@ -9,11 +9,11 @@
     -1
     (v3 0.70 0.80 1.00)
   )
-  :world [
-    (Sphere (v3 0 -1000 0) 1000 (Diffuse (SolidColor (v3 0 0.8 0))))
-    (Sphere (v3 -2.5 1 0) 1 (Glass (SolidColor (v3 1 1 1)) 1.45))
-    (Sphere (v3 0 1 0) 1 (Diffuse (Image "earthmap.jpg")))
-    (Sphere (v3 2.5 1 0) 1 (Glossy (SolidColor (v3 0.8 0.7 0.2)) 0.5))
-  ]
+  ;; :world [
+  ;;   (Sphere (v3 0 -1000 0) 1000 (Diffuse (SolidColor (v3 0 0.8 0))))
+  ;;   (Sphere (v3 -2.5 1 0) 1 (Glass (SolidColor (v3 1 1 1)) 1.45))
+  ;;   (Sphere (v3 0 1 0) 1 (Diffuse (Image "earthmap.jpg")))
+  ;;   (Sphere (v3 2.5 1 0) 1 (Glossy (SolidColor (v3 0.8 0.7 0.2)) 0.5))
+  ;; ]
   :world (map (range -3 4) (fn [i] (Sphere (v3 i 0.5 0) 0.5 (Diffuse (SolidColor (v3 0.8 0 0))))))
 }
