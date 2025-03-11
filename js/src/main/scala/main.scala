@@ -73,6 +73,4 @@ def main(): Unit = {
       }
     }
   }
-
-  button.onclick(null)
 }
